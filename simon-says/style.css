@@ -1,0 +1,17 @@
+.keyboard-num {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 15px;
+  gap: 5px;
+}
+
+.keyboard-letter {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 15px;
+  gap: 5px;
+}
+
+.button {
+  padding: 10px;
+}
