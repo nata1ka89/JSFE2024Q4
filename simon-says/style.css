@@ -43,11 +43,20 @@ span {
   padding-top: 140px;
 }
 
+input {
+  border-radius: 10vw;
+  padding: 8px;
+  width: 200px;
+  margin: 20px;
+  border-color: #fdfdfd00;
+  padding: 8px;
+}
+
 .keyboard-num {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  padding-bottom: 15px;
+  padding: 25px 0px 15px 0px;
   gap: 5px;
 }
 
@@ -66,10 +75,6 @@ span {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-.button-active {
-  background-color: #fdb22b;
-}
-
 .button-level {
   font-family: 'Montserrat';
   font-weight: 600;
@@ -82,17 +87,10 @@ span {
   cursor: pointer;
   transition: box-shadow 0.3s ease-in-out;
   transition: background-color 0.3s ease-in-out;
-}
-
-#Medium,
-#Hard,
-#Easy {
   background-color: #d2d2d2;
 }
 
-#Easy:hover,
-#Medium:hover,
-#Hard:hover {
+.button-level:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
@@ -108,16 +106,16 @@ span {
   cursor: pointer;
   transition: box-shadow 0.3s ease-in-out;
   transition: background-color 0.3s ease-in-out;
-}
-
-#Start,
-#Repeat-the-sequence,
-#New-game {
   background-color: #d2d2d2;
 }
 
-#Start:hover,
-#Repeat-the-sequence:hover,
-#New-game:hover {
+.button-game :hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.button-active {
+  background-color: #fdb22b;
+}
+.hidden {
+  display: none;
 }

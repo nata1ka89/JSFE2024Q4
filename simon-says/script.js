@@ -45,6 +45,9 @@ function createHeader() {
       classes: ['button-level'],
       id: level
     });
+    if (level === 'Easy') {
+      buttonLevel.classList.add('button-active');
+    }
   });
 
   //create round
@@ -57,12 +60,14 @@ function createHeader() {
   const textSpan = createElement({
     tag: 'span',
     text: 'Round',
-    parent: divRound
+    parent: divRound,
+    classes: ['hidden']
   });
   const count = createElement({
     tag: 'span',
     text: '1',
-    parent: divRound
+    parent: divRound,
+    classes: ['hidden']
   });
 }
 // Main
@@ -70,6 +75,13 @@ const main = createElement({
   tag: 'main',
   parent: bodyElement
 });
+
+function createInput() {
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.readOnly = true;
+  main.appendChild(input);
+}
 
 // create Keyboard num
 function createKeyboardNum() {
@@ -99,7 +111,7 @@ function createKeyboardLetter() {
   const container = createElement({
     tag: 'div',
     parent: main,
-    classes: ['keyboard-letter']
+    classes: ['keyboard-letter', 'hidden']
   });
 
   const letter = [...'QWERTYUIOPASDFGHJKLZXCVBNM'];
@@ -138,10 +150,42 @@ function createGameButton() {
       classes: ['button-game'],
       id: buttonId
     });
+    if (button === 'Start') {
+      buttonGame.classList.add('button-active');
+    }
   });
 }
 
 createHeader();
+createInput();
 createKeyboardNum();
 createKeyboardLetter();
 createGameButton();
+
+//toggle difficulty buttons
+const tab = document.querySelectorAll('.button-level');
+const keyboardLetter = document.querySelector('.keyboard-letter');
+const keyboardNum = document.querySelector('.keyboard-num');
+tab.forEach(element => {
+  element.addEventListener('click', event => {
+    tab.forEach(el => {
+      if (el !== element) {
+        el.classList.remove('button-active');
+      }
+    });
+    element.classList.add('button-active');
+
+    if (element.id === 'Medium') {
+      keyboardLetter.classList.remove('hidden');
+      keyboardNum.classList.add('hidden');
+    }
+    if (element.id === 'Hard') {
+      keyboardLetter.classList.remove('hidden');
+      keyboardNum.classList.remove('hidden');
+    }
+    if (element.id === 'Easy') {
+      keyboardLetter.classList.add('hidden');
+      keyboardNum.classList.remove('hidden');
+    }
+  });
+});
