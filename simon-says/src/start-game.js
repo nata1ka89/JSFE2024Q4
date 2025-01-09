@@ -1,3 +1,6 @@
+import { sequenceGeneration } from './sequence-show.js';
+import { sequenceShow } from './sequence-show.js';
+
 export function startGame() {
   const start = document.getElementById('Start');
   const repeat = document.getElementById('Repeat-the-sequence');
@@ -17,5 +20,12 @@ export function startGame() {
     buttonLevel.forEach(button => {
       button.disabled = true;
     });
+
+    const activeLevel = document.querySelector(
+      '.button-level.button-active'
+    ).id;
+
+    let sequence = sequenceGeneration(activeLevel);
+    sequenceShow(sequence);
   });
 }

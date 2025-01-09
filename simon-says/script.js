@@ -71,6 +71,7 @@ function createHeader() {
   const count = createElement({
     tag: 'span',
     text: '1',
+    id: 'round',
     parent: divRound
   });
 }
@@ -103,7 +104,8 @@ function createKeyboardNum() {
       tag: 'button',
       text: element,
       parent: container,
-      classes: ['button']
+      classes: ['button'],
+      id: element
     });
   });
 }
@@ -123,7 +125,8 @@ function createKeyboardLetter() {
       tag: 'button',
       text: element,
       parent: container,
-      classes: ['button']
+      classes: ['button'],
+      id: element
     });
   });
 }
@@ -167,7 +170,7 @@ const tab = document.querySelectorAll('.button-level');
 const keyboardLetter = document.querySelector('.keyboard-letter');
 const keyboardNum = document.querySelector('.keyboard-num');
 tab.forEach(element => {
-  element.addEventListener('click', event => {
+  element.addEventListener('click', () => {
     tab.forEach(el => {
       if (el !== element) {
         el.classList.remove('button-active');
