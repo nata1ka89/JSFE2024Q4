@@ -1,3 +1,9 @@
+import { startGame } from './src/start-game.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+  startGame();
+});
+
 const bodyElement = document.body;
 
 function createElement(options) {
@@ -53,21 +59,19 @@ function createHeader() {
   //create round
   const divRound = createElement({
     tag: 'div',
-    classes: ['container-round'],
+    classes: ['container-round', 'hidden'],
     parent: header
   });
 
   const textSpan = createElement({
     tag: 'span',
     text: 'Round',
-    parent: divRound,
-    classes: ['hidden']
+    parent: divRound
   });
   const count = createElement({
     tag: 'span',
     text: '1',
-    parent: divRound,
-    classes: ['hidden']
+    parent: divRound
   });
 }
 // Main
@@ -80,6 +84,7 @@ function createInput() {
   const input = document.createElement('input');
   input.type = 'text';
   input.readOnly = true;
+  input.classList.add('hidden');
   main.appendChild(input);
 }
 
@@ -100,9 +105,6 @@ function createKeyboardNum() {
       parent: container,
       classes: ['button']
     });
-    button.addEventListener('click', () => {
-      button.classList.toggle('button-active');
-    });
   });
 }
 
@@ -122,9 +124,6 @@ function createKeyboardLetter() {
       text: element,
       parent: container,
       classes: ['button']
-    });
-    button.addEventListener('click', () => {
-      button.classList.toggle('button-active');
     });
   });
 }
@@ -147,11 +146,12 @@ function createGameButton() {
       tag: 'button',
       text: button,
       parent: divGame,
-      classes: ['button-game'],
+      classes: ['button-game', 'button-active'],
       id: buttonId
     });
-    if (button === 'Start') {
-      buttonGame.classList.add('button-active');
+
+    if (button === 'Repeat the sequence' || button === 'New game') {
+      buttonGame.classList.add('hidden');
     }
   });
 }
