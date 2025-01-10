@@ -21,7 +21,8 @@ export function inputKeyboard(activeLevel, sequence) {
       validCharacters = '';
   }
 
-  document.addEventListener('keydown', 'click', event => {
+  //event of pressing a key on a virtual keyboard
+  document.addEventListener('keydown', event => {
     if (!keyPress) {
       keyPress = true;
       const key = event.key.toUpperCase();
@@ -30,6 +31,15 @@ export function inputKeyboard(activeLevel, sequence) {
         processInput(key);
       }
     }
+  });
+
+  //event of pressing a key on a physical keyboard
+  const allButtons = document.querySelectorAll('.button');
+  allButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const key = button.id;
+      processInput(key);
+    });
   });
 
   function processInput(input) {
