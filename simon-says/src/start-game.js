@@ -14,7 +14,6 @@ export function startGame() {
     containerRound.classList.remove('hidden');
     repeat.classList.remove('hidden');
     newGame.classList.remove('hidden');
-    newGame.classList.remove('button-active');
     start.classList.add('hidden');
     input.classList.remove('hidden');
 

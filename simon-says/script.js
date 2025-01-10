@@ -193,3 +193,14 @@ tab.forEach(element => {
     }
   });
 });
+
+const audioFalse = document.createElement('audio');
+audioFalse.src = './audio/false.mp3';
+audioFalse.classList.add('audioFalse');
+
+const audioTrue = document.createElement('audio');
+audioTrue.src = './audio/true.mp3';
+audioTrue.classList.add('audioTrue');
+
+main.appendChild(audioTrue);
+main.appendChild(audioFalse);

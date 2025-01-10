@@ -6,6 +6,7 @@ export function inputKeyboard(activeLevel, sequence) {
   const inputText = document.querySelector('input[placeholder]');
   let validCharacters;
   let keyPress = false; //keypress processing flag
+  let inputBlocked = false;
 
   switch (activeLevel) {
     case 'Easy':
@@ -23,7 +24,7 @@ export function inputKeyboard(activeLevel, sequence) {
 
   //event of pressing a key on a virtual keyboard
   document.addEventListener('keydown', event => {
-    if (!keyPress) {
+    if (!keyPress && !inputBlocked) {
       keyPress = true;
       const key = event.key.toUpperCase();
       if (validCharacters.includes(key)) {
@@ -43,24 +44,32 @@ export function inputKeyboard(activeLevel, sequence) {
   });
 
   function processInput(input) {
+    const audioFalse = document.querySelector('.audioFalse');
+    const audioTrue = document.querySelector('.audioTrue');
+
     userInput += input;
     inputText.value = userInput;
     sequenceShow(input);
     if (userInput === sequence) {
       console.log('Correct sequence!');
-      setTimeout(() => {
+      audioTrue.play();
+      inputBlocked = true;
+      /* setTimeout(() => {
         userInput = '';
         inputText.value = '';
         return;
-      }, 1000);
+      }, 1000);*/
     }
     if (userInput[userInput.length - 1] !== sequence[userInput.length - 1]) {
       console.log('Incorrect sequence!');
-      setTimeout(() => {
+
+      audioFalse.play();
+      inputBlocked = true;
+      /*setTimeout(() => {
         userInput = '';
         inputText.value = '';
         return;
-      }, 1000);
+      }, 1000);*/
     }
     keyPress = false;
   }
