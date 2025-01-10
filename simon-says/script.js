@@ -142,7 +142,7 @@ function createGameButton() {
     parent: main
   });
 
-  const buttonsGame = ['Repeat the sequence', 'New game', 'Start'];
+  const buttonsGame = ['Repeat the sequence', 'Next', 'New game', 'Start'];
 
   buttonsGame.forEach(button => {
     const buttonId = button.replace(/\s+/g, '-');
@@ -154,7 +154,7 @@ function createGameButton() {
       id: buttonId
     });
 
-    if (button === 'Repeat the sequence' || button === 'New game') {
+    if (button !== 'Start') {
       buttonGame.classList.add('hidden');
     }
   });

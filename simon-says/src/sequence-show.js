@@ -1,7 +1,9 @@
 export function sequenceGeneration(activeLevel) {
   let sequence = '';
   let characters;
-  let length = 2;
+  let roundElement = document.getElementById('round');
+  let round = parseInt(roundElement.textContent);
+  let length = round * 2;
 
   switch (activeLevel) {
     case 'Easy':
@@ -14,7 +16,7 @@ export function sequenceGeneration(activeLevel) {
       characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
       break;
     default:
-      length = 2;
+      length;
   }
 
   for (var i = 0; i < length; i++) {

@@ -1,5 +1,6 @@
 //keypress event depending on difficulty level
 import { sequenceShow } from './sequence-show.js';
+import { nextLevel } from './next-level.js';
 
 export function inputKeyboard(activeLevel, sequence) {
   let userInput = '';
@@ -54,6 +55,7 @@ export function inputKeyboard(activeLevel, sequence) {
       console.log('Correct sequence!');
       audioTrue.play();
       inputBlocked = true;
+      nextLevel();
       /* setTimeout(() => {
         userInput = '';
         inputText.value = '';
