@@ -1,6 +1,7 @@
 import { sequenceShow } from './sequence-show.js';
 import { sequenceGeneration } from './sequence-show.js';
 import { inputKeyboard } from './input-keyboard.js';
+import { getActiveLevel } from './start-game.js';
 
 export function nextLevel() {
   const repeat = document.getElementById('Repeat-the-sequence');
@@ -21,8 +22,9 @@ function nextPress() {
   roundElement.textContent = round;
   const inputText = document.querySelector('input[placeholder]');
   inputText.value = '';
-  const activeLevel = document.querySelector('.button-level.button-active').id;
-  let sequence = sequenceGeneration(activeLevel);
+
+  const activeLevel = getActiveLevel();
+  const sequence = sequenceGeneration(activeLevel);
 
   sequenceShow(sequence);
   inputKeyboard(activeLevel, sequence);

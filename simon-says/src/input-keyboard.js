@@ -2,13 +2,15 @@
 import { sequenceShow } from './sequence-show.js';
 import { nextLevel } from './next-level.js';
 
-export function inputKeyboard(activeLevel, sequence) {
-  let userInput = '';
-  const inputText = document.querySelector('input[placeholder]');
-  let validCharacters;
-  let keyPress = false; //keypress processing flag
-  let inputBlocked = false;
+let keyPress = false; //keypress processing flag
+let inputBlocked = false;
+let userInput = '';
 
+export function inputKeyboard(activeLevel, sequence) {
+  keyPress = false; //keypress processing flag
+  inputBlocked = false;
+  userInput = '';
+  let validCharacters;
   switch (activeLevel) {
     case 'Easy':
       validCharacters = '1234567890';
@@ -22,57 +24,69 @@ export function inputKeyboard(activeLevel, sequence) {
     default:
       validCharacters = '';
   }
+  setupEventListeners(validCharacters, sequence);
+  console.log(sequence);
+}
 
-  //event of pressing a key on a virtual keyboard
-  document.addEventListener('keydown', event => {
+let keydownHandler;
+let buttonClickHandler;
+function setupEventListeners(validCharacters, sequence) {
+  // Remove old event handlers
+  if (keydownHandler) {
+    document.removeEventListener('keydown', keydownHandler);
+  }
+  if (buttonClickHandler) {
+    const allButtons = document.querySelectorAll('.button');
+    allButtons.forEach(button => {
+      button.removeEventListener('click', buttonClickHandler);
+    });
+  }
+  // Add new event handlers
+  keydownHandler = event => {
     if (!keyPress && !inputBlocked) {
       keyPress = true;
       const key = event.key.toUpperCase();
       if (validCharacters.includes(key)) {
         console.log(key);
-        processInput(key);
+        processInput(key, sequence);
       }
     }
-  });
+  };
+
+  buttonClickHandler = event => {
+    const key = event.target.id;
+    processInput(key, sequence);
+  };
+
+  //event of pressing a key on a virtual keyboard
+  document.addEventListener('keydown', keydownHandler);
 
   //event of pressing a key on a physical keyboard
   const allButtons = document.querySelectorAll('.button');
   allButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const key = button.id;
-      processInput(key);
-    });
+    button.addEventListener('click', buttonClickHandler);
   });
+}
 
-  function processInput(input) {
-    const audioFalse = document.querySelector('.audioFalse');
-    const audioTrue = document.querySelector('.audioTrue');
+function processInput(input, sequence) {
+  const audioFalse = document.querySelector('.audioFalse');
+  const audioTrue = document.querySelector('.audioTrue');
+  const inputText = document.querySelector('input[placeholder]');
 
-    userInput += input;
-    inputText.value = userInput;
-    sequenceShow(input);
-    if (userInput === sequence) {
-      console.log('Correct sequence!');
-      audioTrue.play();
-      inputBlocked = true;
-      nextLevel();
-      /* setTimeout(() => {
-        userInput = '';
-        inputText.value = '';
-        return;
-      }, 1000);*/
-    }
-    if (userInput[userInput.length - 1] !== sequence[userInput.length - 1]) {
-      console.log('Incorrect sequence!');
-
-      audioFalse.play();
-      inputBlocked = true;
-      /*setTimeout(() => {
-        userInput = '';
-        inputText.value = '';
-        return;
-      }, 1000);*/
-    }
-    keyPress = false;
+  userInput += input;
+  inputText.value = userInput;
+  sequenceShow(input);
+  if (userInput === sequence) {
+    console.log('Correct sequence!');
+    audioTrue.play();
+    inputBlocked = true;
+    nextLevel();
   }
+  if (userInput[userInput.length - 1] !== sequence[userInput.length - 1]) {
+    console.log('Incorrect sequence!');
+
+    audioFalse.play();
+    inputBlocked = true;
+  }
+  keyPress = false;
 }
