@@ -1,5 +1,6 @@
 import { sequenceGeneration } from './sequence-show.js';
 import { sequenceShow } from './sequence-show.js';
+import { inputKeyboard } from './input-keyboard.js';
 
 export function startGame() {
   const start = document.getElementById('Start');
@@ -27,5 +28,6 @@ export function startGame() {
 
     let sequence = sequenceGeneration(activeLevel);
     sequenceShow(sequence);
+    inputKeyboard(activeLevel, sequence);
   });
 }
