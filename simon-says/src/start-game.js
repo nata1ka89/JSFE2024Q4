@@ -1,6 +1,8 @@
 import { sequenceGeneration } from './sequence-show.js';
 import { sequenceShow } from './sequence-show.js';
 import { inputKeyboard } from './input-keyboard.js';
+import { disabledButtons } from './control-buttons.js';
+import { enableButtons } from './control-buttons.js';
 
 export function startGame() {
   const start = document.getElementById('Start');
@@ -13,7 +15,7 @@ export function getActiveLevel() {
   return levelElement ? levelElement.id : 'Easy';
 }
 
-function prepareGame() {
+async function prepareGame() {
   const start = document.getElementById('Start');
   const repeat = document.getElementById('Repeat-the-sequence');
   const newGame = document.getElementById('New-game');
@@ -32,6 +34,8 @@ function prepareGame() {
   });
   const activeLevel = getActiveLevel();
   const sequence = sequenceGeneration(activeLevel);
-  sequenceShow(sequence);
+  disabledButtons();
+  await sequenceShow(sequence);
+  enableButtons();
   inputKeyboard(activeLevel, sequence);
 }

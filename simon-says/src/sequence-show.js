@@ -28,22 +28,23 @@ export function sequenceGeneration(activeLevel) {
 }
 
 export function sequenceShow(sequence) {
-  const allButtons = document.querySelectorAll('.button');
-  sequence.split('').forEach((char, index) => {
-    allButtons.forEach(button => {
-      button.classList.remove('button-active');
+  return new Promise(resolve => {
+    sequence.split('').forEach((char, index) => {
+      setTimeout(
+        () => {
+          const charId = document.getElementById(char);
+          if (charId) {
+            charId.classList.add('button-active');
+          }
+          setTimeout(() => {
+            charId.classList.remove('button-active');
+            if (index === sequence.length - 1) {
+              resolve();
+            }
+          }, 500);
+        },
+        500 * index * 2
+      );
     });
-    setTimeout(
-      () => {
-        const charId = document.getElementById(char);
-        if (charId) {
-          charId.classList.add('button-active');
-        }
-        setTimeout(() => {
-          charId.classList.remove('button-active');
-        }, 500);
-      },
-      500 * index * 2
-    );
   });
 }

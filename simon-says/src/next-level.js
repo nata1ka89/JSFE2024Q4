@@ -2,6 +2,8 @@ import { sequenceShow } from './sequence-show.js';
 import { sequenceGeneration } from './sequence-show.js';
 import { inputKeyboard } from './input-keyboard.js';
 import { getActiveLevel } from './start-game.js';
+import { disabledButtons } from './control-buttons.js';
+import { enableButtons } from './control-buttons.js';
 
 export function nextLevel() {
   const repeat = document.getElementById('Repeat-the-sequence');
@@ -11,7 +13,7 @@ export function nextLevel() {
   next.addEventListener('click', nextPress);
 }
 
-function nextPress() {
+async function nextPress() {
   const repeat = document.getElementById('Repeat-the-sequence');
   const next = document.getElementById('Next');
   repeat.classList.remove('hidden');
@@ -25,7 +27,8 @@ function nextPress() {
 
   const activeLevel = getActiveLevel();
   const sequence = sequenceGeneration(activeLevel);
-
-  sequenceShow(sequence);
+  disabledButtons();
+  await sequenceShow(sequence);
+  enableButtons();
   inputKeyboard(activeLevel, sequence);
 }

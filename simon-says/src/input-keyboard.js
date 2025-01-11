@@ -1,13 +1,14 @@
 //keypress event depending on difficulty level
 import { sequenceShow } from './sequence-show.js';
 import { nextLevel } from './next-level.js';
+import { enableButtons } from './control-buttons.js';
 
-let keyPress = false; //keypress processing flag
+/*let keyPress = false; //keypress processing flag*/
 let inputBlocked = true;
 let userInput = '';
 
 export function inputKeyboard(activeLevel, sequence) {
-  keyPress = false; //keypress processing flag
+  /*keyPress = false; //keypress processing flag*/
   inputBlocked = false;
   userInput = '';
   let validCharacters;
@@ -43,8 +44,8 @@ function setupEventListeners(validCharacters, sequence) {
   }
   // Add new event handlers
   keydownHandler = event => {
-    if (!keyPress && !inputBlocked) {
-      keyPress = true;
+    if (/*!keyPress &&*/ !inputBlocked) {
+      /*keyPress = true;*/
       const key = event.key.toUpperCase();
       if (validCharacters.includes(key)) {
         console.log(key);
@@ -70,14 +71,15 @@ function setupEventListeners(validCharacters, sequence) {
   });
 }
 
-function processInput(input, sequence) {
+async function processInput(input, sequence) {
   const audioFalse = document.querySelector('.audioFalse');
   const audioTrue = document.querySelector('.audioTrue');
   const inputText = document.querySelector('input[placeholder]');
 
   userInput += input;
   inputText.value = userInput;
-  sequenceShow(input);
+  await sequenceShow(input);
+  enableButtons();
   if (userInput === sequence) {
     console.log('Correct sequence!');
     audioTrue.play();
@@ -90,5 +92,5 @@ function processInput(input, sequence) {
     audioFalse.play();
     inputBlocked = true;
   }
-  keyPress = false;
+  /*keyPress = false;*/
 }
