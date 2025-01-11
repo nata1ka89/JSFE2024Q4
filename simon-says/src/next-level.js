@@ -17,6 +17,7 @@ async function nextPress() {
   const repeat = document.getElementById('Repeat-the-sequence');
   const next = document.getElementById('Next');
   repeat.classList.remove('hidden');
+  repeat.setAttribute('name', 'enable');
   next.classList.add('hidden');
   let roundElement = document.getElementById('round');
   let round = parseInt(roundElement.textContent);

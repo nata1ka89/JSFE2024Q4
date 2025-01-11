@@ -23,5 +23,9 @@ export function enableButtons() {
   newGame.disabled = false;
 
   const repeat = document.getElementById('Repeat-the-sequence');
-  repeat.disabled = false;
+  if (repeat.getAttribute('name') === 'disabled') {
+    repeat.disabled = true;
+  } else {
+    repeat.disabled = false;
+  }
 }

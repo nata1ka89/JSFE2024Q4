@@ -48,7 +48,6 @@ function setupEventListeners(validCharacters, sequence) {
       keyPress = true;
       const key = event.key.toUpperCase();
       if (validCharacters.includes(key)) {
-        console.log(key);
         processInput(key, sequence);
       } else {
         keyPress = false; // Reset flag if character is invalid
@@ -77,6 +76,7 @@ async function processInput(input, sequence) {
   const audioFalse = document.querySelector('.audioFalse');
   const audioTrue = document.querySelector('.audioTrue');
   const audioEnd = document.querySelector('.audioEnd');
+  const audioGameOver = document.querySelector('.audioGameOver');
   const inputText = document.querySelector('input[placeholder]');
 
   userInput += input;
@@ -100,9 +100,13 @@ async function processInput(input, sequence) {
   }
   if (userInput[userInput.length - 1] !== sequence[userInput.length - 1]) {
     console.log('Incorrect sequence!');
-
-    audioFalse.play();
     inputBlocked = true;
+    const repeat = document.getElementById('Repeat-the-sequence');
+    if (repeat.getAttribute('name') === 'disabled') {
+      audioGameOver.play();
+    } else {
+      audioFalse.play();
+    }
   }
   keyPress = false;
 }

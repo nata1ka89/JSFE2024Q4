@@ -1,11 +1,13 @@
 import { startGame } from './src/start-game.js';
 import { restartGame } from './src/new-game.js';
 import { disabledButtons } from './src/control-buttons.js';
+import { repeatSequence } from './src/repeat-sequence.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   startGame();
   restartGame();
   disabledButtons();
+  repeatSequence();
 });
 
 const bodyElement = document.body;
@@ -210,6 +212,11 @@ const audioEnd = document.createElement('audio');
 audioEnd.src = './audio/end.mp3';
 audioEnd.classList.add('audioEnd');
 
+const audioGameOver = document.createElement('audio');
+audioGameOver.src = './audio/gameOver.mp3';
+audioGameOver.classList.add('audioGameOver');
+
 main.appendChild(audioTrue);
 main.appendChild(audioFalse);
 main.appendChild(audioEnd);
+main.appendChild(audioGameOver);

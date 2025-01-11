@@ -14,6 +14,7 @@ export function restartGame() {
   newGame.addEventListener('click', () => {
     start.classList.remove('hidden');
     repeat.classList.add('hidden');
+    repeat.setAttribute('name', 'enable');
     newGame.classList.add('hidden');
     next.classList.add('hidden');
     containerRound.classList.add('hidden');

@@ -1,3 +1,5 @@
+let currentSequence = '';
+
 export function sequenceGeneration(activeLevel) {
   let sequence = '';
   let characters;
@@ -24,7 +26,12 @@ export function sequenceGeneration(activeLevel) {
       Math.floor(Math.random() * characters.length)
     );
   }
+  currentSequence = sequence;
   return sequence;
+}
+
+export function saveSequence() {
+  return currentSequence;
 }
 
 export function sequenceShow(sequence) {
@@ -41,9 +48,9 @@ export function sequenceShow(sequence) {
             if (index === sequence.length - 1) {
               resolve();
             }
-          }, 500);
+          }, 300);
         },
-        500 * index * 2
+        300 * index * 2
       );
     });
   });
