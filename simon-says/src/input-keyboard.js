@@ -3,7 +3,7 @@ import { sequenceShow } from './sequence-show.js';
 import { nextLevel } from './next-level.js';
 
 let keyPress = false; //keypress processing flag
-let inputBlocked = false;
+let inputBlocked = true;
 let userInput = '';
 
 export function inputKeyboard(activeLevel, sequence) {
@@ -54,14 +54,16 @@ function setupEventListeners(validCharacters, sequence) {
   };
 
   buttonClickHandler = event => {
-    const key = event.target.id;
-    processInput(key, sequence);
+    if (!inputBlocked) {
+      const key = event.target.id;
+      processInput(key, sequence);
+    }
   };
 
-  //event of pressing a key on a virtual keyboard
+  //event of pressing a key on a physical keyboard
   document.addEventListener('keydown', keydownHandler);
 
-  //event of pressing a key on a physical keyboard
+  //event of pressing a key on a virtual keyboard
   const allButtons = document.querySelectorAll('.button');
   allButtons.forEach(button => {
     button.addEventListener('click', buttonClickHandler);
