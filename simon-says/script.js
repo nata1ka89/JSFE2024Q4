@@ -1,7 +1,11 @@
 import { startGame } from './src/start-game.js';
+import { restartGame } from './src/new-game.js';
+import { disabledButtons } from './src/control-buttons.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   startGame();
+  restartGame();
+  disabledButtons();
 });
 
 const bodyElement = document.body;

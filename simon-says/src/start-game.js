@@ -15,7 +15,7 @@ export function getActiveLevel() {
   return levelElement ? levelElement.id : 'Easy';
 }
 
-async function prepareGame() {
+export async function prepareGame() {
   const start = document.getElementById('Start');
   const repeat = document.getElementById('Repeat-the-sequence');
   const newGame = document.getElementById('New-game');
