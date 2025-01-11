@@ -193,7 +193,7 @@ tab.forEach(element => {
     }
   });
 });
-
+// add audio files
 const audioFalse = document.createElement('audio');
 audioFalse.src = './audio/false.mp3';
 audioFalse.classList.add('audioFalse');
@@ -202,5 +202,10 @@ const audioTrue = document.createElement('audio');
 audioTrue.src = './audio/true.mp3';
 audioTrue.classList.add('audioTrue');
 
+const audioEnd = document.createElement('audio');
+audioEnd.src = './audio/end.mp3';
+audioEnd.classList.add('audioEnd');
+
 main.appendChild(audioTrue);
 main.appendChild(audioFalse);
+main.appendChild(audioEnd);

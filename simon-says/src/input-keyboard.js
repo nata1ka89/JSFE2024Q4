@@ -3,12 +3,12 @@ import { sequenceShow } from './sequence-show.js';
 import { nextLevel } from './next-level.js';
 import { enableButtons } from './control-buttons.js';
 
-/*let keyPress = false; //keypress processing flag*/
+let keyPress = false; //keypress processing flag
 let inputBlocked = true;
 let userInput = '';
 
 export function inputKeyboard(activeLevel, sequence) {
-  /*keyPress = false; //keypress processing flag*/
+  keyPress = false; //keypress processing flag
   inputBlocked = false;
   userInput = '';
   let validCharacters;
@@ -44,12 +44,14 @@ function setupEventListeners(validCharacters, sequence) {
   }
   // Add new event handlers
   keydownHandler = event => {
-    if (/*!keyPress &&*/ !inputBlocked) {
-      /*keyPress = true;*/
+    if (!keyPress && !inputBlocked) {
+      keyPress = true;
       const key = event.key.toUpperCase();
       if (validCharacters.includes(key)) {
         console.log(key);
         processInput(key, sequence);
+      } else {
+        keyPress = false; // Reset flag if character is invalid
       }
     }
   };
@@ -74,6 +76,7 @@ function setupEventListeners(validCharacters, sequence) {
 async function processInput(input, sequence) {
   const audioFalse = document.querySelector('.audioFalse');
   const audioTrue = document.querySelector('.audioTrue');
+  const audioEnd = document.querySelector('.audioEnd');
   const inputText = document.querySelector('input[placeholder]');
 
   userInput += input;
@@ -84,7 +87,16 @@ async function processInput(input, sequence) {
     console.log('Correct sequence!');
     audioTrue.play();
     inputBlocked = true;
-    nextLevel();
+
+    let roundElement = document.getElementById('round');
+    let round = parseInt(roundElement.textContent);
+    if (round < 5) {
+      nextLevel();
+    } else {
+      const repeat = document.getElementById('Repeat-the-sequence');
+      repeat.disabled = true;
+      audioEnd.play();
+    }
   }
   if (userInput[userInput.length - 1] !== sequence[userInput.length - 1]) {
     console.log('Incorrect sequence!');
@@ -92,5 +104,5 @@ async function processInput(input, sequence) {
     audioFalse.play();
     inputBlocked = true;
   }
-  /*keyPress = false;*/
+  keyPress = false;
 }
