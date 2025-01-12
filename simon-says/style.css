@@ -1,0 +1,122 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  background: url(https://cdn.pixabay.com/photo/2015/05/06/03/56/blue-754864_1280.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 80px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 80px;
+}
+
+span {
+  font-family: 'Montserrat';
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding-left: 15px;
+}
+
+.container-level,
+.container-round,
+.container-game {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.container-game {
+  padding-top: 140px;
+}
+
+input {
+  border-radius: 10vw;
+  padding: 8px;
+  width: 320px;
+  margin: 20px;
+  border-color: #fdfdfd00;
+  padding: 8px;
+}
+
+.keyboard-num {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 25px 0px 15px 0px;
+  gap: 5px;
+}
+
+.keyboard-letter {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-bottom: 15px;
+  gap: 5px;
+}
+
+.button {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.button-level {
+  font-family: 'Montserrat';
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  width: 80px;
+  height: 40px;
+  border-radius: 0.5vw;
+  border-color: #fdfdfd00;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
+  background-color: #d2d2d2;
+}
+
+.button-level:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.button-game {
+  font-family: 'Montserrat';
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  width: 230px;
+  height: 40px;
+  border-radius: 0.5vw;
+  border-color: #fdfdfd00;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
+  background-color: #d2d2d2;
+}
+
+.button-game :hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.button-active {
+  background-color: #fdb22b;
+}
+.hidden {
+  display: none;
+}
