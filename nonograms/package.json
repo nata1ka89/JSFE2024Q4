@@ -1,6 +1,7 @@
 {
   "name": "nonograms",
   "version": "1.0.0",
+  "type": "module",
   "main": "test.js",
   "scripts": {
   "lint": "eslint .",

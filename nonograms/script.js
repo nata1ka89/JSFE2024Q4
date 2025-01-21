@@ -29,20 +29,45 @@ const container = createElement({
   parent: bodyElement,
   classes: ['container'],
 });
+const containerTop = createElement({
+  tag: 'div',
+  parent: container,
+  classes: ['container-top'],
+});
+const containerBottom = createElement({
+  tag: 'div',
+  parent: container,
+  classes: ['container-bottom'],
+});
+const topNumber = createElement({
+  tag: 'div',
+  parent: containerTop,
+  classes: ['top-number'],
+});
+const leftNumber = createElement({
+  tag: 'div',
+  parent: containerBottom,
+  classes: ['left-number'],
+});
+const field = createElement({
+  tag: 'div',
+  parent: containerBottom,
+  classes: ['field'],
+});
 
 const tableData = [
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
+  [0, 1, 1, 0, 0],
+  [1, 1, 0, 0, 1],
+  [1, 1, 1, 1, 0],
+  [0, 1, 1, 0, 0],
+  [1, 0, 0, 1, 0],
 ];
 
-function createCeil() {
+function createCell() {
   tableData.forEach((row) => {
     const rowElement = createElement({
       tag: 'div',
-      parent: container,
+      parent: field,
       classes: ['row'],
     });
 
@@ -56,7 +81,10 @@ function createCeil() {
   });
 }
 
-createCeil();
+
+createTopClues();
+createCell();
+createLeftClues();
 
 const gameField = document.querySelectorAll('.cell');
 

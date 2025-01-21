@@ -11,6 +11,33 @@ body {
   justify-content: center;
 }
 
+.container-top {
+  display: flex;
+  justify-content: center;
+}
+
+.container-bottom {
+  display: flex;
+  justify-content: center;
+}
+
+.top-number {
+  display: flex;
+  justify-content: center;
+}
+
+.left-number {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .row {
   display: flex;
   justify-content: center;
@@ -26,4 +53,31 @@ body {
 
 .black-cell {
   background-color: black;
+}
+
+.row-number {
+  display: flex;
+  justify-content: center;
+}
+
+.row-number-top {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cell-number {
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  background-color: grey;
+  cursor: pointer;
+}
+
+.empty-square {
+  width: 42px;
+  height: 42px;
+  border: 1px solid black;
+  background-color: grey;
+  cursor: pointer;
 }
