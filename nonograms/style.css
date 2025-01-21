@@ -1,0 +1,29 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+.cell {
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  background-color: white;
+  cursor: pointer;
+}
+
+.black-cell {
+  background-color: black;
+}
