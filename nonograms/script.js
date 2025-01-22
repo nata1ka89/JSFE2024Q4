@@ -1,3 +1,5 @@
+import { countCluesColumn, countCluesRow } from './src/count-clues.js';
+
 const bodyElement = document.body;
 
 function createElement(options) {
@@ -81,10 +83,55 @@ function createCell() {
   });
 }
 
+const arrCluesRow = countCluesRow(tableData);
+const arrCluesColumn = countCluesColumn(tableData);
 
-createTopClues();
+function createLeftClues() {
+  arrCluesColumn.forEach((row) => {
+    const rowElement = createElement({
+      tag: 'div',
+      parent: leftNumber,
+      classes: ['row-number'],
+    });
+
+    row.forEach((cell) => {
+      const cellElement = createElement({
+        tag: 'div',
+        parent: rowElement,
+        classes: ['cell-number'],
+        text: cell,
+      });
+    });
+  });
+}
+
+function createTopClues() {
+  const emptyElement = createElement({
+    tag: 'div',
+    parent: topNumber,
+    classes: ['empty-square'],
+  });
+  arrCluesRow.forEach((row) => {
+    const rowElement = createElement({
+      tag: 'div',
+      parent: topNumber,
+      classes: ['row-number-top'],
+    });
+
+    row.forEach((cell) => {
+      const cellElement = createElement({
+        tag: 'div',
+        parent: rowElement,
+        classes: ['cell-number'],
+        text: cell,
+      });
+    });
+  });
+}
+
+createTopClues(arrCluesRow);
 createCell();
-createLeftClues();
+createLeftClues(arrCluesColumn);
 
 const gameField = document.querySelectorAll('.cell');
 

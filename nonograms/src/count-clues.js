@@ -1,7 +1,27 @@
+// сделать длину массивов подсказок одинаковой
+
+function Filling(data) {
+  let length = 0;
+  data.forEach((element) => {
+    if (element.length > length) {
+      length = element.length;
+    }
+  });
+
+  data.forEach((element) => {
+    if (element.length < length) {
+      while (element.length !== length) {
+        element.unshift(null);
+      }
+    }
+  });
+  return data;
+}
+
 // подсчет черных клеток для подсказок слева
 
 export function countCluesColumn(data) {
-  let arrColumn = [];
+  const arrColumn = [];
   data.forEach((row) => {
     const arr = [];
     let count = 0;
@@ -19,17 +39,18 @@ export function countCluesColumn(data) {
     }
     arrColumn.push(arr);
   });
-  Filling(arrColumn)
+  Filling(arrColumn);
+  return arrColumn;
 }
 
 // подсчет черных клеток для подсказок вверху
 
 export function countCluesRow(data) {
-  let arrRow = [];
-  for (let j = 0; j < data[0].length; j++) {
+  const arrRow = [];
+  for (let j = 0; j < data[0].length; j += 1) {
     const arr = [];
     let count = 0;
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i += 1) {
       if (data[i][j] === 1) {
         count += 1;
       } else if (count > 0) {
@@ -41,26 +62,7 @@ export function countCluesRow(data) {
       arr.push(count);
     }
     arrRow.push(arr);
-
   }
   Filling(arrRow);
-}
-
-// сделать длину массивов подсказок одинаковой
-
-function Filling(data) {
-  let length = 0;
-  data.forEach(element => {
-    if (element.length > length) {
-      length = element.length
-    }
-  });
-
-  data.forEach(element => {
-    if (element.length < length) {
-      while (element.length !== length) {
-        element.unshift(null);
-      }
-    }
-  });
+  return arrRow;
 }
