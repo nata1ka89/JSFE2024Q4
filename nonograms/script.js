@@ -1,4 +1,5 @@
 import { countCluesColumn, countCluesRow } from './src/count-clues.js';
+import createGameArray from './src/game-end.js';
 
 const bodyElement = document.body;
 
@@ -133,10 +134,4 @@ createTopClues(arrCluesRow);
 createCell();
 createLeftClues(arrCluesColumn);
 
-const gameField = document.querySelectorAll('.cell');
-
-gameField.forEach((element) => {
-  element.addEventListener('click', () => {
-    element.classList.toggle('black-cell');
-  });
-});
+createGameArray();
