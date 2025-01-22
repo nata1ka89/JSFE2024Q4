@@ -26,7 +26,15 @@ function createElement(options) {
   return element;
 }
 
-// create table
+// создание елементов игры
+
+export const p = createElement({
+  tag: 'p',
+  parent: bodyElement,
+  classes: ['p'],
+  text: '',
+});
+
 const container = createElement({
   tag: 'div',
   parent: bodyElement,
@@ -58,7 +66,7 @@ const field = createElement({
   classes: ['field'],
 });
 
-const tableData = [
+export const tableData = [
   [0, 1, 1, 0, 0],
   [1, 1, 0, 0, 1],
   [1, 1, 1, 1, 0],
@@ -133,5 +141,4 @@ function createTopClues() {
 createTopClues(arrCluesRow);
 createCell();
 createLeftClues(arrCluesColumn);
-
 createGameArray();
