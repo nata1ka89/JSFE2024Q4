@@ -49,6 +49,14 @@ export default function createGameArray() {
           p.innerText = 'Great! You have solved the nonogram!';
         }
       });
+      element.addEventListener('contextmenu', (event) => {
+        event.preventDefault();
+        const close = element.querySelector('.close');
+        close.classList.toggle('hidden');
+        if (element.classList.contains('black-cell')) {
+          element.classList.remove('black-cell')
+        }
+      });
     });
   });
 }

@@ -107,3 +107,13 @@ body {
   min-height: 20px;
   font-size: 20px;
 }
+
+.close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hidden {
+  display: none;
+}

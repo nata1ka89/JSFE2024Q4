@@ -88,6 +88,12 @@ function createCell() {
         parent: rowElement,
         classes: ['cell'],
       });
+      const spanElement = createElement({
+        tag: 'span',
+        parent: cellElement,
+        classes: ['close', 'hidden'],
+        text: '✖'
+      });
     });
   });
 }
