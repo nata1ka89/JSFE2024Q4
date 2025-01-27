@@ -43,4 +43,34 @@ export default function createHeader() {
       element.classList.add('button-active');
     });
   });
+
+  // создание списка картинок
+
+  const divPictures = createElement({
+    tag: 'div',
+    parent: header,
+    classes: ['container-picture'],
+
+  });
+  const selectPictures = createElement({
+    tag: 'select',
+    parent: divPictures,
+    classes: ['select'],
+
+  });
+
+  const pictures = ['Choose picture', 'Stroller', 'Camel', 'Fan', 'Dinosaur', 'Heart'];
+
+  pictures.forEach((picture) => {
+    const pictureElement = createElement({
+      tag: 'option',
+      parent: selectPictures,
+      text: picture,
+      value: picture,
+    });
+
+    if (picture === 'Choose picture') {
+      pictureElement.setAttribute('disabled', '');
+    }
+  });
 }

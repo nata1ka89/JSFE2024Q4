@@ -1,6 +1,6 @@
 export default function createElement(options) {
   const {
-    tag = '', text = '', parent, classes = [], id = '',
+    tag = '', text = '', parent, classes = [], id = '', value = '',
   } = options;
 
   const element = document.createElement(tag);
@@ -12,6 +12,9 @@ export default function createElement(options) {
 
   if (id !== '') {
     element.id = id;
+  }
+  if (value !== '') {
+    element.value = value;
   }
 
   if (parent != null) {
