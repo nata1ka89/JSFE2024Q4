@@ -1,14 +1,6 @@
 import { stroller } from './template-5x5.js';
-import createElement from './createElement.js';
+import createElement from './create-element.js';
 
-const bodyElement = document.body;
-
-const p = createElement({
-  tag: 'p',
-  parent: bodyElement,
-  classes: ['p'],
-  text: '',
-});
 // сравнение массивов
 function compareArray(data, useArr) {
   let result = false;
@@ -49,6 +41,15 @@ export default function createGameArray() {
       return useArr;
     }
     // при каждом клике проверяет соответствует ли текущее решение картинке
+    const main = document.querySelector('body > main');
+
+    const p = createElement({
+      tag: 'span',
+      parent: main,
+      classes: ['text'],
+      text: '',
+    });
+
     gameField.forEach((element) => {
       element.addEventListener('click', () => {
         element.classList.toggle('black-cell');

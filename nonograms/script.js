@@ -1,15 +1,22 @@
 import { countCluesColumn, countCluesRow } from './src/count-clues.js';
 import createGameArray from './src/game-end.js';
 import { stroller } from './src/template-5x5.js';
-import createElement from './src/createElement.js';
+import createElement from './src/create-element.js';
+import createHeader from './src/create-header.js';
 
 const bodyElement = document.body;
+
+// Main
+const main = createElement({
+  tag: 'main',
+  parent: bodyElement,
+});
 
 // создание елементов игры
 
 const container = createElement({
   tag: 'div',
-  parent: bodyElement,
+  parent: main,
   classes: ['container'],
 });
 const containerTop = createElement({
@@ -112,3 +119,4 @@ createTopClues(arrCluesRow);
 createCell();
 createLeftClues(arrCluesColumn);
 createGameArray();
+createHeader();

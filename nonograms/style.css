@@ -7,12 +7,29 @@ body {
   margin: 0;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 80px;
+  gap: 20px;
+}
+
+
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
+.text {
+  min-height: 20px;
+  font-size: 20px;
+}
+
+/*подсказки верхние и левые*/
 
 .container-top {
   display: flex;
@@ -35,37 +52,6 @@ body {
   flex-direction: column;
   justify-content: center;
   border-right: 2px solid black;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.row {
-  display: flex;
-  justify-content: center;
-}
-
-.row:nth-child(5n + 5) {
-  border-bottom: 2px solid black;
-}
-
-.cell {
-  width: 20px;
-  height: 20px;
-  border: 1px solid black;
-  background-color: white;
-  cursor: pointer;
-}
-
-.cell:nth-child(5n + 5) {
-  border-right: 2px solid black;
-}
-
-.black-cell {
-  background-color: black;
 }
 
 .row-number {
@@ -103,9 +89,37 @@ body {
   border-right: 2px solid black;
 }
 
-.p {
-  min-height: 20px;
-  font-size: 20px;
+/*поле игры*/
+
+.field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+.row:nth-child(5n + 5) {
+  border-bottom: 2px solid black;
+}
+
+.cell {
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  background-color: white;
+  cursor: pointer;
+}
+
+.cell:nth-child(5n + 5) {
+  border-right: 2px solid black;
+}
+
+.black-cell {
+  background-color: black;
 }
 
 .close {
@@ -116,4 +130,42 @@ body {
 
 .hidden {
   display: none;
+}
+
+/*Header*/
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 80px;
+}
+
+.container-level {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.button-level {
+  font-family: 'Montserrat';
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  width: 80px;
+  height: 40px;
+  border-radius: 0.5vw;
+  border-color: #fdfdfd00;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
+  background-color: #d2d2d2;
+}
+
+.button-level:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.button-active {
+  background-color: #fdb22b;
 }
