@@ -1,5 +1,14 @@
-import { tableData, p } from '../script.js';
+import { stroller } from './template-5x5.js';
+import createElement from './createElement.js';
 
+const bodyElement = document.body;
+
+const p = createElement({
+  tag: 'p',
+  parent: bodyElement,
+  classes: ['p'],
+  text: '',
+});
 // сравнение массивов
 function compareArray(data, useArr) {
   let result = false;
@@ -44,7 +53,7 @@ export default function createGameArray() {
       element.addEventListener('click', () => {
         element.classList.toggle('black-cell');
         const useArr = fillGameArray();
-        const result = compareArray(tableData, useArr);
+        const result = compareArray(stroller, useArr);
         if (result === true) {
           p.innerText = 'Great! You have solved the nonogram!';
         }
@@ -54,7 +63,7 @@ export default function createGameArray() {
         const close = element.querySelector('.close');
         close.classList.toggle('hidden');
         if (element.classList.contains('black-cell')) {
-          element.classList.remove('black-cell')
+          element.classList.remove('black-cell');
         }
       });
     });

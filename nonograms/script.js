@@ -1,39 +1,11 @@
 import { countCluesColumn, countCluesRow } from './src/count-clues.js';
 import createGameArray from './src/game-end.js';
+import { stroller } from './src/template-5x5.js';
+import createElement from './src/createElement.js';
 
 const bodyElement = document.body;
 
-function createElement(options) {
-  const {
-    tag = '', text = '', parent, classes = [], id = '',
-  } = options;
-
-  const element = document.createElement(tag);
-  element.textContent = text;
-
-  if (classes.length > 0) {
-    element.classList.add(...classes);
-  }
-
-  if (id !== '') {
-    element.id = id;
-  }
-
-  if (parent != null) {
-    parent.appendChild(element);
-  }
-
-  return element;
-}
-
 // создание елементов игры
-
-export const p = createElement({
-  tag: 'p',
-  parent: bodyElement,
-  classes: ['p'],
-  text: '',
-});
 
 const container = createElement({
   tag: 'div',
@@ -66,40 +38,32 @@ const field = createElement({
   classes: ['field'],
 });
 
-export const tableData = [
-  [0, 1, 1, 0, 0],
-  [1, 1, 0, 0, 1],
-  [1, 1, 1, 1, 0],
-  [0, 1, 1, 0, 0],
-  [1, 0, 0, 1, 0],
-];
-
 function createCell() {
-  tableData.forEach((row) => {
+  stroller.forEach((row) => {
     const rowElement = createElement({
       tag: 'div',
       parent: field,
       classes: ['row'],
     });
 
-    row.forEach((cell) => {
+    row.forEach(() => {
       const cellElement = createElement({
         tag: 'div',
         parent: rowElement,
         classes: ['cell'],
       });
-      const spanElement = createElement({
+      createElement({
         tag: 'span',
         parent: cellElement,
         classes: ['close', 'hidden'],
-        text: '✖'
+        text: '✖',
       });
     });
   });
 }
 
-const arrCluesRow = countCluesRow(tableData);
-const arrCluesColumn = countCluesColumn(tableData);
+const arrCluesRow = countCluesRow(stroller);
+const arrCluesColumn = countCluesColumn(stroller);
 
 function createLeftClues() {
   arrCluesColumn.forEach((row) => {
@@ -110,7 +74,7 @@ function createLeftClues() {
     });
 
     row.forEach((cell) => {
-      const cellElement = createElement({
+      createElement({
         tag: 'div',
         parent: rowElement,
         classes: ['cell-number'],
@@ -121,7 +85,7 @@ function createLeftClues() {
 }
 
 function createTopClues() {
-  const emptyElement = createElement({
+  createElement({
     tag: 'div',
     parent: topNumber,
     classes: ['empty-square'],
@@ -134,7 +98,7 @@ function createTopClues() {
     });
 
     row.forEach((cell) => {
-      const cellElement = createElement({
+      createElement({
         tag: 'div',
         parent: rowElement,
         classes: ['cell-number'],
