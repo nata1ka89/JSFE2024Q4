@@ -59,18 +59,14 @@ export default function createHeader() {
 
   });
 
-  const pictures = ['Choose picture', 'Stroller', 'Camel', 'Fan', 'Dinosaur', 'Heart'];
+  const pictures = ['Stroller', 'Camel', 'Fan', 'Dinosaur', 'Heart'];
 
   pictures.forEach((picture) => {
-    const pictureElement = createElement({
+    createElement({
       tag: 'option',
       parent: selectPictures,
       text: picture,
       value: picture,
     });
-
-    if (picture === 'Choose picture') {
-      pictureElement.setAttribute('disabled', '');
-    }
   });
 }

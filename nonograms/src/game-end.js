@@ -1,5 +1,5 @@
-import { stroller } from './template-5x5.js';
-import createElement from './create-element.js';
+import { template5 } from './template-5x5.js';
+/* import createElement from './create-element.js'; */
 
 // сравнение массивов
 function compareArray(data, useArr) {
@@ -20,53 +20,46 @@ function compareArray(data, useArr) {
   return result;
 }
 
-export default function createGameArray() {
-  document.addEventListener('DOMContentLoaded', () => {
-    const gameField = document.querySelectorAll('.cell');
-    // создать массив ответов пользователя
-    function fillGameArray() {
-      const useArr = [];
-      let arr = [];
-      gameField.forEach((element) => {
-        if (element.classList.contains('black-cell')) {
-          arr.push(1);
-        } else {
-          arr.push(0);
-        }
-        if (arr.length === 5) {
-          useArr.push(arr);
-          arr = [];
-        }
-      });
-      return useArr;
+// создать массив ответов пользователя
+export function createGameArray() {
+  const gameField = document.querySelectorAll('.cell');
+  const useArr = [];
+  let arr = [];
+  gameField.forEach((element) => {
+    if (element.classList.contains('black-cell')) {
+      arr.push(1);
+    } else {
+      arr.push(0);
     }
-    // при каждом клике проверяет соответствует ли текущее решение картинке
-    const main = document.querySelector('body > main');
-
-    const p = createElement({
-      tag: 'span',
-      parent: main,
-      classes: ['text'],
-      text: '',
+    if (arr.length === 5) {
+      useArr.push(arr);
+      arr = [];
+    }
+  });
+  return useArr;
+}
+// при каждом клике проверяет соответствует ли текущее решение картинке
+export function gameEnd() {
+  const span = document.querySelector('.text');
+  const gameField = document.querySelectorAll('.cell');
+  gameField.forEach((element) => {
+    element.addEventListener('click', () => {
+      const select = document.querySelector('.select');
+      const nameTemplate = select.value;
+      element.classList.toggle('black-cell');
+      const useArr = createGameArray();
+      const result = compareArray(template5[nameTemplate], useArr);
+      if (result === true) {
+        span.innerText = 'Great! You have solved the nonogram!';
+      }
     });
-
-    gameField.forEach((element) => {
-      element.addEventListener('click', () => {
-        element.classList.toggle('black-cell');
-        const useArr = fillGameArray();
-        const result = compareArray(stroller, useArr);
-        if (result === true) {
-          p.innerText = 'Great! You have solved the nonogram!';
-        }
-      });
-      element.addEventListener('contextmenu', (event) => {
-        event.preventDefault();
-        const close = element.querySelector('.close');
-        close.classList.toggle('hidden');
-        if (element.classList.contains('black-cell')) {
-          element.classList.remove('black-cell');
-        }
-      });
+    element.addEventListener('contextmenu', (event) => {
+      event.preventDefault();
+      const close = element.querySelector('.close');
+      close.classList.toggle('hidden');
+      if (element.classList.contains('black-cell')) {
+        element.classList.remove('black-cell');
+      }
     });
   });
 }

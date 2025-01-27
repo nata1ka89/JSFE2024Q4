@@ -1,12 +1,12 @@
 // сделать длину массивов подсказок одинаковой
 
 function Filling(data) {
-  let length = 0;
-  data.forEach((element) => {
+  const length = 2;
+  /* data.forEach((element) => {
     if (element.length > length) {
       length = element.length;
     }
-  });
+  }); */
 
   data.forEach((element) => {
     if (element.length < length) {

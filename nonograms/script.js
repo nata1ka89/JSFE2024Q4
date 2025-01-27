@@ -1,6 +1,6 @@
 import { countCluesColumn, countCluesRow } from './src/count-clues.js';
-import createGameArray from './src/game-end.js';
-import { stroller } from './src/template-5x5.js';
+import { createGameArray, gameEnd } from './src/game-end.js';
+import { template5 } from './src/template-5x5.js';
 import createElement from './src/create-element.js';
 import createHeader from './src/create-header.js';
 
@@ -13,6 +13,13 @@ const main = createElement({
 });
 
 // создание елементов игры
+
+createElement({
+  tag: 'span',
+  parent: main,
+  classes: ['text'],
+  text: '',
+});
 
 const container = createElement({
   tag: 'div',
@@ -46,7 +53,7 @@ const field = createElement({
 });
 
 function createCell() {
-  stroller.forEach((row) => {
+  template5.Stroller.forEach((row) => {
     const rowElement = createElement({
       tag: 'div',
       parent: field,
@@ -69,11 +76,9 @@ function createCell() {
   });
 }
 
-const arrCluesRow = countCluesRow(stroller);
-const arrCluesColumn = countCluesColumn(stroller);
-
-function createLeftClues() {
-  arrCluesColumn.forEach((row) => {
+function createLeftClues(data) {
+  leftNumber.innerHTML = '';
+  data.forEach((row) => {
     const rowElement = createElement({
       tag: 'div',
       parent: leftNumber,
@@ -91,13 +96,14 @@ function createLeftClues() {
   });
 }
 
-function createTopClues() {
+function createTopClues(data) {
+  topNumber.innerHTML = '';
   createElement({
     tag: 'div',
     parent: topNumber,
     classes: ['empty-square'],
   });
-  arrCluesRow.forEach((row) => {
+  data.forEach((row) => {
     const rowElement = createElement({
       tag: 'div',
       parent: topNumber,
@@ -114,9 +120,26 @@ function createTopClues() {
     });
   });
 }
+document.addEventListener('DOMContentLoaded', () => {
+  let arrCluesRow = countCluesRow(template5.Stroller);
+  let arrCluesColumn = countCluesColumn(template5.Stroller);
+  createTopClues(arrCluesRow);
+  createCell();
+  createLeftClues(arrCluesColumn);
+  createGameArray();
+  createHeader();
 
-createTopClues(arrCluesRow);
-createCell();
-createLeftClues(arrCluesColumn);
-createGameArray();
-createHeader();
+  // выбор картинки
+
+  const select = document.querySelector('.select');
+  select.addEventListener('change', () => {
+    const nameTemplate = select.value;
+
+    arrCluesRow = countCluesRow(template5[nameTemplate]);
+    arrCluesColumn = countCluesColumn(template5[nameTemplate]);
+    createTopClues(arrCluesRow);
+    createLeftClues(arrCluesColumn);
+  });
+
+  gameEnd();
+});
