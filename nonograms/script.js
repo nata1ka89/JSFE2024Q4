@@ -4,6 +4,7 @@ import { template5 } from './src/template-5x5.js';
 import createElement from './src/create-element.js';
 import createHeader from './src/create-header.js';
 import resetGame from './src/reset-game.js';
+import { startWatch } from './src/stop-watch.js';
 
 const bodyElement = document.body;
 
@@ -122,6 +123,13 @@ function createTopClues(data) {
   });
 }
 
+createElement({
+  tag: 'span',
+  parent: main,
+  classes: ['watch'],
+  text: '00:00',
+});
+
 function createGameButton() {
   // create Game button
   const divGame = createElement({
@@ -174,4 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
   reset.addEventListener('click', () => {
     resetGame();
   });
+
+  const start = document.querySelector('.field');
+  start.addEventListener('click', startWatch);
 });

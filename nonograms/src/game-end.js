@@ -1,5 +1,5 @@
 import { template5 } from './template-5x5.js';
-/* import createElement from './create-element.js'; */
+import { stopWatch } from './stop-watch.js';
 
 // сравнение массивов
 function compareArray(data, useArr) {
@@ -50,7 +50,13 @@ export function gameEnd() {
       const useArr = createGameArray();
       const result = compareArray(template5[nameTemplate], useArr);
       if (result === true) {
-        span.innerText = 'Great! You have solved the nonogram!';
+        stopWatch();
+        const watch = document.querySelector('.watch ');
+        let timeArray = watch.textContent.split(':');
+        let sumSec = parseInt(timeArray[0] * 60) + parseInt(timeArray[1])
+        console.log(sumSec);
+
+        span.innerText = `Great! You have solved the nonogram in ${sumSec} seconds!`;
       }
     });
     element.addEventListener('contextmenu', (event) => {

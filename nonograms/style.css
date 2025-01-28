@@ -192,7 +192,7 @@ header {
 .container-button {
   display: flex;
   justify-content: center;
-  padding: 140px 20px 0px 20px;
+  padding: 70px 20px 0px 20px;
   gap: 20px;
   flex-wrap: wrap;
 }
@@ -214,4 +214,12 @@ header {
 
 .button-game:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/*секундомер*/
+
+.watch {
+  min-height: 30px;
+  font-size: 20px;
+  padding-top: 40px;
 }
