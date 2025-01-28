@@ -9,10 +9,10 @@ body {
 
 main {
   display: flex;
+  width: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 80px;
   gap: 20px;
 }
 
@@ -25,7 +25,7 @@ main {
 }
 
 .text {
-  min-height: 20px;
+  min-height: 30px;
   font-size: 20px;
 }
 
@@ -168,7 +168,7 @@ header {
 }
 
 .button-active {
-  background-color: #fdb22b;
+  background-color: #5b9bd5;
 }
 
 .container-picture {
@@ -181,8 +181,37 @@ header {
   border: 1px solid #ccc;
   padding: 5px 30px 5px 10px;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .select:focus {
   border-color: #5b9bd5;
+}
+
+/*кнопки Reset и Save*/
+.container-button {
+  display: flex;
+  justify-content: center;
+  padding: 140px 20px 0px 20px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.button-game {
+  font-family: 'Montserrat';
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  width: 230px;
+  height: 40px;
+  border-radius: 0.5vw;
+  border-color: #fdfdfd00;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
+  background-color: #5b9bd5;
+}
+
+.button-game:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }

@@ -3,6 +3,7 @@ import { createGameArray, gameEnd } from './src/game-end.js';
 import { template5 } from './src/template-5x5.js';
 import createElement from './src/create-element.js';
 import createHeader from './src/create-header.js';
+import resetGame from './src/reset-game.js';
 
 const bodyElement = document.body;
 
@@ -120,6 +121,29 @@ function createTopClues(data) {
     });
   });
 }
+
+function createGameButton() {
+  // create Game button
+  const divGame = createElement({
+    tag: 'div',
+    classes: ['container-button'],
+    parent: main,
+  });
+
+  const buttonsGame = ['Continue last game', 'Save game', 'Reset game'];
+
+  buttonsGame.forEach((button) => {
+    const buttonId = button.replace(/\s+/g, '-');
+    createElement({
+      tag: 'button',
+      text: button,
+      parent: divGame,
+      classes: ['button-game'],
+      id: buttonId,
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   let arrCluesRow = countCluesRow(template5.Stroller);
   let arrCluesColumn = countCluesColumn(template5.Stroller);
@@ -128,12 +152,15 @@ document.addEventListener('DOMContentLoaded', () => {
   createLeftClues(arrCluesColumn);
   createGameArray();
   createHeader();
+  createGameButton();
 
   // выбор картинки
 
   const select = document.querySelector('.select');
   select.addEventListener('change', () => {
     const nameTemplate = select.value;
+
+    resetGame();
 
     arrCluesRow = countCluesRow(template5[nameTemplate]);
     arrCluesColumn = countCluesColumn(template5[nameTemplate]);
@@ -142,4 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   gameEnd();
+
+  const reset = document.getElementById('Reset-game');
+  reset.addEventListener('click', () => {
+    resetGame();
+  });
 });
