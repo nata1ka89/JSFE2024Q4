@@ -42,11 +42,14 @@ export function createGameArray() {
 export function gameEnd() {
   const span = document.querySelector('.text');
   const gameField = document.querySelectorAll('.cell');
+  const audioEnd = document.querySelector('.audioEnd');
+  const audioClick = document.querySelector('.audioClick');
   gameField.forEach((element) => {
     element.addEventListener('click', () => {
       const select = document.querySelector('.select');
       const nameTemplate = select.value;
       element.classList.toggle('black-cell');
+      audioClick.play();
       const useArr = createGameArray();
       const result = compareArray(template5[nameTemplate], useArr);
       if (result === true) {
@@ -54,15 +57,15 @@ export function gameEnd() {
         const watch = document.querySelector('.watch ');
         let timeArray = watch.textContent.split(':');
         let sumSec = parseInt(timeArray[0] * 60) + parseInt(timeArray[1])
-        console.log(sumSec);
-
         span.innerText = `Great! You have solved the nonogram in ${sumSec} seconds!`;
+        audioEnd.play();
       }
     });
     element.addEventListener('contextmenu', (event) => {
       event.preventDefault();
       const close = element.querySelector('.close');
       close.classList.toggle('hidden');
+      audioClick.play();
       if (element.classList.contains('black-cell')) {
         element.classList.remove('black-cell');
       }

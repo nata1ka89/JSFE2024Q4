@@ -14,6 +14,17 @@ const main = createElement({
   parent: bodyElement,
 });
 
+const audioEnd = document.createElement('audio');
+audioEnd.src = './audio/end.mp3';
+audioEnd.classList.add('audioEnd');
+
+const audioClick = document.createElement('audio');
+audioClick.src = './audio/click.mp3';
+audioClick.classList.add('audioClick');
+
+main.appendChild(audioEnd);
+main.appendChild(audioClick);
+
 // создание елементов игры
 
 createElement({
