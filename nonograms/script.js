@@ -5,6 +5,7 @@ import createElement from './src/create-element.js';
 import createHeader from './src/create-header.js';
 import resetGame from './src/reset-game.js';
 import { startWatch } from './src/stop-watch.js';
+import { saveGame, continueGame } from './src/save-game.js';
 
 const bodyElement = document.body;
 
@@ -89,7 +90,7 @@ function createCell() {
   });
 }
 
-function createLeftClues(data) {
+export function createLeftClues(data) {
   leftNumber.innerHTML = '';
   data.forEach((row) => {
     const rowElement = createElement({
@@ -109,7 +110,7 @@ function createLeftClues(data) {
   });
 }
 
-function createTopClues(data) {
+export function createTopClues(data) {
   topNumber.innerHTML = '';
   createElement({
     tag: 'div',
@@ -190,10 +191,14 @@ document.addEventListener('DOMContentLoaded', () => {
   gameEnd();
 
   const reset = document.getElementById('Reset-game');
-  reset.addEventListener('click', () => {
-    resetGame();
-  });
+  reset.addEventListener('click', resetGame);
 
   const start = document.querySelector('.field');
   start.addEventListener('click', startWatch);
+
+  const saveButton = document.getElementById('Save-game');
+  saveButton.addEventListener('click', saveGame);
+
+  const continueButton = document.getElementById('Continue-last-game');
+  continueButton.addEventListener('click', continueGame);
 });

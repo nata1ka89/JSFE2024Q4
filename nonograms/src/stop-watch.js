@@ -19,3 +19,9 @@ export function startWatch() {
 export function stopWatch() {
   clearInterval(intervalID);
 }
+
+export function clearWatch() {
+  stopWatch();
+  const watch = document.querySelector('.watch ');
+  watch.innerText = '00:00';
+}

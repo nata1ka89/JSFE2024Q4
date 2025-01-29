@@ -55,8 +55,8 @@ export function gameEnd() {
       if (result === true) {
         stopWatch();
         const watch = document.querySelector('.watch ');
-        let timeArray = watch.textContent.split(':');
-        let sumSec = parseInt(timeArray[0] * 60) + parseInt(timeArray[1])
+        const timeArray = watch.textContent.split(':');
+        const sumSec = parseInt(timeArray[0] * 60) + parseInt(timeArray[1]);
         span.innerText = `Great! You have solved the nonogram in ${sumSec} seconds!`;
         audioEnd.play();
       }
