@@ -6,6 +6,9 @@ function compareArray(data, useArr) {
   let result = false;
   for (let i = 0; i < data.length; i += 1) {
     for (let j = 0; j < data[i].length; j += 1) {
+      if (useArr[i][j] === 2) {
+        useArr[i][j] = 0;
+      }
       if (data[i][j] === useArr[i][j]) {
         result = true;
       } else {
@@ -26,11 +29,15 @@ export function createGameArray() {
   const useArr = [];
   let arr = [];
   gameField.forEach((element) => {
+    const close = element.querySelector('.close');
     if (element.classList.contains('black-cell')) {
       arr.push(1);
+    } else if (!close.classList.contains('hidden')) {
+      arr.push(2);
     } else {
       arr.push(0);
     }
+
     if (arr.length === 5) {
       useArr.push(arr);
       arr = [];

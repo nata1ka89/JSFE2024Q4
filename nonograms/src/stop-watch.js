@@ -2,6 +2,11 @@ let min = 0;
 let sec = 0;
 let intervalID;
 
+export function setTime(minutes, seconds) {
+  min = minutes;
+  sec = seconds;
+}
+
 function updateWatch() {
   const watch = document.querySelector('.watch ');
   sec += 1;
@@ -11,17 +16,20 @@ function updateWatch() {
 }
 
 export function startWatch() {
-  const start = document.querySelector('.field');
-  intervalID = window.setInterval(updateWatch, 1000);
-  start.removeEventListener('click', startWatch);
+  if (!intervalID) {
+    intervalID = window.setInterval(updateWatch, 1000);
+  }
 }
 
 export function stopWatch() {
   clearInterval(intervalID);
+  intervalID = null;
 }
 
 export function clearWatch() {
   stopWatch();
+  min = 0;
+  sec = 0;
   const watch = document.querySelector('.watch ');
   watch.innerText = '00:00';
 }
