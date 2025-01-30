@@ -1,4 +1,5 @@
 import { template5 } from './template-5x5.js';
+import { template10 } from './template-10x10.js';
 import { stopWatch } from './stop-watch.js';
 
 // сравнение массивов
@@ -53,12 +54,14 @@ export function gameEnd() {
   const audioClick = document.querySelector('.audioClick');
   gameField.forEach((element) => {
     element.addEventListener('click', () => {
+      const activeButton = document.querySelector('.button-active');
+      const template = activeButton.id === 'Easy' ? template5 : template10;
       const select = document.querySelector('.select');
       const nameTemplate = select.value;
       element.classList.toggle('black-cell');
       audioClick.play();
       const useArr = createGameArray();
-      const result = compareArray(template5[nameTemplate], useArr);
+      const result = compareArray(template[nameTemplate], useArr);
       if (result === true) {
         stopWatch();
         const watch = document.querySelector('.watch ');

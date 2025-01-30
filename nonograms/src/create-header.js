@@ -8,7 +8,7 @@ const header = createElement({
   parent: bodyElement,
 });
 
-export default function createHeader() {
+export function createButtonLevel() {
   // создание кнопок уровней сложности
   const divLevel = createElement({
     tag: 'div',
@@ -49,7 +49,9 @@ export default function createHeader() {
        createCell() */
     });
   });
+}
 
+export function createListPictures(pictures) {
   // создание списка картинок
 
   const divPictures = createElement({
@@ -64,8 +66,6 @@ export default function createHeader() {
     classes: ['select'],
 
   });
-
-  const pictures = ['Stroller', 'Camel', 'Fan', 'Dinosaur', 'Heart'];
 
   pictures.forEach((picture) => {
     createElement({

@@ -1,4 +1,3 @@
-import { template5 } from './template-5x5.js';
 import createElement from './create-element.js';
 
 export function createContainer() {
@@ -45,17 +44,17 @@ export function createContainer() {
     parent: container,
     classes: ['container-bottom'],
   });
-  const topNumber = createElement({
+  createElement({
     tag: 'div',
     parent: containerTop,
     classes: ['top-number'],
   });
-  const leftNumber = createElement({
+  createElement({
     tag: 'div',
     parent: containerBottom,
     classes: ['left-number'],
   });
-  const field = createElement({
+  createElement({
     tag: 'div',
     parent: containerBottom,
     classes: ['field'],
@@ -66,17 +65,17 @@ export function createContainer() {
     classes: ['watch'],
     text: '00:00',
   });
-  const divGame = createElement({
+  createElement({
     tag: 'div',
     classes: ['container-button'],
     parent: main,
   });
 }
 
-export function createCell() {
+export function createCell(template, nameTemplate) {
   const field = document.querySelector('.field');
 
-  template5.Stroller.forEach((row) => {
+  template[nameTemplate].forEach((row) => {
     const rowElement = createElement({
       tag: 'div',
       parent: field,

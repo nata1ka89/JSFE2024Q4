@@ -2,6 +2,7 @@ import { createGameArray } from './game-end.js';
 import { countCluesColumn, countCluesRow } from './count-clues.js';
 import { createTopClues, createLeftClues } from './create-main.js';
 import { template5 } from './template-5x5.js';
+import { template10 } from './template-10x10.js';
 import { startWatch, setTime } from './stop-watch.js';
 import resetGame from './reset-game.js';
 
@@ -23,12 +24,14 @@ export function continueGame() {
   // установить выбранную картинку и подсказки
   const select = document.querySelector('.select');
   const nameTemplate = localStorage.getItem('picture');
+  const activeButton = document.querySelector('.button-active');
+  const template = activeButton.id === 'Easy' ? template5 : template10;
 
   if (nameTemplate) {
     select.value = nameTemplate;
 
-    const arrCluesRow = countCluesRow(template5[nameTemplate]);
-    const arrCluesColumn = countCluesColumn(template5[nameTemplate]);
+    const arrCluesRow = countCluesRow(template[nameTemplate]);
+    const arrCluesColumn = countCluesColumn(template[nameTemplate]);
     createTopClues(arrCluesRow);
     createLeftClues(arrCluesColumn);
   }
