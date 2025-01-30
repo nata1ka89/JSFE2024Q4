@@ -2,6 +2,7 @@ import { clearWatch, startWatch } from './stop-watch.js';
 
 export default function resetGame() {
   const gameField = document.querySelectorAll('.cell');
+  const span = document.querySelector('.text');
   gameField.forEach((element) => {
     element.classList.remove('black-cell');
     const close = element.querySelector('.close');
@@ -9,7 +10,7 @@ export default function resetGame() {
   });
 
   clearWatch();
-
+  span.innerText = '';
   const start = document.querySelector('.field');
   start.addEventListener('click', startWatch);
 }

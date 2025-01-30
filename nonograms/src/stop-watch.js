@@ -23,11 +23,11 @@ export function startWatch() {
 
 export function stopWatch() {
   clearInterval(intervalID);
-  intervalID = null;
 }
 
 export function clearWatch() {
   stopWatch();
+  intervalID = null;
   min = 0;
   sec = 0;
   const watch = document.querySelector('.watch ');
