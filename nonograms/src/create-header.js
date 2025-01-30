@@ -33,6 +33,9 @@ export default function createHeader() {
 
   // переключение кнопок сложности
   const tab = document.querySelectorAll('.button-level');
+  /* const topNumber = document.querySelector('.top-number');
+  const leftNumber = document.querySelector('.left-number');
+  const field = document.querySelector('.field'); */
   tab.forEach((element) => {
     element.addEventListener('click', () => {
       tab.forEach((el) => {
@@ -41,6 +44,9 @@ export default function createHeader() {
         }
       });
       element.classList.add('button-active');
+
+      /* //обновление игрового поля после выбора уровня сложности
+       createCell() */
     });
   });
 

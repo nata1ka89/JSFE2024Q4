@@ -1,6 +1,6 @@
 import { createGameArray } from './game-end.js';
 import { countCluesColumn, countCluesRow } from './count-clues.js';
-import { createTopClues, createLeftClues } from '../script.js';
+import { createTopClues, createLeftClues } from './create-main.js';
 import { template5 } from './template-5x5.js';
 import { startWatch, setTime } from './stop-watch.js';
 import resetGame from './reset-game.js';
