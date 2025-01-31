@@ -101,7 +101,6 @@ export function createLeftClues(data) {
   const leftNumber = document.querySelector('.left-number');
 
   leftNumber.innerHTML = '';
-
   data.forEach((row) => {
     const rowElement = createElement({
       tag: 'div',
@@ -120,26 +119,23 @@ export function createLeftClues(data) {
   });
 }
 
-export function createTopClues(data) {
+export function createTopClues(data, height, width) {
   const topNumber = document.querySelector('.top-number');
 
   topNumber.innerHTML = '';
+  const widthSquare = 20 * width + 2 * (width - 1);
+  const heightSquare = 20 * height + 2 * (height - 1);
 
-  const activeButton = document.querySelector('.button-active');
-  if (!activeButton) {
-    createElement({
-      tag: 'div',
-      parent: topNumber,
-      classes: ['empty-square'],
-    });
-  } else {
-    topNumber.innerHTML = '';
-    createElement({
-      tag: 'div',
-      parent: topNumber,
-      classes: ['empty-square'],
-    });
-  }
+  createElement({
+    tag: 'div',
+    parent: topNumber,
+    classes: ['empty-square'],
+    styles: {
+      width: `${widthSquare}px`,
+      height: `${heightSquare}px`,
+    }
+  });
+
 
   data.forEach((row) => {
     const rowElement = createElement({

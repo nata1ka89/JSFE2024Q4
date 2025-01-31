@@ -40,7 +40,7 @@ export function countCluesColumn(data) {
     arrColumn.push(arr);
   });
   Filling(arrColumn, length);
-  return arrColumn;
+  return { arr: arrColumn, size: length };
 }
 
 // подсчет черных клеток для подсказок вверху
@@ -71,5 +71,6 @@ export function countCluesRow(data) {
     arrRow.push(arr);
   }
   Filling(arrRow, length);
-  return arrRow;
+
+  return { arr: arrRow, size: length };
 }

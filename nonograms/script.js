@@ -24,8 +24,9 @@ let nameTemplate = select.value;
 createCell(template, nameTemplate);
 let arrCluesRow = countCluesRow(template[nameTemplate]);
 let arrCluesColumn = countCluesColumn(template[nameTemplate]);
-createTopClues(arrCluesRow);
-createLeftClues(arrCluesColumn);
+createTopClues(arrCluesRow.arr, arrCluesRow.size, arrCluesColumn.size);
+createLeftClues(arrCluesColumn.arr);
+
 let gameField = document.querySelectorAll('.cell');
 
 gameEnd(gameField, template, nameTemplate);
@@ -47,8 +48,8 @@ function switchButtons() {
   createGameArray(gameField, template);
   arrCluesRow = countCluesRow(template[nameTemplate]);
   arrCluesColumn = countCluesColumn(template[nameTemplate]);
-  createTopClues(arrCluesRow);
-  createLeftClues(arrCluesColumn);
+  createTopClues(arrCluesRow.arr, arrCluesRow.size, arrCluesColumn.size);
+  createLeftClues(arrCluesColumn.arr);
 }
 tab.forEach((element) => {
   element.addEventListener('click', () => {
@@ -78,8 +79,8 @@ select.addEventListener('change', () => {
   updateCell(template, nameTemplate);
   arrCluesRow = countCluesRow(template[nameTemplate]);
   arrCluesColumn = countCluesColumn(template[nameTemplate]);
-  createTopClues(arrCluesRow);
-  createLeftClues(arrCluesColumn);
+  createTopClues(arrCluesRow.arr, arrCluesRow.size, arrCluesColumn.size);
+  createLeftClues(arrCluesColumn.arr);
   gameField = document.querySelectorAll('.cell');
 
   gameEnd(gameField, template, nameTemplate);

@@ -36,8 +36,8 @@ export function continueGame() {
 
     const arrCluesRow = countCluesRow(template[nameTemplate]);
     const arrCluesColumn = countCluesColumn(template[nameTemplate]);
-    createTopClues(arrCluesRow);
-    createLeftClues(arrCluesColumn);
+    createTopClues(arrCluesRow.arr, arrCluesRow.size, arrCluesColumn.size);
+    createLeftClues(arrCluesColumn.arr);
   }
 
   // установить сохраненное состаяние поля
