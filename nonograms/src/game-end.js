@@ -25,8 +25,7 @@ function compareArray(data, useArr) {
 }
 
 // создать массив ответов пользователя
-export function createGameArray() {
-  const gameField = document.querySelectorAll('.cell');
+export function createGameArray(gameField, template) {
   const useArr = [];
   let arr = [];
   gameField.forEach((element) => {
@@ -39,7 +38,11 @@ export function createGameArray() {
       arr.push(0);
     }
 
-    if (arr.length === 5) {
+    if (template === template5 && arr.length === 5) {
+      useArr.push(arr);
+      arr = [];
+    }
+    if (template === template10 && arr.length === 10) {
       useArr.push(arr);
       arr = [];
     }
@@ -47,21 +50,17 @@ export function createGameArray() {
   return useArr;
 }
 // при каждом клике проверяет соответствует ли текущее решение картинке
-export function gameEnd() {
+export function gameEnd(gameField, template, nameTemplate) {
   const span = document.querySelector('.text');
-  const gameField = document.querySelectorAll('.cell');
   const audioEnd = document.querySelector('.audioEnd');
   const audioClick = document.querySelector('.audioClick');
   gameField.forEach((element) => {
     element.addEventListener('click', () => {
-      const activeButton = document.querySelector('.button-active');
-      const template = activeButton.id === 'Easy' ? template5 : template10;
-      const select = document.querySelector('.select');
-      const nameTemplate = select.value;
       element.classList.toggle('black-cell');
       audioClick.play();
-      const useArr = createGameArray();
+      const useArr = createGameArray(gameField, template);
       const result = compareArray(template[nameTemplate], useArr);
+
       if (result === true) {
         stopWatch();
         const watch = document.querySelector('.watch ');

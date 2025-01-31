@@ -30,30 +30,8 @@ export function createButtonLevel() {
       buttonLevel.classList.add('button-active');
     }
   });
-
-  // переключение кнопок сложности
-  const tab = document.querySelectorAll('.button-level');
-  /* const topNumber = document.querySelector('.top-number');
-  const leftNumber = document.querySelector('.left-number');
-  const field = document.querySelector('.field'); */
-  tab.forEach((element) => {
-    element.addEventListener('click', () => {
-      tab.forEach((el) => {
-        if (el !== element) {
-          el.classList.remove('button-active');
-        }
-      });
-      element.classList.add('button-active');
-
-      /* //обновление игрового поля после выбора уровня сложности
-       createCell() */
-    });
-  });
 }
-
 export function createListPictures(pictures) {
-  // создание списка картинок
-
   const divPictures = createElement({
     tag: 'div',
     parent: header,
@@ -66,11 +44,27 @@ export function createListPictures(pictures) {
     classes: ['select'],
 
   });
+  pictures.forEach((picture) => {
+    const options = createElement({
+      tag: 'option',
+      parent: selectPictures,
+      classes: ['options'],
+      text: picture,
+      value: picture,
+    });
+  });
+}
+
+export function updateListPictures(pictures) {
+  // создание списка картинок
+  const selectPictures = document.querySelector('.select');
+  selectPictures.innerHTML = '';
 
   pictures.forEach((picture) => {
     createElement({
       tag: 'option',
       parent: selectPictures,
+      classes: ['options'],
       text: picture,
       value: picture,
     });

@@ -8,7 +8,11 @@ import resetGame from './reset-game.js';
 
 // сохраняем время, состояние поля, выбранную картинку
 export function saveGame() {
-  const gameArray = createGameArray();
+  const gameField = document.querySelectorAll('.cell');
+  const activeButton = document.querySelector('.button-active');
+  const template = activeButton.id === 'Easy' ? template5 : template10;
+  const gameArray = createGameArray(gameField, template);
+
   localStorage.setItem('field', gameArray);
 
   const watch = document.querySelector('.watch ');

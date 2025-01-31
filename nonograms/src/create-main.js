@@ -74,7 +74,6 @@ export function createContainer() {
 
 export function createCell(template, nameTemplate) {
   const field = document.querySelector('.field');
-
   template[nameTemplate].forEach((row) => {
     const rowElement = createElement({
       tag: 'div',
@@ -102,6 +101,7 @@ export function createLeftClues(data) {
   const leftNumber = document.querySelector('.left-number');
 
   leftNumber.innerHTML = '';
+
   data.forEach((row) => {
     const rowElement = createElement({
       tag: 'div',
@@ -124,11 +124,23 @@ export function createTopClues(data) {
   const topNumber = document.querySelector('.top-number');
 
   topNumber.innerHTML = '';
-  createElement({
-    tag: 'div',
-    parent: topNumber,
-    classes: ['empty-square'],
-  });
+
+  const activeButton = document.querySelector('.button-active');
+  if (!activeButton) {
+    createElement({
+      tag: 'div',
+      parent: topNumber,
+      classes: ['empty-square'],
+    });
+  } else {
+    topNumber.innerHTML = '';
+    createElement({
+      tag: 'div',
+      parent: topNumber,
+      classes: ['empty-square'],
+    });
+  }
+
   data.forEach((row) => {
     const rowElement = createElement({
       tag: 'div',
@@ -161,6 +173,33 @@ export function createGameButton() {
       parent: divGame,
       classes: ['button-game'],
       id: buttonId,
+    });
+  });
+}
+
+export function updateCell(template, nameTemplate) {
+  const field = document.querySelector('.field');
+  field.innerHTML = '';
+
+  template[nameTemplate].forEach((row) => {
+    const rowElement = createElement({
+      tag: 'div',
+      parent: field,
+      classes: ['row'],
+    });
+
+    row.forEach(() => {
+      const cellElement = createElement({
+        tag: 'div',
+        parent: rowElement,
+        classes: ['cell'],
+      });
+      createElement({
+        tag: 'span',
+        parent: cellElement,
+        classes: ['close', 'hidden'],
+        text: '✖',
+      });
     });
   });
 }

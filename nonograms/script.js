@@ -2,8 +2,9 @@ import { countCluesColumn, countCluesRow } from './src/count-clues.js';
 import { createGameArray, gameEnd } from './src/game-end.js';
 import { template5 } from './src/template-5x5.js';
 import { template10 } from './src/template-10x10.js';
-import { createButtonLevel, createListPictures } from './src/create-header.js';
+import { createButtonLevel, updateListPictures, createListPictures } from './src/create-header.js';
 import {
+  updateCell,
   createCell, createTopClues, createLeftClues, createContainer, createGameButton,
 } from './src/create-main.js';
 import resetGame from './src/reset-game.js';
@@ -11,40 +12,82 @@ import { startWatch } from './src/stop-watch.js';
 import { saveGame, continueGame } from './src/save-game.js';
 
 createButtonLevel();
+let template = template5;
+let pictures = Object.keys(template);
+createListPictures(pictures);
 createContainer();
 createGameButton();
 
-document.addEventListener('DOMContentLoaded', () => {
+const tab = document.querySelectorAll('.button-level');
+let select = document.querySelector('.select');
+let nameTemplate = select.value;
+createCell(template, nameTemplate);
+let arrCluesRow = countCluesRow(template[nameTemplate]);
+let arrCluesColumn = countCluesColumn(template[nameTemplate]);
+createTopClues(arrCluesRow);
+createLeftClues(arrCluesColumn);
+let gameField = document.querySelectorAll('.cell');
+
+gameEnd(gameField, template, nameTemplate);
+
+createGameArray(gameField, template);
+function switchButtons() {
+  resetGame();
   const activeButton = document.querySelector('.button-active');
-  const template = activeButton.id === 'Easy' ? template5 : template10;
-  const pictures = Object.keys(template);
-  console.log(pictures);
+  template = activeButton.id === 'Easy' ? template5 : template10;
+  pictures = Object.keys(template);
 
-  createListPictures(pictures);
+  updateListPictures(pictures);
+  select = document.querySelector('.select');
+  nameTemplate = select.value;
+  updateCell(template, nameTemplate);
+  gameField = document.querySelectorAll('.cell');
+  gameEnd(gameField, template, nameTemplate);
 
-  const select = document.querySelector('.select');
-  const nameTemplate = select.value;
-
-  createCell(template, nameTemplate);
-  let arrCluesRow = countCluesRow(template[nameTemplate]);
-  let arrCluesColumn = countCluesColumn(template[nameTemplate]);
+  createGameArray(gameField, template);
+  arrCluesRow = countCluesRow(template[nameTemplate]);
+  arrCluesColumn = countCluesColumn(template[nameTemplate]);
   createTopClues(arrCluesRow);
   createLeftClues(arrCluesColumn);
-  createGameArray();
-
-  // выбор картинки
-
-  select.addEventListener('change', () => {
-    resetGame();
-
-    arrCluesRow = countCluesRow(template[nameTemplate]);
-    arrCluesColumn = countCluesColumn(template[nameTemplate]);
-    createTopClues(arrCluesRow);
-    createLeftClues(arrCluesColumn);
+}
+tab.forEach((element) => {
+  element.addEventListener('click', () => {
+    tab.forEach((el) => {
+      if (el !== element) {
+        el.classList.remove('button-active');
+      }
+    });
+    element.classList.add('button-active');
+    if (element.id === 'Medium') {
+      template = template10;
+      switchButtons();
+    }
+    if (element.id === 'Hard') {
+      template = template10;
+      switchButtons();
+    }
+    if (element.id === 'Easy') {
+      template = template5;
+      switchButtons();
+    }
   });
+});
+select.addEventListener('change', () => {
+  resetGame();
+  nameTemplate = select.value;
+  updateCell(template, nameTemplate);
+  arrCluesRow = countCluesRow(template[nameTemplate]);
+  arrCluesColumn = countCluesColumn(template[nameTemplate]);
+  createTopClues(arrCluesRow);
+  createLeftClues(arrCluesColumn);
+  gameField = document.querySelectorAll('.cell');
 
-  gameEnd();
+  gameEnd(gameField, template, nameTemplate);
 
+  createGameArray(gameField, template);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
   const reset = document.getElementById('Reset-game');
   reset.addEventListener('click', resetGame);
 
@@ -52,7 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
   start.addEventListener('click', startWatch);
 
   const saveButton = document.getElementById('Save-game');
-  saveButton.addEventListener('click', saveGame);
+  saveButton.addEventListener('click', () => {
+    saveGame();
+  });
 
   const continueButton = document.getElementById('Continue-last-game');
   continueButton.addEventListener('click', continueGame);

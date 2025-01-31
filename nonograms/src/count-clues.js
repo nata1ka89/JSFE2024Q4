@@ -1,13 +1,6 @@
 // сделать длину массивов подсказок одинаковой
 
-function Filling(data) {
-  const length = 2;
-  /* data.forEach((element) => {
-    if (element.length > length) {
-      length = element.length;
-    }
-  }); */
-
+function Filling(data, length) {
   data.forEach((element) => {
     if (element.length < length) {
       while (element.length !== length) {
@@ -22,6 +15,7 @@ function Filling(data) {
 
 export function countCluesColumn(data) {
   const arrColumn = [];
+  let length = 2;
   data.forEach((row) => {
     const arr = [];
     let count = 0;
@@ -31,15 +25,21 @@ export function countCluesColumn(data) {
       } else if (count > 0) {
         arr.push(count);
         count = 0;
+        if (length < arr.length) {
+          length = arr.length;
+        }
       }
     });
 
     if (count > 0) {
       arr.push(count);
+      if (length < arr.length) {
+        length = arr.length;
+      }
     }
     arrColumn.push(arr);
   });
-  Filling(arrColumn);
+  Filling(arrColumn, length);
   return arrColumn;
 }
 
@@ -47,6 +47,7 @@ export function countCluesColumn(data) {
 
 export function countCluesRow(data) {
   const arrRow = [];
+  let length = 2;
   for (let j = 0; j < data[0].length; j += 1) {
     const arr = [];
     let count = 0;
@@ -56,13 +57,19 @@ export function countCluesRow(data) {
       } else if (count > 0) {
         arr.push(count);
         count = 0;
+        if (length < arr.length) {
+          length = arr.length;
+        }
       }
     }
     if (count > 0) {
       arr.push(count);
+      if (length < arr.length) {
+        length = arr.length;
+      }
     }
     arrRow.push(arr);
   }
-  Filling(arrRow);
+  Filling(arrRow, length);
   return arrRow;
 }
