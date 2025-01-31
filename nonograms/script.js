@@ -2,6 +2,7 @@ import { countCluesColumn, countCluesRow } from './src/count-clues.js';
 import { createGameArray, gameEnd } from './src/game-end.js';
 import { template5 } from './src/template-5x5.js';
 import { template10 } from './src/template-10x10.js';
+import { template15 } from './src/template-15x15.js';
 import { createButtonLevel, updateListPictures, createListPictures } from './src/create-header.js';
 import {
   updateCell,
@@ -35,7 +36,7 @@ createGameArray(gameField, template);
 function switchButtons() {
   resetGame();
   const activeButton = document.querySelector('.button-active');
-  template = activeButton.id === 'Easy' ? template5 : template10;
+  template = activeButton.id === 'Easy' ? template5 : activeButton.id === 'Medium' ? template10 : template15;
   pictures = Object.keys(template);
 
   updateListPictures(pictures);
@@ -64,7 +65,7 @@ tab.forEach((element) => {
       switchButtons();
     }
     if (element.id === 'Hard') {
-      template = template10;
+      template = template15;
       switchButtons();
     }
     if (element.id === 'Easy') {
@@ -76,6 +77,11 @@ tab.forEach((element) => {
 select.addEventListener('change', () => {
   resetGame();
   nameTemplate = select.value;
+  let activeButton = document.querySelector('.button-active');
+  template = activeButton.id === 'Easy' ? template5 : activeButton.id === 'Medium' ? template10 : template15;
+
+  console.log(template);
+  console.log(nameTemplate);
   updateCell(template, nameTemplate);
   arrCluesRow = countCluesRow(template[nameTemplate]);
   arrCluesColumn = countCluesColumn(template[nameTemplate]);

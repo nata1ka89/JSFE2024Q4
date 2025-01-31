@@ -1,6 +1,6 @@
 export default function createElement(options) {
   const {
-    tag = '', text = '', parent, classes = [], id = '', value = '', styles = {}
+    tag = '', text = '', parent, classes = [], id = '', value = '', styles = {},
   } = options;
 
   const element = document.createElement(tag);

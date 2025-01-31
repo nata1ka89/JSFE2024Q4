@@ -1,18 +1,22 @@
 import { createGameArray } from './game-end.js';
 import { countCluesColumn, countCluesRow } from './count-clues.js';
-import { createTopClues, createLeftClues } from './create-main.js';
+import { updateCell, createTopClues, createLeftClues } from './create-main.js';
 import { template5 } from './template-5x5.js';
 import { template10 } from './template-10x10.js';
+import { template15 } from './template-15x15.js';
 import { startWatch, setTime } from './stop-watch.js';
 import resetGame from './reset-game.js';
+import { updateListPictures } from './create-header.js';
+
 
 // сохраняем время, состояние поля, выбранную картинку
 export function saveGame() {
   const gameField = document.querySelectorAll('.cell');
   const activeButton = document.querySelector('.button-active');
-  const template = activeButton.id === 'Easy' ? template5 : template10;
+  const template = activeButton.id === 'Easy' ? template5 : activeButton.id === 'Medium' ? template10 : template15;
   const gameArray = createGameArray(gameField, template);
 
+  localStorage.setItem('activeButton', activeButton.id);
   localStorage.setItem('field', gameArray);
 
   const watch = document.querySelector('.watch ');
@@ -28,9 +32,24 @@ export function continueGame() {
   // установить выбранную картинку и подсказки
   const select = document.querySelector('.select');
   const nameTemplate = localStorage.getItem('picture');
-  const activeButton = document.querySelector('.button-active');
-  const template = activeButton.id === 'Easy' ? template5 : template10;
+  const tab = document.querySelectorAll('.button-level');
+  const activeButton = localStorage.getItem('activeButton');
+  console.log(activeButton);
+  tab.forEach((element) => {
 
+    element.classList.remove('button-active');
+    if (element.id === activeButton) {
+      element.classList.add('button-active');
+
+      /*switchButtons();*/
+    }
+  });
+
+
+  const template = activeButton === 'Easy' ? template5 : activeButton === 'Medium' ? template10 : template15;
+  console.log(template);
+  const pictures = Object.keys(template);
+  updateListPictures(pictures);
   if (nameTemplate) {
     select.value = nameTemplate;
 
@@ -41,6 +60,7 @@ export function continueGame() {
   }
 
   // установить сохраненное состаяние поля
+  updateCell(template, nameTemplate)
   const valueString = localStorage.getItem('field');
   if (valueString) {
     const numArray = valueString.split(',').map(Number);

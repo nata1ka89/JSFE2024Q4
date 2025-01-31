@@ -133,9 +133,8 @@ export function createTopClues(data, height, width) {
     styles: {
       width: `${widthSquare}px`,
       height: `${heightSquare}px`,
-    }
+    },
   });
-
 
   data.forEach((row) => {
     const rowElement = createElement({

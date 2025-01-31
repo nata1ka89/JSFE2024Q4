@@ -1,5 +1,6 @@
 import { template5 } from './template-5x5.js';
 import { template10 } from './template-10x10.js';
+import { template15 } from './template-15x15.js';
 import { stopWatch } from './stop-watch.js';
 
 // сравнение массивов
@@ -43,6 +44,10 @@ export function createGameArray(gameField, template) {
       arr = [];
     }
     if (template === template10 && arr.length === 10) {
+      useArr.push(arr);
+      arr = [];
+    }
+    if (template === template15 && arr.length === 15) {
       useArr.push(arr);
       arr = [];
     }
