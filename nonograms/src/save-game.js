@@ -1,4 +1,4 @@
-import { createGameArray } from './game-end.js';
+import { createGameArray, gameEnd } from './game-end.js';
 import { countCluesColumn, countCluesRow } from './count-clues.js';
 import { updateCell, createTopClues, createLeftClues } from './create-main.js';
 import { template5 } from './template-5x5.js';
@@ -34,7 +34,6 @@ export function continueGame() {
   const nameTemplate = localStorage.getItem('picture');
   const tab = document.querySelectorAll('.button-level');
   const activeButton = localStorage.getItem('activeButton');
-  console.log(activeButton);
   tab.forEach((element) => {
 
     element.classList.remove('button-active');
@@ -47,7 +46,6 @@ export function continueGame() {
 
 
   const template = activeButton === 'Easy' ? template5 : activeButton === 'Medium' ? template10 : template15;
-  console.log(template);
   const pictures = Object.keys(template);
   updateListPictures(pictures);
   if (nameTemplate) {
@@ -88,4 +86,6 @@ export function continueGame() {
     watch.innerText = saveWatch;
     startWatch();
   }
+  const gameField = document.querySelectorAll('.cell');
+  gameEnd(gameField, template, nameTemplate)
 }

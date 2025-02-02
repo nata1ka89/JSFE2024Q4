@@ -63,6 +63,8 @@ export function gameEnd(gameField, template, nameTemplate) {
     element.addEventListener('click', () => {
       element.classList.toggle('black-cell');
       audioClick.play();
+      const close = element.querySelector('.close');
+      close.classList.add('hidden');
       const useArr = createGameArray(gameField, template);
       const result = compareArray(template[nameTemplate], useArr);
 
