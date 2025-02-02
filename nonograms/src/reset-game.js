@@ -1,6 +1,8 @@
 import { clearWatch, startWatch } from './stop-watch.js';
+import { setGameFinish } from './state-game.js';
 
 export default function resetGame() {
+  setGameFinish(false);
   const gameField = document.querySelectorAll('.cell');
   const span = document.querySelector('.text');
   gameField.forEach((element) => {

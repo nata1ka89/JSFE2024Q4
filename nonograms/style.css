@@ -161,7 +161,6 @@ header {
   border-radius: 0.5vw;
   border-color: #fdfdfd00;
   cursor: pointer;
-  transition: box-shadow 0.3s ease-in-out;
   transition: background-color 0.3s ease-in-out;
   background-color: #d2d2d2;
 }
@@ -175,8 +174,9 @@ header {
 }
 
 .container-picture {
+  display: flex;
+  gap: 20px;
   padding: 20px;
-
 }
 
 .select {
@@ -190,10 +190,30 @@ header {
   font-size: medium;
   letter-spacing: 0.6px;
 }
-}
 
 .select:focus {
   border-color: #5b9bd5;
+}
+
+.button-audio {
+  width: 40px;
+  height: 40px;
+  background-image: url(./assets/image/volume.svg);
+  background-size: cover;
+  border-color: #fdfdfd00;
+  cursor: pointer;
+  border-radius: 0.5vw;
+  transition: background-color 0.3s ease-in-out;
+  background-color: #5b9bd5;
+}
+
+.button-audioOff {
+  background-image: url(./assets/image/volume-off.svg);
+  background-color: #d2d2d2;
+}
+
+.button-audio:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 /*кнопки Reset и Save*/
@@ -225,7 +245,6 @@ header {
 }
 
 /*секундомер*/
-
 .watch {
   min-height: 30px;
   font-size: 20px;

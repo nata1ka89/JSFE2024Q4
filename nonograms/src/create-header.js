@@ -36,13 +36,18 @@ export function createListPictures(pictures) {
     tag: 'div',
     parent: header,
     classes: ['container-picture'],
-
   });
+  // кнопка звука
+  createElement({
+    tag: 'button',
+    classes: ['button-audio'],
+    parent: divPictures,
+  });
+
   const selectPictures = createElement({
     tag: 'select',
     parent: divPictures,
     classes: ['select'],
-
   });
   pictures.forEach((picture) => {
     const options = createElement({

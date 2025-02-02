@@ -8,7 +8,6 @@ import { startWatch, setTime } from './stop-watch.js';
 import resetGame from './reset-game.js';
 import { updateListPictures } from './create-header.js';
 
-
 // сохраняем время, состояние поля, выбранную картинку
 export function saveGame() {
   const gameField = document.querySelectorAll('.cell');
@@ -35,15 +34,11 @@ export function continueGame() {
   const tab = document.querySelectorAll('.button-level');
   const activeButton = localStorage.getItem('activeButton');
   tab.forEach((element) => {
-
     element.classList.remove('button-active');
     if (element.id === activeButton) {
       element.classList.add('button-active');
-
-      /*switchButtons();*/
     }
   });
-
 
   const template = activeButton === 'Easy' ? template5 : activeButton === 'Medium' ? template10 : template15;
   const pictures = Object.keys(template);
@@ -58,7 +53,7 @@ export function continueGame() {
   }
 
   // установить сохраненное состаяние поля
-  updateCell(template, nameTemplate)
+  updateCell(template, nameTemplate);
   const valueString = localStorage.getItem('field');
   if (valueString) {
     const numArray = valueString.split(',').map(Number);
@@ -87,5 +82,5 @@ export function continueGame() {
     startWatch();
   }
   const gameField = document.querySelectorAll('.cell');
-  gameEnd(gameField, template, nameTemplate)
+  gameEnd(gameField, template, nameTemplate);
 }

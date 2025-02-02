@@ -80,8 +80,6 @@ select.addEventListener('change', () => {
   let activeButton = document.querySelector('.button-active');
   template = activeButton.id === 'Easy' ? template5 : activeButton.id === 'Medium' ? template10 : template15;
 
-  console.log(template);
-  console.log(nameTemplate);
   updateCell(template, nameTemplate);
   arrCluesRow = countCluesRow(template[nameTemplate]);
   arrCluesColumn = countCluesColumn(template[nameTemplate]);
@@ -90,7 +88,6 @@ select.addEventListener('change', () => {
   gameField = document.querySelectorAll('.cell');
 
   gameEnd(gameField, template, nameTemplate);
-
   createGameArray(gameField, template);
 });
 
@@ -108,4 +105,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const continueButton = document.getElementById('Continue-last-game');
   continueButton.addEventListener('click', continueGame);
+});
+
+const buttonAudio = document.querySelector('.button-audio');
+buttonAudio.addEventListener('click', () => {
+  buttonAudio.classList.toggle('button-audioOff')
 });

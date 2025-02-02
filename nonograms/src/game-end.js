@@ -2,6 +2,7 @@ import { template5 } from './template-5x5.js';
 import { template10 } from './template-10x10.js';
 import { template15 } from './template-15x15.js';
 import { stopWatch } from './stop-watch.js';
+import { setGameFinish, getGameFinish, setGameAudio } from './state-game.js';
 
 // сравнение массивов
 function compareArray(data, useArr) {
@@ -54,34 +55,44 @@ export function createGameArray(gameField, template) {
   });
   return useArr;
 }
+
 // при каждом клике проверяет соответствует ли текущее решение картинке
 export function gameEnd(gameField, template, nameTemplate) {
   const span = document.querySelector('.text');
   const audioEnd = document.querySelector('.audioEnd');
+  /* const buttonAudio = document.querySelector('.button-audio'); */
   const audioClick = document.querySelector('.audioClick');
+  setGameFinish(false);
+
   gameField.forEach((element) => {
     element.addEventListener('click', () => {
+      if (getGameFinish()) return;
+      const isAudioState = setGameAudio();
+      if (isAudioState) { audioClick.play(); }
       element.classList.toggle('black-cell');
-      audioClick.play();
       const close = element.querySelector('.close');
       close.classList.add('hidden');
       const useArr = createGameArray(gameField, template);
       const result = compareArray(template[nameTemplate], useArr);
 
       if (result === true) {
+        setGameFinish(true);
         stopWatch();
         const watch = document.querySelector('.watch ');
         const timeArray = watch.textContent.split(':');
         const sumSec = parseInt(timeArray[0] * 60) + parseInt(timeArray[1]);
         span.innerText = `Great! You have solved the nonogram in ${sumSec} seconds!`;
-        audioEnd.play();
+        if (isAudioState) { audioEnd.play(); }
       }
     });
     element.addEventListener('contextmenu', (event) => {
       event.preventDefault();
+      if (getGameFinish()) return;
+      const isAudioState = setGameAudio();
+
       const close = element.querySelector('.close');
       close.classList.toggle('hidden');
-      audioClick.play();
+      if (isAudioState) { audioClick.play(); }
       if (element.classList.contains('black-cell')) {
         element.classList.remove('black-cell');
       }

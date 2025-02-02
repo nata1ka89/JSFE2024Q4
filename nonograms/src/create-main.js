@@ -10,11 +10,11 @@ export function createContainer() {
   });
 
   const audioEnd = document.createElement('audio');
-  audioEnd.src = './audio/end.mp3';
+  audioEnd.src = './assets/audio/end.mp3';
   audioEnd.classList.add('audioEnd');
 
   const audioClick = document.createElement('audio');
-  audioClick.src = './audio/click.mp3';
+  audioClick.src = './assets/audio/click.mp3';
   audioClick.classList.add('audioClick');
 
   main.appendChild(audioEnd);
