@@ -11,6 +11,7 @@ import {
 import resetGame from './src/reset-game.js';
 import { startWatch } from './src/stop-watch.js';
 import { saveGame, continueGame } from './src/save-game.js';
+import showSolution from './src/solution.js';
 
 createButtonLevel();
 let template = template5;
@@ -106,9 +107,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const continueButton = document.getElementById('Continue-last-game');
   continueButton.addEventListener('click', continueGame);
   saveButton.disabled = false;
-});
 
-const buttonAudio = document.querySelector('.button-audio');
-buttonAudio.addEventListener('click', () => {
-  buttonAudio.classList.toggle('button-audioOff');
+  const buttonAudio = document.querySelector('.button-audio');
+  buttonAudio.addEventListener('click', () => {
+    buttonAudio.classList.toggle('button-audioOff');
+  });
+
+  const solution = document.getElementById('Solution');
+  solution.addEventListener('click', () => {
+    showSolution();
+    saveButton.disabled = true;
+  });
 });

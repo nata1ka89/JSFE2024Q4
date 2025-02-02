@@ -158,7 +158,7 @@ export function createGameButton() {
   // create Game button
   const divGame = document.querySelector('.container-button');
 
-  const buttonsGame = ['Continue last game', 'Save game', 'Reset game'];
+  const buttonsGame = ['Continue last game', 'Save game', 'Reset game', 'Random game', 'Solution'];
 
   buttonsGame.forEach((button) => {
     const buttonId = button.replace(/\s+/g, '-');

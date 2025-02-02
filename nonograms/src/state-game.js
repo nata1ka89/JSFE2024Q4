@@ -15,7 +15,7 @@ export function setGameAudio() {
   if (buttonAudio.classList.contains('button-audioOff')) {
     isAudioState = false;
   } else {
-    return isAudioState = true;
+    isAudioState = true;
   }
   return isAudioState;
 }

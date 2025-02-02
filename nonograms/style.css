@@ -140,7 +140,7 @@ main {
 header {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .container-level {
@@ -180,6 +180,7 @@ header {
 }
 
 .select {
+  height: 40px;
   background: #d2d2d2;
   border: 1px solid #ccc;
   padding: 5px 30px 5px 10px;
@@ -219,8 +220,9 @@ header {
 /*кнопки Reset и Save*/
 .container-button {
   display: flex;
+  max-width: 978px;
   justify-content: center;
-  padding: 70px 20px 0px 20px;
+  padding: 30px 20px 0px 20px;
   gap: 20px;
   flex-wrap: wrap;
 }
@@ -248,5 +250,4 @@ header {
 .watch {
   min-height: 30px;
   font-size: 20px;
-  padding-top: 40px;
 }

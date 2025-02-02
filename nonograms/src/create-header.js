@@ -50,7 +50,7 @@ export function createListPictures(pictures) {
     classes: ['select'],
   });
   pictures.forEach((picture) => {
-    const options = createElement({
+    createElement({
       tag: 'option',
       parent: selectPictures,
       classes: ['options'],
