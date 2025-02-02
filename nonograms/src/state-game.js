@@ -13,7 +13,9 @@ let isAudioState = true;
 export function setGameAudio() {
   const buttonAudio = document.querySelector('.button-audio');
   if (buttonAudio.classList.contains('button-audioOff')) {
-    return isAudioState = false;
+    isAudioState = false;
+  } else {
+    return isAudioState = true;
   }
-  return isAudioState = true;
+  return isAudioState;
 }

@@ -60,15 +60,17 @@ export function createGameArray(gameField, template) {
 export function gameEnd(gameField, template, nameTemplate) {
   const span = document.querySelector('.text');
   const audioEnd = document.querySelector('.audioEnd');
-  /* const buttonAudio = document.querySelector('.button-audio'); */
   const audioClick = document.querySelector('.audioClick');
   setGameFinish(false);
+  const saveButton = document.getElementById('Save-game');
 
   gameField.forEach((element) => {
     element.addEventListener('click', () => {
       if (getGameFinish()) return;
       const isAudioState = setGameAudio();
-      if (isAudioState) { audioClick.play(); }
+      if (isAudioState) {
+        audioClick.play();
+      }
       element.classList.toggle('black-cell');
       const close = element.querySelector('.close');
       close.classList.add('hidden');
@@ -82,14 +84,16 @@ export function gameEnd(gameField, template, nameTemplate) {
         const timeArray = watch.textContent.split(':');
         const sumSec = parseInt(timeArray[0] * 60) + parseInt(timeArray[1]);
         span.innerText = `Great! You have solved the nonogram in ${sumSec} seconds!`;
-        if (isAudioState) { audioEnd.play(); }
+        if (isAudioState) {
+          audioEnd.play();
+        }
+        saveButton.disabled = true;
       }
     });
     element.addEventListener('contextmenu', (event) => {
       event.preventDefault();
       if (getGameFinish()) return;
       const isAudioState = setGameAudio();
-
       const close = element.querySelector('.close');
       close.classList.toggle('hidden');
       if (isAudioState) { audioClick.play(); }

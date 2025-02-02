@@ -77,7 +77,7 @@ tab.forEach((element) => {
 select.addEventListener('change', () => {
   resetGame();
   nameTemplate = select.value;
-  let activeButton = document.querySelector('.button-active');
+  const activeButton = document.querySelector('.button-active');
   template = activeButton.id === 'Easy' ? template5 : activeButton.id === 'Medium' ? template10 : template15;
 
   updateCell(template, nameTemplate);
@@ -105,9 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const continueButton = document.getElementById('Continue-last-game');
   continueButton.addEventListener('click', continueGame);
+  saveButton.disabled = false;
 });
 
 const buttonAudio = document.querySelector('.button-audio');
 buttonAudio.addEventListener('click', () => {
-  buttonAudio.classList.toggle('button-audioOff')
+  buttonAudio.classList.toggle('button-audioOff');
 });
