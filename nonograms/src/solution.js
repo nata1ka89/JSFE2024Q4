@@ -6,7 +6,7 @@ import { setGameFinish } from './state-game.js';
 
 export default function showSolution() {
   resetGame();
-  setGameFinish(true)
+  setGameFinish(true);
   const activeButton = document.querySelector('.button-active');
   const template = activeButton.id === 'Easy' ? template5 : activeButton.id === 'Medium' ? template10 : template15;
 

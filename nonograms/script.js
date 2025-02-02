@@ -12,6 +12,7 @@ import resetGame from './src/reset-game.js';
 import { startWatch } from './src/stop-watch.js';
 import { saveGame, continueGame } from './src/save-game.js';
 import showSolution from './src/solution.js';
+import randomGame from './src/random-game.js';
 
 createButtonLevel();
 let template = template5;
@@ -117,5 +118,9 @@ document.addEventListener('DOMContentLoaded', () => {
   solution.addEventListener('click', () => {
     showSolution();
     saveButton.disabled = true;
+  });
+  const randomButton = document.getElementById('Random-game');
+  randomButton.addEventListener('click', () => {
+    randomGame();
   });
 });
