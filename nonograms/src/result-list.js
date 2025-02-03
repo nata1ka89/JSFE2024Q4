@@ -84,7 +84,7 @@ export function saveResult() {
     timeSecond: resultNumber,
   };
 
-  const result = JSON.parse(localStorage.getItem('gameResult')) || [];
+  const result = JSON.parse(localStorage.getItem('gameResultNonogramsNK')) || [];
   result.push(currentGameResult);
   result.sort((a, b) => a.timeSecond - b.timeSecond);
 
@@ -92,11 +92,11 @@ export function saveResult() {
     result.pop();
   }
 
-  localStorage.setItem('gameResult', JSON.stringify(result));
+  localStorage.setItem('gameResultNonogramsNK', JSON.stringify(result));
 }
 export function writeResult() {
   // записать результаты
-  const result = JSON.parse(localStorage.getItem('gameResult')) || [];
+  const result = JSON.parse(localStorage.getItem('gameResultNonogramsNK')) || [];
   const tbody = document.querySelector('tbody');
   tbody.innerHTML = '';
   result.forEach((el, index) => {
