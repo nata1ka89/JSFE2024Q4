@@ -111,6 +111,12 @@ document.addEventListener('DOMContentLoaded', () => {
   continueButton.addEventListener('click', continueGame);
   saveButton.disabled = false;
 
+  const buttonTheme = document.querySelector('.button-theme');
+  buttonTheme.addEventListener('click', () => {
+    buttonTheme.classList.toggle('button-theme-moon');
+    document.body.classList.toggle('dark-mode');
+  });
+
   const buttonAudio = document.querySelector('.button-audio');
   buttonAudio.addEventListener('click', () => {
     buttonAudio.classList.toggle('button-audioOff');

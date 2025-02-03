@@ -38,6 +38,12 @@ export function createListPictures(pictures) {
     classes: ['container-picture'],
   });
 
+  // кнопка темы
+  createElement({
+    tag: 'button',
+    classes: ['button-theme'],
+    parent: divPictures,
+  });
   // кнопка результатов
   createElement({
     tag: 'button',
