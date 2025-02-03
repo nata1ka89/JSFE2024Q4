@@ -1,0 +1,108 @@
+import { template5 } from './template-5x5.js';
+import { template10 } from './template-10x10.js';
+import { template15 } from './template-15x15.js';
+import { stopWatch } from './stop-watch.js';
+import { setGameFinish, getGameFinish, setGameAudio } from './state-game.js';
+import { writeResult, saveResult } from './result-list.js';
+
+// сравнение массивов
+function compareArray(data, useArr) {
+  let result = false;
+  for (let i = 0; i < data.length; i += 1) {
+    for (let j = 0; j < data[i].length; j += 1) {
+      if (useArr[i][j] === 2) {
+        useArr[i][j] = 0;
+      }
+      if (data[i][j] === useArr[i][j]) {
+        result = true;
+      } else {
+        result = false;
+        break;
+      }
+    }
+    if (!result) {
+      break;
+    }
+  }
+  return result;
+}
+
+// создать массив ответов пользователя
+export function createGameArray(gameField, template) {
+  const useArr = [];
+  let arr = [];
+  gameField.forEach((element) => {
+    const close = element.querySelector('.close');
+    if (element.classList.contains('black-cell')) {
+      arr.push(1);
+    } else if (!close.classList.contains('hidden')) {
+      arr.push(2);
+    } else {
+      arr.push(0);
+    }
+
+    if (template === template5 && arr.length === 5) {
+      useArr.push(arr);
+      arr = [];
+    }
+    if (template === template10 && arr.length === 10) {
+      useArr.push(arr);
+      arr = [];
+    }
+    if (template === template15 && arr.length === 15) {
+      useArr.push(arr);
+      arr = [];
+    }
+  });
+  return useArr;
+}
+
+// при каждом клике проверяет соответствует ли текущее решение картинке
+export function gameEnd(gameField, template, nameTemplate) {
+  const span = document.querySelector('.text');
+  const audioEnd = document.querySelector('.audioEnd');
+  const audioClick = document.querySelector('.audioClick');
+  setGameFinish(false);
+  const saveButton = document.getElementById('Save-game');
+
+  gameField.forEach((element) => {
+    element.addEventListener('click', () => {
+      if (getGameFinish()) return;
+      const isAudioState = setGameAudio();
+      if (isAudioState) {
+        audioClick.play();
+      }
+      element.classList.toggle('black-cell');
+      const close = element.querySelector('.close');
+      close.classList.add('hidden');
+      const useArr = createGameArray(gameField, template);
+      const result = compareArray(template[nameTemplate], useArr);
+
+      if (result === true) {
+        setGameFinish(true);
+        stopWatch();
+        const watch = document.querySelector('.watch ');
+        const timeArray = watch.textContent.split(':');
+        const sumSec = parseInt(timeArray[0] * 60) + parseInt(timeArray[1]);
+        span.innerText = `Great! You have solved the nonogram in ${sumSec} seconds!`;
+        if (isAudioState) {
+          audioEnd.play();
+        }
+        saveButton.disabled = true;
+        saveResult();
+        writeResult();
+      }
+    });
+    element.addEventListener('contextmenu', (event) => {
+      event.preventDefault();
+      if (getGameFinish()) return;
+      const isAudioState = setGameAudio();
+      const close = element.querySelector('.close');
+      close.classList.toggle('hidden');
+      if (isAudioState) { audioClick.play(); }
+      if (element.classList.contains('black-cell')) {
+        element.classList.remove('black-cell');
+      }
+    });
+  });
+}

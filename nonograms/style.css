@@ -1,0 +1,349 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  align-items: center;
+  margin: 0;
+  background-image: url(./assets/image/422423-min.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+main {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 470px;
+}
+
+.text {
+  min-height: 30px;
+  font-size: 25px;
+}
+
+/*подсказки верхние и левые*/
+
+.container-top {
+  display: flex;
+  justify-content: center;
+}
+
+.container-bottom {
+  display: flex;
+  justify-content: center;
+}
+
+.top-number {
+  display: flex;
+  justify-content: center;
+  border-bottom: 2px solid black;
+}
+
+.left-number {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-right: 2px solid black;
+}
+
+.row-number {
+  display: flex;
+  justify-content: center;
+}
+
+.row-number:nth-child(5n + 5) {
+  border-bottom: 2px solid black;
+}
+
+.row-number-top {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.row-number-top:nth-child(5n + 6) {
+  border-right: 2px solid black;
+}
+
+.cell-number {
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  background-color: #d2d2d2;
+  ;
+  text-align: center;
+}
+
+.empty-square {
+  width: 42px;
+  height: 42px;
+  border: 1px solid black;
+  background-color: #d2d2d2;
+  ;
+  border-right: 3px solid black;
+}
+
+/*поле игры*/
+
+.field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+.row:nth-child(5n + 5) {
+  border-bottom: 2px solid black;
+}
+
+.cell {
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  background-color: white;
+  cursor: pointer;
+}
+
+.cell:nth-child(5n + 5) {
+  border-right: 3px solid black;
+}
+
+.black-cell {
+  background-color: black;
+}
+
+.close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hidden {
+  display: none;
+}
+
+/*Header*/
+
+header {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.container-level {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+.button-level {
+  font-family: 'Montserrat';
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  width: 80px;
+  height: 40px;
+  border-radius: 0.5vw;
+  border-color: #fdfdfd00;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  background-color: #d2d2d2;
+}
+
+.button-level:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.button-active {
+  background-color: #5b9bd5;
+}
+
+.container-picture {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.select {
+  height: 40px;
+  background: #d2d2d2;
+  border: 1px solid #ccc;
+  padding: 5px 30px 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Montserrat';
+  font-weight: 600;
+  font-size: medium;
+  letter-spacing: 0.6px;
+}
+
+.select:focus {
+  border-color: #5b9bd5;
+}
+
+.button-audio {
+  width: 40px;
+  height: 40px;
+  background-image: url(./assets/image/volume.svg);
+  background-size: cover;
+  border-color: #fdfdfd00;
+  cursor: pointer;
+  border-radius: 0.5vw;
+  transition: background-color 0.3s ease-in-out;
+  background-color: #5b9bd5;
+}
+
+.button-audioOff {
+  background-image: url(./assets/image/volume-off.svg);
+  background-color: #d2d2d2;
+}
+
+.button-audio:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.button-result {
+  width: 40px;
+  height: 40px;
+  background-image: url(./assets/image/cup.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-color: #fdfdfd00;
+  background-color: #d2d2d2;
+  cursor: pointer;
+  border-radius: 0.5vw;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.button-result:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/*кнопки игры*/
+.container-button {
+  display: flex;
+  max-width: 978px;
+  justify-content: center;
+  padding: 30px 20px 0px 20px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.button-game {
+  font-family: 'Montserrat';
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  width: 230px;
+  height: 40px;
+  border-radius: 0.5vw;
+  border-color: #fdfdfd00;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
+  background-color: #5b9bd5;
+}
+
+.button-game:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/*секундомер*/
+.watch {
+  min-height: 30px;
+  font-size: 25px;
+}
+
+/*результаты*/
+.background-active {
+  position: fixed;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  background: rgba(41, 41, 41, 0.6);
+}
+
+.pop-up-content {
+  display: flex;
+  align-items: center;
+}
+
+.pop-up-hidden {
+  visibility: hidden;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  align-items: center;
+  border-radius: 20px;
+  background: #ECF3F8;
+  position: relative;
+}
+
+.exit {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.info-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 20px;
+  padding: 20px;
+  background: #FFF;
+}
+
+.title {
+  font-weight: 600;
+  line-height: 130%;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.table {
+  line-height: 148%;
+  width: 400px;
+
+}
+
+thead,
+tbody,
+th,
+td {
+  text-align: center;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
