@@ -1,8 +1,8 @@
 import createElement from './create-element.js';
 
-export default function showPopup() {
-  const main = document.querySelector("body > main");
-  //контейнер с результатами
+export function showPopup() {
+  const main = document.querySelector('body > main');
+  // контейнер с результатами
   const result = createElement({
     tag: 'div',
     parent: main,
@@ -22,10 +22,10 @@ export default function showPopup() {
     tag: 'img',
     parent: card,
     classes: ['exit'],
-    id: "button-pop-up"
+    id: 'button-pop-up',
   });
-  imgClose.src = './assets/image/close.svg'
-  imgClose.alt = 'exit'
+  imgClose.src = './assets/image/close.svg';
+  imgClose.alt = 'exit';
 
   const info = createElement({
     tag: 'div',
@@ -51,7 +51,7 @@ export default function showPopup() {
     tag: 'tr',
     parent: thead,
   });
-  let theadText = ['#', 'Picture', 'Level', 'Time'];
+  const theadText = ['#', 'Picture', 'Level', 'Time'];
 
   theadText.forEach((th) => {
     createElement({
@@ -62,23 +62,51 @@ export default function showPopup() {
     });
   });
 
-  const tbody = createElement({
+  createElement({
     tag: 'tbody',
     parent: table,
   });
-  let tbodyText = ['1', '2', '3', '4', '5'];
+}
 
-  tbodyText.forEach((_, index) => {
-    const trElement = createElement({
-      tag: 'tr',
-      parent: tbody,
-    });
-    for (let i = 0; i < 4; i += 1) {
-      createElement({
-        tag: 'td',
-        parent: trElement,
-        text: i === 0 ? tbodyText[index] : '',
-      });
-    }
+export function saveResult() {
+  // сохранить результат
+  const select = document.querySelector('.select');
+  const activeButton = document.querySelector('.button-active');
+  const watch = document.querySelector('.watch ');
+  const watchText = watch.innerText;
+  const resultArray = watchText.split(':');
+  const resultNumber = parseInt(resultArray[0] * 60) + parseInt(resultArray[1]);
+
+  const currentGameResult = {
+    pictureResult: select.value,
+    activeButtonResult: activeButton.id,
+    watchResult: watchText,
+    timeSecond: resultNumber,
+  };
+
+  const result = JSON.parse(localStorage.getItem('gameResult')) || [];
+  result.push(currentGameResult);
+  result.sort((a, b) => a.timeSecond - b.timeSecond);
+
+  if (result.length > 5) {
+    result.pop();
+  }
+
+  localStorage.setItem('gameResult', JSON.stringify(result));
+}
+export function writeResult() {
+  // записать результаты
+  const result = JSON.parse(localStorage.getItem('gameResult')) || [];
+  const tbody = document.querySelector('tbody');
+  tbody.innerHTML = '';
+  result.forEach((el, index) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+    <td>${index + 1}</td>
+    <td>${el.pictureResult}</td>
+    <td>${el.activeButtonResult}</td>
+    <td>${el.watchResult}</td>
+  `;
+    tbody.appendChild(tr);
   });
 }

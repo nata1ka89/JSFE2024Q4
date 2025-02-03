@@ -5,6 +5,9 @@ body {
   min-height: 100vh;
   align-items: center;
   margin: 0;
+  background-image: url(./assets/image/422423-min.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 main {
@@ -27,7 +30,7 @@ main {
 
 .text {
   min-height: 30px;
-  font-size: 20px;
+  font-size: 25px;
 }
 
 /*подсказки верхние и левые*/
@@ -224,6 +227,7 @@ header {
   background-size: cover;
   background-repeat: no-repeat;
   border-color: #fdfdfd00;
+  background-color: #d2d2d2;
   cursor: pointer;
   border-radius: 0.5vw;
   transition: background-color 0.3s ease-in-out;
@@ -233,7 +237,7 @@ header {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-/*кнопки Reset и Save*/
+/*кнопки игры*/
 .container-button {
   display: flex;
   max-width: 978px;
@@ -265,7 +269,7 @@ header {
 /*секундомер*/
 .watch {
   min-height: 30px;
-  font-size: 20px;
+  font-size: 25px;
 }
 
 /*результаты*/

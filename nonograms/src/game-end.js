@@ -3,6 +3,7 @@ import { template10 } from './template-10x10.js';
 import { template15 } from './template-15x15.js';
 import { stopWatch } from './stop-watch.js';
 import { setGameFinish, getGameFinish, setGameAudio } from './state-game.js';
+import { writeResult, saveResult } from './result-list.js';
 
 // сравнение массивов
 function compareArray(data, useArr) {
@@ -88,6 +89,8 @@ export function gameEnd(gameField, template, nameTemplate) {
           audioEnd.play();
         }
         saveButton.disabled = true;
+        saveResult();
+        writeResult();
       }
     });
     element.addEventListener('contextmenu', (event) => {

@@ -13,7 +13,7 @@ import { startWatch } from './src/stop-watch.js';
 import { saveGame, continueGame } from './src/save-game.js';
 import showSolution from './src/solution.js';
 import randomGame from './src/random-game.js';
-import showPopup from './src/result-list.js';
+import { showPopup, writeResult } from './src/result-list.js';
 
 createButtonLevel();
 let template = template5;
@@ -137,4 +137,5 @@ document.addEventListener('DOMContentLoaded', () => {
     background.classList.toggle('pop-up-hidden');
     document.body.classList.toggle('no-scroll');
   });
+  writeResult();
 });
