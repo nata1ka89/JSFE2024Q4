@@ -108,8 +108,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const continueButton = document.getElementById('Continue-last-game');
-  continueButton.addEventListener('click', continueGame);
-  saveButton.disabled = false;
+  continueButton.addEventListener('click', () => {
+    const data = localStorage.getItem('picture');
+    if (data) {
+      continueGame();
+      saveButton.disabled = false;
+    }
+  })
 
   const buttonTheme = document.querySelector('.button-theme');
   buttonTheme.addEventListener('click', () => {

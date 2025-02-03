@@ -2,6 +2,7 @@
   --background-color: #ffffff;
   --text-color: #000000;
   --cell-color: #d2d2d2;
+  --cell-color-tab: #f0efef;
   --highlight-color: #5b9bd5;
   --border-color: #000000;
   --button-bg-color: #d2d2d2;
@@ -16,13 +17,14 @@
   --background-color: #282c34;
   --text-color: #ffffff;
   --cell-color: #3c4043;
+  --cell-color-tab: #7f858a;
   --highlight-color: #4c8c4a;
   --border-color: #ffffff;
   --button-bg-color: #3c4043;
   --button-hover-bg-color: #4c8c4a;
   --popup-bg-color: #333;
   --select-border-color: #666;
-  --table-bg-color: #424242;
+  --table-bg-color: #7f858a;
   background-image: url(./assets/image/dark.jpg);
 
 }
@@ -148,7 +150,7 @@ main {
   width: 20px;
   height: 20px;
   border: 1px solid var(--border-color);
-  background-color: var(--cell-color);
+  background-color: var(--cell-color-tab);
   cursor: pointer;
 }
 
