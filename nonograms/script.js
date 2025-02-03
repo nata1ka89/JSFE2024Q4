@@ -13,6 +13,7 @@ import { startWatch } from './src/stop-watch.js';
 import { saveGame, continueGame } from './src/save-game.js';
 import showSolution from './src/solution.js';
 import randomGame from './src/random-game.js';
+import showPopup from './src/result-list.js';
 
 createButtonLevel();
 let template = template5;
@@ -20,6 +21,7 @@ let pictures = Object.keys(template);
 createListPictures(pictures);
 createContainer();
 createGameButton();
+showPopup();
 
 const tab = document.querySelectorAll('.button-level');
 let select = document.querySelector('.select');
@@ -122,5 +124,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const randomButton = document.getElementById('Random-game');
   randomButton.addEventListener('click', () => {
     randomGame();
+  });
+
+  const resultButton = document.querySelector('.button-result');
+  const background = document.querySelector('.background-active');
+  resultButton.addEventListener('click', () => {
+    background.classList.toggle('pop-up-hidden');
+    document.body.classList.toggle('no-scroll');
+  });
+  const imgClose = document.querySelector('.exit');
+  imgClose.addEventListener('click', () => {
+    background.classList.toggle('pop-up-hidden');
+    document.body.classList.toggle('no-scroll');
   });
 });

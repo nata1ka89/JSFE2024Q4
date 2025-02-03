@@ -217,6 +217,22 @@ header {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
+.button-result {
+  width: 40px;
+  height: 40px;
+  background-image: url(./assets/image/cup.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-color: #fdfdfd00;
+  cursor: pointer;
+  border-radius: 0.5vw;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.button-result:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
 /*кнопки Reset и Save*/
 .container-button {
   display: flex;
@@ -250,4 +266,80 @@ header {
 .watch {
   min-height: 30px;
   font-size: 20px;
+}
+
+/*результаты*/
+.background-active {
+  position: fixed;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  background: rgba(41, 41, 41, 0.6);
+}
+
+.pop-up-content {
+  display: flex;
+  align-items: center;
+}
+
+.pop-up-hidden {
+  visibility: hidden;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  align-items: center;
+  border-radius: 20px;
+  background: #ECF3F8;
+  position: relative;
+}
+
+.exit {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.info-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 20px;
+  padding: 20px;
+  background: #FFF;
+}
+
+.title {
+  font-weight: 600;
+  line-height: 130%;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.table {
+  line-height: 148%;
+  width: 400px;
+
+}
+
+thead,
+tbody,
+th,
+td {
+  text-align: center;
+}
+
+.no-scroll {
+  overflow: hidden;
 }

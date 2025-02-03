@@ -37,6 +37,13 @@ export function createListPictures(pictures) {
     parent: header,
     classes: ['container-picture'],
   });
+
+  // кнопка результатов
+  createElement({
+    tag: 'button',
+    classes: ['button-result'],
+    parent: divPictures,
+  });
   // кнопка звука
   createElement({
     tag: 'button',
