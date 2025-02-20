@@ -1,4 +1,4 @@
-export interface Sources {
+export interface ISources {
     id: string;
     name: string;
     description: string;
@@ -10,13 +10,13 @@ export interface Sources {
 
 export interface AllSources {
     status: string;
-    sources: Sources[];
+    sources: ISources[];
 }
 
 export interface Article {
     urlToImage: string;
     author: string;
-    source: Pick<Sources, 'name'>;
+    source: Pick<ISources, 'name'>;
     publishedAt: string;
     title: string;
     description: string;
