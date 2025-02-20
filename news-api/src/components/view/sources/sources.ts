@@ -8,16 +8,22 @@ class Sources {
         if (sourceItemTemp !== null) {
             data.forEach((item) => {
                 const sourceClone = sourceItemTemp.content.cloneNode(true) as HTMLElement;
+                const itemName = sourceClone.querySelector('.source__item-name');
+                if (itemName === null) throw new Error('element is null');
+                itemName.textContent = item.name;
 
-                (sourceClone.querySelector('.source__item-name') as HTMLElement).textContent = item.name;
-                sourceClone.querySelector('.source__item')?.setAttribute('data-source-id', item.id);
+                const sourceItem = sourceClone.querySelector('.source__item');
+                if (sourceItem === null) throw new Error('element is null');
+                sourceItem.setAttribute('data-source-id', item.id);
 
                 fragment.append(sourceClone);
             });
         } else {
             throw new Error('Template element #newsItemTemp not found');
         }
-        document.querySelector('.sources')?.append(fragment);
+        const sourcesElement = document.querySelector('.sources');
+        if (sourcesElement === null) throw new Error('element is null');
+        sourcesElement.append(fragment);
     }
 }
 
