@@ -13,12 +13,18 @@ export interface AllSources {
     sources: ISources[];
 }
 
+export interface ArticleSource {
+    id: string;
+    name: string;
+}
+
 export interface Article {
-    urlToImage: string;
-    author: string;
-    source: Pick<ISources, 'name'>;
+    source: ArticleSource;
+    urlToImage?: string;
+    author?: string;
     publishedAt: string;
     title: string;
     description: string;
     url: string;
+    content?: string;
 }

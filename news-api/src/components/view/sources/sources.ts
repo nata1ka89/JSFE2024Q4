@@ -19,7 +19,7 @@ class Sources {
                 fragment.append(sourceClone);
             });
         } else {
-            throw new Error('Template element #newsItemTemp not found');
+            throw new Error('Template element #sourceItemTemp not found');
         }
         const sourcesElement = document.querySelector('.sources');
         if (sourcesElement === null) throw new Error('element is null');
