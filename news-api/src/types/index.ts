@@ -8,7 +8,7 @@ export interface ISources {
     country: string;
 }
 
-export interface AllSources {
+export interface SourcesResponse {
     status: string;
     sources: ISources[];
 }
@@ -27,4 +27,10 @@ export interface Article {
     description: string;
     url: string;
     content?: string;
+}
+
+export interface ArticleResponse {
+    status: string;
+    totalResults: bigint;
+    articles: Article[];
 }
