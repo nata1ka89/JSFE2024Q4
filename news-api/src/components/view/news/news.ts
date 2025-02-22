@@ -12,8 +12,18 @@ class News {
                 const newsItem = checkNull(newsClone.querySelector('.news__item'));
                 if (idx % 2) newsItem.classList.add('alt');
                 const metaPhoto = checkNull(newsClone.querySelector('.news__meta-photo'));
-                (metaPhoto as HTMLElement).style.backgroundImage =
-                    `url(${item.urlToImage || 'img/news_placeholder.jpg'})`;
+                const imageUrl: string =
+                    item.urlToImage ||
+                    'https://www.umweltbundesamt.de/sites/default/files/medien/4292/bilder/fotolia_8849224_m_news_0.jpg';
+                const img = new Image();
+                img.src = imageUrl;
+                img.onload = () => {
+                    metaPhoto.style.backgroundImage = `url(${imageUrl})`;
+                };
+                img.onerror = () => {
+                    metaPhoto.style.backgroundImage =
+                        "url('https://www.umweltbundesamt.de/sites/default/files/medien/4292/bilder/fotolia_8849224_m_news_0.jpg')";
+                };
                 const metaAuthor = checkNull(newsClone.querySelector('.news__meta-author'));
                 metaAuthor.textContent = item.author || item.source.name;
                 const metaDate = checkNull(newsClone.querySelector('.news__meta-date'));
