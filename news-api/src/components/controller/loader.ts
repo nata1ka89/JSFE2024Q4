@@ -1,13 +1,4 @@
-interface Options {
-    [key: string]: string;
-}
-
-interface RequestParameters {
-    endpoint: string;
-    options?: Options;
-}
-
-type Callback<T> = (data: T) => void;
+import { Options, RequestParameters, Callback } from '../../types/index';
 
 class Loader {
     private baseLink: string;

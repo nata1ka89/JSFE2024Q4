@@ -1,19 +1,17 @@
 import './sources.css';
-import { ISources } from '../../../types/index';
+import { ISources, checkNull } from '../../../types/index';
 
 class Sources {
-    public draw(data: ISources[]) {
-        const fragment = document.createDocumentFragment();
+    public draw(data: ISources[]): void {
+        const fragment: DocumentFragment = document.createDocumentFragment();
         const sourceItemTemp: HTMLTemplateElement | null = document.querySelector('#sourceItemTemp');
         if (sourceItemTemp !== null) {
             data.forEach((item) => {
                 const sourceClone = sourceItemTemp.content.cloneNode(true) as HTMLElement;
-                const itemName = sourceClone.querySelector('.source__item-name');
-                if (itemName === null) throw new Error('element is null');
+                const itemName = checkNull(sourceClone.querySelector('.source__item-name'));
                 itemName.textContent = item.name;
 
-                const sourceItem = sourceClone.querySelector('.source__item');
-                if (sourceItem === null) throw new Error('element is null');
+                const sourceItem = checkNull(sourceClone.querySelector('.source__item'));
                 sourceItem.setAttribute('data-source-id', item.id);
 
                 fragment.append(sourceClone);
@@ -21,8 +19,7 @@ class Sources {
         } else {
             throw new Error('Template element #sourceItemTemp not found');
         }
-        const sourcesElement = document.querySelector('.sources');
-        if (sourcesElement === null) throw new Error('element is null');
+        const sourcesElement = checkNull(document.querySelector('.sources'));
         sourcesElement.append(fragment);
     }
 }

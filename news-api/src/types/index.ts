@@ -34,3 +34,19 @@ export interface ArticleResponse {
     totalResults: bigint;
     articles: Article[];
 }
+
+export function checkNull(element: HTMLElement | null): HTMLElement {
+    if (element === null) throw new Error('element is null');
+    return element;
+}
+
+export interface Options {
+    [key: string]: string;
+}
+
+export interface RequestParameters {
+    endpoint: string;
+    options?: Options;
+}
+
+export type Callback<T> = (data: T) => void;

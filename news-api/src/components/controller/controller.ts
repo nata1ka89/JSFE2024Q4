@@ -1,10 +1,8 @@
 import AppLoader from './appLoader';
-import { SourcesResponse, ArticleResponse } from '../../types/index';
-
-type Callback<T> = (data: T) => void;
+import { SourcesResponse, ArticleResponse, Callback } from '../../types/index';
 
 class AppController extends AppLoader {
-    getSources(callback: Callback<SourcesResponse>): void {
+    public getSources(callback: Callback<SourcesResponse>): void {
         super.getResp<SourcesResponse>(
             {
                 endpoint: 'sources',
@@ -13,7 +11,7 @@ class AppController extends AppLoader {
         );
     }
 
-    getNews(e: Event, callback: Callback<ArticleResponse>): void {
+    public getNews(e: Event, callback: Callback<ArticleResponse>): void {
         const target: EventTarget | null = e.target;
         const newsContainer: EventTarget | null = e.currentTarget;
         if (!target || !newsContainer) throw new Error('EventTarget is null');
