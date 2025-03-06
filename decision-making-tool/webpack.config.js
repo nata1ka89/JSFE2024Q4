@@ -5,7 +5,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: './src/index.ts',
-  mode: 'development',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -17,7 +16,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.[ts]j$/,
+        test: /\.ts$/,
         use: 'ts-loader',
         exclude: /node_modules/,
       },
@@ -30,14 +29,14 @@ module.exports = {
         type: 'asset/resource',
       },
       {
-        test: /\.(wolff(2)?|eot|ttf|otf)$/i,
+        test: /\.(woff(2)?|eot|ttf|otf)$/i,
         type: 'asset/resource',
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'decision-making-too',
+      title: 'decision-making-tool',
     }),
     new CleanWebpackPlugin(),
     /*    new CopyPlugin({
