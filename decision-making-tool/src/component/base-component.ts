@@ -1,6 +1,5 @@
 type Callback = (event: MouseEvent) => void;
 export class BaseComponent {
-
   public node: HTMLElement;
 
   constructor(

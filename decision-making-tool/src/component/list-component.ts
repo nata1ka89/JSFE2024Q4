@@ -9,7 +9,7 @@ export class ListComponent extends BaseComponent {
     this.addListItem();
   }
 
-  protected addListItem(): void {
+  public addListItem(): void {
     const listItem = new BaseComponent(this.node, 'li', 'list-item');
     const id: string = crypto.randomUUID();
     this.displayId++;
