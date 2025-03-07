@@ -37,12 +37,13 @@ export class ListComponent extends BaseComponent {
     inputWeight.setAttribute('placeholder', 'Weight');
     inputWeight.setAttribute('name', 'weight');
 
-    const button = new BaseComponent(
+    const buttonDelete = new BaseComponent(
       listItem.node,
       'button',
       'button-item',
       'Delete'
     );
-    button.setAttribute('type', 'button');
+    buttonDelete.setAttribute('type', 'button');
+    buttonDelete.setCallback(() => listItem.destroy())
   }
 }

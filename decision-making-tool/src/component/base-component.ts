@@ -1,4 +1,6 @@
+type Callback = (event: MouseEvent) => void;
 export class BaseComponent {
+
   public node: HTMLElement;
 
   constructor(
@@ -23,6 +25,10 @@ export class BaseComponent {
 
   public setAttribute(name: string, value: string): void {
     this.node.setAttribute(name, value);
+  }
+
+  public setCallback(callback: Callback) {
+    this.node.addEventListener('click', (event) => callback(event));
   }
 
   public destroy(): void {
