@@ -27,7 +27,7 @@ export class BaseComponent {
     this.node.setAttribute(name, value);
   }
 
-  public setCallback(callback: Callback) {
+  public setCallback(callback: Callback): void {
     this.node.addEventListener('click', (event) => callback(event));
   }
 

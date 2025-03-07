@@ -7,20 +7,20 @@ const buttonsName = [
   'Clear List',
   'Save List',
   'Load List',
-  'Start'
-]
+  'Start',
+];
 
 export class ButtonsComponent extends BaseComponent {
   constructor(_parenNode: HTMLElement | null) {
     super(_parenNode, 'div', 'buttons-container');
-    this.addButtons()
+    this.addButtons();
   }
 
   protected addButtons(): void {
-    let button: BaseComponent
-    buttonsName.forEach(element => {
+    let button: BaseComponent;
+    buttonsName.forEach((element) => {
       button = new BaseComponent(this.node, 'button', 'button', element);
-      const elementId = element.split(" ").join("-")
+      const elementId = element.split(' ').join('-');
       button.setAttribute('id', elementId);
     });
   }

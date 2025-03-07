@@ -4,7 +4,6 @@
   list-style: none;
 }
 
-
 .list-item {
   display: flex;
   align-items: center;
@@ -18,14 +17,12 @@
   border-bottom: none;
 }
 
-
 .label-item {
   flex: 0 0 50px;
   margin-right: 10px;
   font-weight: bold;
   color: #333;
 }
-
 
 .input-title {
   flex: 1;
@@ -38,7 +35,6 @@
   font-size: 14px;
 }
 
-
 .input-weight {
   flex: 0 0 100px;
 
@@ -49,7 +45,6 @@
 
   font-size: 14px;
 }
-
 
 .button-item {
   cursor: pointer;
@@ -69,7 +64,6 @@
 .button-item:hover {
   background-color: #0056b3;
 }
-
 
 @media (width <=600px) {
   .list-item {

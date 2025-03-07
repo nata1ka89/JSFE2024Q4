@@ -44,6 +44,6 @@ export class ListComponent extends BaseComponent {
       'Delete'
     );
     buttonDelete.setAttribute('type', 'button');
-    buttonDelete.setCallback(() => listItem.destroy())
+    buttonDelete.setCallback(() => listItem.destroy());
   }
 }
