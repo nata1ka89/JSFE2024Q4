@@ -1,6 +1,18 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100vh;
+  margin: 0;
+
+  background-color: #f0f0f0;
+}
+
 .main-container {
+  width: 100%;
   max-width: 800px;
-  margin: 0 auto;
+  margin: 20px;
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
