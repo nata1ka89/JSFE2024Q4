@@ -3,13 +3,18 @@ import './style-list.css';
 
 export class ListComponent extends BaseComponent {
   public displayId: number = 0;
-  public listItem: BaseComponent | undefined;
+
+  private inputAll: {
+    id: string;
+    titleInput: BaseComponent;
+    weightInput: BaseComponent;
+  }[] = [];
   constructor(_parenNode: HTMLElement | null) {
     super(_parenNode, 'ul', 'list');
-    this.addListItem();
+    this.addListItem('', '');
   }
 
-  public addListItem(): void {
+  public addListItem(title: string, weight: string): void {
     const listItem = new BaseComponent(this.node, 'li', 'list-item');
     const id: string = crypto.randomUUID();
     this.displayId++;
@@ -26,6 +31,7 @@ export class ListComponent extends BaseComponent {
     inputTitle.setAttribute('type', 'text');
     inputTitle.setAttribute('placeholder', 'Title');
     inputTitle.setAttribute('name', 'title');
+    inputTitle.setAttribute('value', title);
 
     const inputWeight = new BaseComponent(
       listItem.node,
@@ -36,6 +42,13 @@ export class ListComponent extends BaseComponent {
     inputWeight.setAttribute('type', 'number');
     inputWeight.setAttribute('placeholder', 'Weight');
     inputWeight.setAttribute('name', 'weight');
+    inputWeight.setAttribute('value', weight);
+
+    this.inputAll.push({
+      id,
+      titleInput: inputTitle,
+      weightInput: inputWeight,
+    });
 
     const buttonDelete = new BaseComponent(
       listItem.node,
@@ -44,7 +57,10 @@ export class ListComponent extends BaseComponent {
       'Delete'
     );
     buttonDelete.setAttribute('type', 'button');
-    buttonDelete.setCallback(() => listItem.destroy());
+    buttonDelete.setCallback(() => {
+      listItem.destroy();
+      this.inputAll = this.inputAll.filter((input) => input.id !== id);
+    })
   }
 
   public clearList(): void {
@@ -52,5 +68,21 @@ export class ListComponent extends BaseComponent {
       this.node.firstChild.remove();
     }
     this.displayId = 0;
+  }
+  public getOptions(): { id: string; title: string; weight: string }[] {
+    const options: { id: string; title: string; weight: string }[] = [];
+    this.inputAll.forEach((input) => {
+      if (
+        input.titleInput.node instanceof HTMLInputElement &&
+        input.weightInput.node instanceof HTMLInputElement
+      ) {
+        const title = input.titleInput.node.value.trim();
+        const weight = input.weightInput.node.value.trim();
+        if (title && weight) {
+          options.push({ id: input.id, title, weight });
+        }
+      }
+    });
+    return options;
   }
 }

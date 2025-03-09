@@ -1,6 +1,7 @@
 import { BaseComponent } from './base-component';
 import type ModalComponent from './modal-component';
 import type { ListComponent } from './list-component';
+import { saveOptions } from './local-storage';
 import './style-buttons.css';
 
 const buttonsName = [
@@ -28,12 +29,16 @@ export class ButtonsComponent extends BaseComponent {
 
   protected addButtons(): void {
     const actions: { [key: string]: () => void } = {
-      'Add-Option': () => this.listComponent.addListItem(),
+      'Add-Option': () => this.listComponent.addListItem('', ''),
       'Paste-List': () => this.modalComponent.addModal(),
       'Clear-List': () => this.listComponent.clearList(),
       'Save-List': () => console.log('Save List clicked'),
       'Load-List': () => console.log('Load List clicked'),
-      'Start': () => console.log('Start clicked'),
+      'Start': () => {
+        const options = this.listComponent.getOptions();
+        saveOptions(options);
+        console.log('Options saved:', options);
+      },
     };
 
     let button: BaseComponent;
@@ -46,7 +51,11 @@ export class ButtonsComponent extends BaseComponent {
           const target = event.target;
           const buttonId = target.id;
           const action = actions[buttonId];
-          action();
+          if (typeof action === 'function') {
+            action();
+          } else {
+            console.error(`No action found`);
+          }
         } else {
           throw new TypeError('Element is not an instance of HTMLElement');
         }
