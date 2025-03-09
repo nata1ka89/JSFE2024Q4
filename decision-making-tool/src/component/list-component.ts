@@ -3,7 +3,7 @@ import './style-list.css';
 
 export class ListComponent extends BaseComponent {
   public displayId: number = 0;
-
+  public listItem: BaseComponent | undefined;
   constructor(_parenNode: HTMLElement | null) {
     super(_parenNode, 'ul', 'list');
     this.addListItem();
@@ -45,5 +45,12 @@ export class ListComponent extends BaseComponent {
     );
     buttonDelete.setAttribute('type', 'button');
     buttonDelete.setCallback(() => listItem.destroy());
+  }
+
+  public clearList(): void {
+    while (this.node.firstChild) {
+      this.node.firstChild.remove();
+    }
+    this.displayId = 0;
   }
 }

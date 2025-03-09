@@ -1,7 +1,6 @@
 import { BaseComponent } from './base-component';
 import type ModalComponent from './modal-component';
 import type { ListComponent } from './list-component';
-
 import './style-buttons.css';
 
 const buttonsName = [
@@ -31,10 +30,10 @@ export class ButtonsComponent extends BaseComponent {
     const actions: { [key: string]: () => void } = {
       'Add-Option': () => this.listComponent.addListItem(),
       'Paste-List': () => this.modalComponent.addModal(),
-      'Clear-List': () => console.log('Clear List clicked'),
+      'Clear-List': () => this.listComponent.clearList(),
       'Save-List': () => console.log('Save List clicked'),
       'Load-List': () => console.log('Load List clicked'),
-      Start: () => console.log('Start clicked'),
+      'Start': () => console.log('Start clicked'),
     };
 
     let button: BaseComponent;
