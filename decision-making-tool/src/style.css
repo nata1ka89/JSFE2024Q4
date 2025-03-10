@@ -22,3 +22,10 @@ body {
   background-color: #f9f9f9;
   box-shadow: 0 4px 6px rgb(0 0 0 / 10%);
 }
+
+h1.app-name {
+  margin: 20px 0;
+  font-size: 2rem;
+  color: #4a90e2;
+  text-align: center;
+}

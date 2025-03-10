@@ -60,7 +60,7 @@ export class ListComponent extends BaseComponent {
     buttonDelete.setCallback(() => {
       listItem.destroy();
       this.inputAll = this.inputAll.filter((input) => input.id !== id);
-    })
+    });
   }
 
   public clearList(): void {
