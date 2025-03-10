@@ -1,4 +1,4 @@
-import { BaseComponent } from './base-component';
+import { BaseComponent } from '../base-component';
 import './style-list.css';
 
 export class ListComponent extends BaseComponent {

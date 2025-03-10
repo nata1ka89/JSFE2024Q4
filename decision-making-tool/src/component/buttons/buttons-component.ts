@@ -1,7 +1,7 @@
-import { BaseComponent } from './base-component';
-import type ModalComponent from './modal-component';
-import type { ListComponent } from './list-component';
-import { saveOptions } from './local-storage';
+import { BaseComponent } from '../base-component';
+import type ModalComponent from '../modal/modal-component';
+import type { ListComponent } from '../options/list-component';
+import { saveOptions } from '../local-storage';
 import './style-buttons.css';
 
 const buttonsName = [

@@ -1,7 +1,7 @@
 import { BaseComponent } from './component/base-component';
-import ModalComponent from './component/modal-component';
-import { ButtonsComponent } from './component/buttons-component';
-import { ListComponent } from './component/list-component';
+import ModalComponent from './component/modal/modal-component';
+import { ButtonsComponent } from './component/buttons/buttons-component';
+import { ListComponent } from './component/options/list-component';
 import './style.css';
 const main = new BaseComponent(document.body, 'main', 'main-container');
 

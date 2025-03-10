@@ -1,4 +1,4 @@
-import { BaseComponent } from './base-component';
+import { BaseComponent } from '../base-component';
 import './style-modal.css';
 
 export default class ModalComponent {
