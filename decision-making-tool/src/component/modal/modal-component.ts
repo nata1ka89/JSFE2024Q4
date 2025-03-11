@@ -1,4 +1,5 @@
 import { BaseComponent } from '../base-component';
+import type { ListComponent } from '../options/list-component';
 import './style-modal.css';
 
 export default class ModalComponent {
@@ -6,8 +7,17 @@ export default class ModalComponent {
   private dialog: BaseComponent | undefined;
   private buttonCancel: BaseComponent | undefined;
   private buttonConfirm: BaseComponent | undefined;
-  constructor(parenNode: HTMLElement) {
+  private listComponent: ListComponent;
+
+  constructor(parenNode: HTMLElement, listComponent: ListComponent) {
+    this.listComponent = listComponent;
     this.parenNode = parenNode;
+  }
+
+  private static closeModal(dialogElement: HTMLDialogElement): void {
+    document.body.style.overflow = '';
+    dialogElement.close();
+    dialogElement.remove();
   }
 
   public addModal(): void {
@@ -37,38 +47,40 @@ export default class ModalComponent {
     );
     this.buttonCancel.setAttribute('type', 'button');
     this.buttonConfirm.setAttribute('type', 'button');
-    this.viewModal();
+    this.viewModal(textarea);
   }
 
-  private viewModal(): void {
+  private viewModal(textarea: BaseComponent): void {
     if (!this.dialog) {
       throw new Error('Modal has not been created.');
     }
     if (this.dialog.node instanceof HTMLDialogElement) {
       const dialogElement = this.dialog.node;
+      dialogElement.showModal();
+      document.body.style.overflow = 'hidden';
       dialogElement.addEventListener('cancel', () => {
-        dialogElement.close();
-        dialogElement.remove();
+        ModalComponent.closeModal(dialogElement);
       });
       dialogElement.addEventListener('click', (event) => {
         if (event.target === dialogElement) {
-          dialogElement.close();
-          dialogElement.remove();
+          ModalComponent.closeModal(dialogElement);
         }
       });
-      dialogElement.showModal();
       if (this.buttonCancel) {
         this.buttonCancel.setCallback(() => {
-          dialogElement.close();
-          dialogElement.remove();
+          ModalComponent.closeModal(dialogElement);
         });
       }
       if (this.buttonConfirm) {
         this.buttonConfirm.setCallback((event) => {
           event.preventDefault();
           console.log('Confirm clicked');
-          dialogElement.close();
-          dialogElement.remove();
+          if (textarea.node instanceof HTMLTextAreaElement) {
+            const inputData = textarea.node.value.trim();
+            console.log(inputData);
+            this.parseData(inputData);
+          }
+          ModalComponent.closeModal(dialogElement);
         });
       }
     } else {
@@ -76,5 +88,15 @@ export default class ModalComponent {
         'dialog.node is not an instance of HTMLDialogElement'
       );
     }
+  }
+
+  private parseData(inputData: string): void {
+    const rows = inputData.split('\n');
+    rows.forEach((row) => {
+      const [title, weight] = row.split(',');
+      if (title && weight) {
+        this.listComponent.addListItem(title.trim(), weight.trim());
+      }
+    });
   }
 }

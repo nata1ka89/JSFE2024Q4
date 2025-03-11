@@ -29,7 +29,7 @@ export class ButtonsComponent extends BaseComponent {
   }
 
   protected addButtons(): void {
-    const modal = new ModalComponent(this.node);
+    const modal = new ModalComponent(this.node, this.listComponent);
     const actions: { [key: string]: () => void } = {
       'Add-Option': () => this.listComponent.addListItem('', ''),
       'Paste-List': () => modal.addModal(),
