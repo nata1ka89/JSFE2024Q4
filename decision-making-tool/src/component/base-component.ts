@@ -11,12 +11,6 @@ export class BaseComponent {
     const element = document.createElement(tagName);
     element.className = className;
     element.textContent = content;
-    if (_parenNode && tagName === 'main') {
-      const appName = document.createElement('h1');
-      appName.className = 'app-name';
-      appName.textContent = 'Decision Making Tool';
-      element.append(appName);
-    }
 
     if (element instanceof HTMLElement) {
       this.node = element;

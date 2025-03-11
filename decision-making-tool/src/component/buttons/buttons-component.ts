@@ -1,7 +1,8 @@
 import { BaseComponent } from '../base-component';
-import type ModalComponent from '../modal/modal-component';
+import ModalComponent from '../modal/modal-component';
 import type { ListComponent } from '../options/list-component';
 import { saveOptions } from '../local-storage';
+import type Router from '../router';
 import './style-buttons.css';
 
 const buttonsName = [
@@ -15,22 +16,23 @@ const buttonsName = [
 
 export class ButtonsComponent extends BaseComponent {
   private listComponent: ListComponent;
-  private modalComponent: ModalComponent;
+  private router: Router;
   constructor(
     _parenNode: HTMLElement | null,
     listComponent: ListComponent,
-    modalComponent: ModalComponent
+    router: Router
   ) {
     super(_parenNode, 'div', 'buttons-container');
     this.listComponent = listComponent;
-    this.modalComponent = modalComponent;
+    this.router = router;
     this.addButtons();
   }
 
   protected addButtons(): void {
+    const modal = new ModalComponent(this.node);
     const actions: { [key: string]: () => void } = {
       'Add-Option': () => this.listComponent.addListItem('', ''),
-      'Paste-List': () => this.modalComponent.addModal(),
+      'Paste-List': () => modal.addModal(),
       'Clear-List': () => this.listComponent.clearList(),
       'Save-List': () => console.log('Save List clicked'),
       'Load-List': () => console.log('Load List clicked'),
@@ -38,6 +40,11 @@ export class ButtonsComponent extends BaseComponent {
         const options = this.listComponent.getOptions();
         saveOptions(options);
         console.log('Options saved:', options);
+        if (options.length < 2) {
+          alert('You need at least two valid options to start.');
+        } else {
+          this.router.navigate('/decision-picker');
+        }
       },
     };
 

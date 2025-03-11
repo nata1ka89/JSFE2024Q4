@@ -19,9 +19,8 @@ export function saveOptions(
           typeof option.title === 'string' &&
           typeof option.weight === 'string'
       )
-    ) {
-      return parsedOptions;
-    }
+    )
+    console.log(parsedOptions);
     return parsedOptions;
   }
   throw new TypeError('Invalid options structure');

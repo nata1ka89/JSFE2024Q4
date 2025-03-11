@@ -5,6 +5,7 @@ export class DecisionPickerComponent extends BaseComponent {
   private duration: number = 10;
 
   constructor(_parenNode: HTMLElement | null) {
+    new BaseComponent(_parenNode, 'h1', 'app-name', 'Decision Making Tool');
     super(_parenNode, 'div', 'decision-picker-container');
 
     this.createPickedOptionDisplay();

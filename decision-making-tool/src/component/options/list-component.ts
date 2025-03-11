@@ -10,6 +10,7 @@ export class ListComponent extends BaseComponent {
     weightInput: BaseComponent;
   }[] = [];
   constructor(_parenNode: HTMLElement | null) {
+    new BaseComponent(_parenNode, 'h1', 'app-name', 'Decision Making Tool');
     super(_parenNode, 'ul', 'list');
     this.addListItem('', '');
   }

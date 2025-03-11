@@ -9,5 +9,6 @@ module.exports = merge(commonConfig, {
     static: path.join(__dirname, 'dist'),
     compress: true,
     port: 4000,
+    historyApiFallback: true,
   },
 });
