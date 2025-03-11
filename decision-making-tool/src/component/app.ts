@@ -28,6 +28,6 @@ export class App extends BaseComponent {
   }
   private viewSecondPage(): void {
     this.node.innerHTML = '';
-    new DecisionPickerComponent(this.node);
+    new DecisionPickerComponent(this.node, this.router);
   }
 }

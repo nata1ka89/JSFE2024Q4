@@ -4,6 +4,7 @@ import type { ListComponent } from '../options/list-component';
 import { saveOptions } from '../local-storage';
 import type Router from '../router';
 import './style-buttons.css';
+import ModalValidComponent from '../modal/valid-modal-component';
 
 const buttonsName = ['Add Option', 'Paste List', 'Clear List', 'Save List', 'Load List', 'Start'];
 
@@ -30,7 +31,8 @@ export class ButtonsComponent extends BaseComponent {
         saveOptions(options);
         console.log('Options saved:', options);
         if (options.length < 2) {
-          alert('You need at least two valid options to start.');
+          const modalValidComponent = new ModalValidComponent(this.node);
+          modalValidComponent.addValidationModal();
         } else {
           this.router.navigate('/decision-picker');
         }

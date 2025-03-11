@@ -3,18 +3,18 @@ import type { ListComponent } from '../options/list-component';
 import './style-modal.css';
 
 export default class ModalComponent {
-  private parenNode: HTMLElement;
-  private dialog: BaseComponent | undefined;
+  public parenNode: HTMLElement;
+  public dialog: BaseComponent | undefined;
   private buttonCancel: BaseComponent | undefined;
   private buttonConfirm: BaseComponent | undefined;
-  private listComponent: ListComponent;
+  private listComponent?: ListComponent;
 
-  constructor(parenNode: HTMLElement, listComponent: ListComponent) {
-    this.listComponent = listComponent;
+  constructor(parenNode: HTMLElement, listComponent?: ListComponent) {
+    if (listComponent) this.listComponent = listComponent;
     this.parenNode = parenNode;
   }
 
-  private static closeModal(dialogElement: HTMLDialogElement): void {
+  public static closeModal(dialogElement: HTMLDialogElement): void {
     document.body.style.overflow = '';
     dialogElement.close();
     dialogElement.remove();
@@ -79,7 +79,7 @@ export default class ModalComponent {
     rows.forEach((row) => {
       const [title, weight] = row.split(',');
       if (title && weight) {
-        this.listComponent.addListItem(title.trim(), weight.trim());
+        this.listComponent?.addListItem(title.trim(), weight.trim());
       }
     });
   }

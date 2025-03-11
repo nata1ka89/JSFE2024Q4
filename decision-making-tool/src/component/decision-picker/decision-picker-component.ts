@@ -1,13 +1,15 @@
 import { BaseComponent } from '../base-component';
+import type Router from '../router';
 import './style-decision.css';
 
 export class DecisionPickerComponent extends BaseComponent {
   private duration: number = 10;
+  private router: Router;
 
-  constructor(_parenNode: HTMLElement | null) {
+  constructor(_parenNode: HTMLElement | null, router: Router) {
     new BaseComponent(_parenNode, 'h1', 'app-name', 'Decision Making Tool');
     super(_parenNode, 'div', 'decision-picker-container');
-
+    this.router = router;
     this.createPickedOptionDisplay();
     this.createButtons();
     this.createWheelCanvas();
@@ -34,6 +36,7 @@ export class DecisionPickerComponent extends BaseComponent {
     const backButton = new BaseComponent(buttonPanel.node, 'button', 'back-button', '⬅ Back');
     backButton.setCallback(() => {
       console.log('Back clicked');
+      this.router.navigate('/');
     });
 
     const soundButton = new BaseComponent(
