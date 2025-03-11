@@ -5,23 +5,12 @@ import { saveOptions } from '../local-storage';
 import type Router from '../router';
 import './style-buttons.css';
 
-const buttonsName = [
-  'Add Option',
-  'Paste List',
-  'Clear List',
-  'Save List',
-  'Load List',
-  'Start',
-];
+const buttonsName = ['Add Option', 'Paste List', 'Clear List', 'Save List', 'Load List', 'Start'];
 
 export class ButtonsComponent extends BaseComponent {
   private listComponent: ListComponent;
   private router: Router;
-  constructor(
-    _parenNode: HTMLElement | null,
-    listComponent: ListComponent,
-    router: Router
-  ) {
+  constructor(_parenNode: HTMLElement | null, listComponent: ListComponent, router: Router) {
     super(_parenNode, 'div', 'buttons-container');
     this.listComponent = listComponent;
     this.router = router;

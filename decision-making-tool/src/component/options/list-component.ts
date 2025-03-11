@@ -19,12 +19,7 @@ export class ListComponent extends BaseComponent {
     const listItem = new BaseComponent(this.node, 'li', 'list-item');
     const id: string = crypto.randomUUID();
     this.displayId++;
-    const label = new BaseComponent(
-      listItem.node,
-      'label',
-      'label-item',
-      `#${this.displayId}`
-    );
+    const label = new BaseComponent(listItem.node, 'label', 'label-item', `#${this.displayId}`);
     label.setAttribute('for', id);
 
     const inputTitle = new BaseComponent(listItem.node, 'input', 'input-title');
@@ -34,11 +29,7 @@ export class ListComponent extends BaseComponent {
     inputTitle.setAttribute('name', 'title');
     inputTitle.setAttribute('value', title);
 
-    const inputWeight = new BaseComponent(
-      listItem.node,
-      'input',
-      'input-weight'
-    );
+    const inputWeight = new BaseComponent(listItem.node, 'input', 'input-weight');
     inputWeight.setAttribute('id', id);
     inputWeight.setAttribute('type', 'number');
     inputWeight.setAttribute('placeholder', 'Weight');
@@ -51,12 +42,7 @@ export class ListComponent extends BaseComponent {
       weightInput: inputWeight,
     });
 
-    const buttonDelete = new BaseComponent(
-      listItem.node,
-      'button',
-      'button-item',
-      'Delete'
-    );
+    const buttonDelete = new BaseComponent(listItem.node, 'button', 'button-item', 'Delete');
     buttonDelete.setAttribute('type', 'button');
     buttonDelete.setCallback(() => {
       listItem.destroy();
