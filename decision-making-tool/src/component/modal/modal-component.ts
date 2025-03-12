@@ -79,7 +79,7 @@ export default class ModalComponent {
     rows.forEach((row) => {
       const [title, weight] = row.split(',');
       if (title && weight) {
-        this.listComponent?.addListItem(title.trim(), weight.trim());
+        this.listComponent?.addListItem('', title.trim(), weight.trim());
       }
     });
   }

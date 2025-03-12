@@ -1,4 +1,15 @@
-export function saveOptions(options: { id: string; title: string; weight: string }[]): void {
+type IListItem = {
+  id: string;
+  title: string;
+  weight: string;
+};
+
+type IJsonData = {
+  list: IListItem[];
+  lastId: number;
+};
+
+export function saveOptions(options: IJsonData): void {
   localStorage.clear();
   localStorage.setItem('options', JSON.stringify(options));
 }

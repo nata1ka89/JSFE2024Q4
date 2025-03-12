@@ -5,6 +5,7 @@ import { saveOptions } from '../local-storage';
 import type Router from '../router';
 import './style-buttons.css';
 import ModalValidComponent from '../modal/valid-modal-component';
+import { createURL } from '../save-load-json';
 
 const buttonsName = ['Add Option', 'Paste List', 'Clear List', 'Save List', 'Load List', 'Start'];
 
@@ -21,14 +22,26 @@ export class ButtonsComponent extends BaseComponent {
   protected addButtons(): void {
     const modal = new ModalComponent(this.node, this.listComponent);
     const actions: { [key: string]: () => void } = {
-      'Add-Option': () => this.listComponent.addListItem('', ''),
+      'Add-Option': () => this.listComponent.addListItem('', '', ''),
       'Paste-List': () => modal.addModal(),
       'Clear-List': () => this.listComponent.clearList(),
-      'Save-List': () => console.log('Save List clicked'),
+      'Save-List': () => {
+        const options = this.listComponent.getOptions();
+
+        const optionsSave = {
+          list: options,
+          lastId: this.listComponent.displayId,
+        };
+        createURL(optionsSave);
+      },
       'Load-List': () => console.log('Load List clicked'),
       'Start': () => {
         const options = this.listComponent.getOptions();
-        saveOptions(options);
+        const optionsSave = {
+          list: options,
+          lastId: this.listComponent.displayId,
+        };
+        saveOptions(optionsSave);
         console.log('Options saved:', options);
         if (options.length < 2) {
           const modalValidComponent = new ModalValidComponent(this.node);

@@ -5,39 +5,40 @@ export class ListComponent extends BaseComponent {
   public displayId: number = 0;
 
   private inputAll: {
-    id: string;
+    idRandom: string;
     titleInput: BaseComponent;
     weightInput: BaseComponent;
   }[] = [];
   constructor(_parenNode: HTMLElement | null) {
     new BaseComponent(_parenNode, 'h1', 'app-name', 'Decision Making Tool');
     super(_parenNode, 'ul', 'list');
-    this.addListItem('', '');
+    this.addListItem('', '', '');
   }
 
-  public addListItem(title: string, weight: string): void {
+  public addListItem(id: string, title: string, weight: string): void {
     const listItem = new BaseComponent(this.node, 'li', 'list-item');
-    const id: string = crypto.randomUUID();
+    const idRandom: string = crypto.randomUUID();
     this.displayId++;
     const label = new BaseComponent(listItem.node, 'label', 'label-item', `#${this.displayId}`);
-    label.setAttribute('for', id);
+    label.setAttribute('for', `#${this.displayId}`);
+    label.setAttribute('id', idRandom);
 
     const inputTitle = new BaseComponent(listItem.node, 'input', 'input-title');
-    inputTitle.setAttribute('id', id);
+    inputTitle.setAttribute('id', `#${this.displayId}`);
     inputTitle.setAttribute('type', 'text');
     inputTitle.setAttribute('placeholder', 'Title');
     inputTitle.setAttribute('name', 'title');
     inputTitle.setAttribute('value', title);
 
     const inputWeight = new BaseComponent(listItem.node, 'input', 'input-weight');
-    inputWeight.setAttribute('id', id);
+    inputWeight.setAttribute('id', `#${this.displayId}`);
     inputWeight.setAttribute('type', 'number');
     inputWeight.setAttribute('placeholder', 'Weight');
     inputWeight.setAttribute('name', 'weight');
     inputWeight.setAttribute('value', weight);
 
     this.inputAll.push({
-      id,
+      idRandom: id,
       titleInput: inputTitle,
       weightInput: inputWeight,
     });
@@ -46,7 +47,7 @@ export class ListComponent extends BaseComponent {
     buttonDelete.setAttribute('type', 'button');
     buttonDelete.setCallback(() => {
       listItem.destroy();
-      this.inputAll = this.inputAll.filter((input) => input.id !== id);
+      this.inputAll = this.inputAll.filter((input) => input.idRandom !== idRandom);
     });
   }
 
@@ -65,8 +66,9 @@ export class ListComponent extends BaseComponent {
       ) {
         const title = input.titleInput.node.value.trim();
         const weight = input.weightInput.node.value.trim();
-        if (title && weight) {
-          options.push({ id: input.id, title, weight });
+        const id = input.titleInput.node.id;
+        if (id) {
+          options.push({ id, title, weight });
         }
       }
     });
