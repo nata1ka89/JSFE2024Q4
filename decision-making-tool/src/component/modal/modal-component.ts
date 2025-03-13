@@ -1,4 +1,4 @@
-import { BaseComponent } from '../base-component';
+import { BaseComponent } from '../../utils/base-component';
 import type { ListComponent } from '../options/list-component';
 import './style-modal.css';
 

@@ -1,10 +1,10 @@
-import { BaseComponent } from '../base-component';
+import { BaseComponent } from '../../utils/base-component';
 import ModalComponent from '../modal/modal-component';
 import type { ListComponent } from '../options/list-component';
 import type Router from '../router';
 import './style-buttons.css';
 import ModalValidComponent from '../modal/valid-modal-component';
-import { createURL } from '../save-load-json';
+import { createURL } from '../../utils/save-load-json';
 
 const buttonsName = ['Add Option', 'Paste List', 'Clear List', 'Save List', 'Load List', 'Start'];
 

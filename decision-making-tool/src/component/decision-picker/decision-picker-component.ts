@@ -1,4 +1,4 @@
-import { BaseComponent } from '../base-component';
+import { BaseComponent } from '../../utils/base-component';
 import type Router from '../router';
 import './style-decision.css';
 

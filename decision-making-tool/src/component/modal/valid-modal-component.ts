@@ -1,4 +1,4 @@
-import { BaseComponent } from '../base-component';
+import { BaseComponent } from '../../utils/base-component';
 import ModalComponent from '../modal/modal-component';
 import './style-valid-modal.css';
 

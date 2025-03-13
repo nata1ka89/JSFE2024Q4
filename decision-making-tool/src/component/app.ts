@@ -1,4 +1,4 @@
-import { BaseComponent } from './base-component';
+import { BaseComponent } from '../utils/base-component';
 import { ButtonsComponent } from './buttons/buttons-component';
 import { DecisionPickerComponent } from './decision-picker/decision-picker-component';
 import { ListComponent } from './options/list-component';

@@ -1,30 +1,20 @@
 import type { ListComponent } from '../component/options/list-component';
+import type { JsonData, ListItem } from './data-structure';
 
-type IListItem = {
-  id: string;
-  title: string;
-  weight: string;
-};
-
-type IJsonData = {
-  list: IListItem[];
-  lastId: number;
-};
-
-export function saveOptions(options: IJsonData): void {
+export function saveOptions(options: JsonData): void {
   localStorage.clear();
   localStorage.setItem('options', JSON.stringify(options));
 }
 
-export function loadOptions(listComponent: ListComponent): IJsonData {
+export function loadOptions(listComponent: ListComponent): JsonData {
   listComponent.clearList();
   const options = localStorage.getItem('options');
 
   if (options) {
-    const parsedOptions: IJsonData = JSON.parse(options);
+    const parsedOptions: JsonData = JSON.parse(options);
 
     listComponent.displayId = parsedOptions.lastId;
-    parsedOptions.list.forEach((item: IListItem) => {
+    parsedOptions.list.forEach((item: ListItem) => {
       listComponent.addListItem(item.id, item.title, item.weight);
     });
 

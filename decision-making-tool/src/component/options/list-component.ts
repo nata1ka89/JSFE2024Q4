@@ -1,18 +1,8 @@
-import { BaseComponent } from '../base-component';
-import { loadOptions, saveOptions } from '../local-storage';
+import { BaseComponent } from '../../utils/base-component';
+import type { ListItem, InputItem } from '../../utils/data-structure';
+import { loadOptions, saveOptions } from '../../utils/local-storage';
 import './style-list.css';
 
-type IListItem = {
-  id: string;
-  title: string;
-  weight: string;
-};
-
-type InputItem = {
-  idRandom: string;
-  inputTitle: BaseComponent;
-  inputWeight: BaseComponent;
-};
 export class ListComponent extends BaseComponent {
   public displayId: number = 0;
 
@@ -81,8 +71,8 @@ export class ListComponent extends BaseComponent {
     this.inputAll = [];
   }
 
-  public getOptions(): IListItem[] {
-    const options: IListItem[] = [];
+  public getOptions(): ListItem[] {
+    const options: ListItem[] = [];
     this.inputAll.forEach((input) => {
       if (
         input.inputTitle.node instanceof HTMLInputElement &&
