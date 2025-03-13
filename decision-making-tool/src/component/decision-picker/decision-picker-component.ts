@@ -34,7 +34,7 @@ export class DecisionPickerComponent extends BaseComponent {
     const buttonPanel = new BaseComponent(this.node, 'div', 'button-panel');
 
     const backButton = new BaseComponent(buttonPanel.node, 'button', 'back-button', '⬅ Back');
-    backButton.setCallback(() => {
+    backButton.setCallback('click', () => {
       console.log('Back clicked');
       this.router.navigate('/');
     });
@@ -45,7 +45,7 @@ export class DecisionPickerComponent extends BaseComponent {
       'sound-button',
       '🔊 Sound: On'
     );
-    soundButton.setCallback(() => {
+    soundButton.setCallback('click', () => {
       console.log('Sound clicked');
     });
 
@@ -53,12 +53,12 @@ export class DecisionPickerComponent extends BaseComponent {
     durationInput.setAttribute('type', 'number');
     durationInput.setAttribute('placeholder', 'sec');
     durationInput.setAttribute('value', this.duration.toString());
-    durationInput.setCallback(() => {
+    durationInput.setCallback('input', () => {
       console.log('Input clicked');
     });
 
     const pickButton = new BaseComponent(buttonPanel.node, 'button', 'pick-button', '▶');
-    pickButton.setCallback(() => {
+    pickButton.setCallback('click', () => {
       console.log('Pick clicked');
     });
   }

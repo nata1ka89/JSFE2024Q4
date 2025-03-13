@@ -1,7 +1,6 @@
 import { BaseComponent } from '../base-component';
 import ModalComponent from '../modal/modal-component';
 import type { ListComponent } from '../options/list-component';
-import { saveOptions } from '../local-storage';
 import type Router from '../router';
 import './style-buttons.css';
 import ModalValidComponent from '../modal/valid-modal-component';
@@ -24,10 +23,12 @@ export class ButtonsComponent extends BaseComponent {
     const actions: { [key: string]: () => void } = {
       'Add-Option': () => this.listComponent.addListItem('', '', ''),
       'Paste-List': () => modal.addModal(),
-      'Clear-List': () => this.listComponent.clearList(),
+      'Clear-List': () => {
+        this.listComponent.clearList();
+        this.listComponent.displayId = 0;
+      },
       'Save-List': () => {
         const options = this.listComponent.getOptions();
-
         const optionsSave = {
           list: options,
           lastId: this.listComponent.displayId,
@@ -37,12 +38,6 @@ export class ButtonsComponent extends BaseComponent {
       'Load-List': () => console.log('Load List clicked'),
       'Start': () => {
         const options = this.listComponent.getOptions();
-        const optionsSave = {
-          list: options,
-          lastId: this.listComponent.displayId,
-        };
-        saveOptions(optionsSave);
-        console.log('Options saved:', options);
         if (options.length < 2) {
           const modalValidComponent = new ModalValidComponent(this.node);
           modalValidComponent.addValidationModal();
@@ -57,7 +52,7 @@ export class ButtonsComponent extends BaseComponent {
       button = new BaseComponent(this.node, 'button', 'button', element);
       const elementId = element.split(' ').join('-');
       button.setAttribute('id', elementId);
-      button.setCallback((event) => {
+      button.setCallback('click', (event) => {
         if (event.target instanceof HTMLElement) {
           const target = event.target;
           const buttonId = target.id;

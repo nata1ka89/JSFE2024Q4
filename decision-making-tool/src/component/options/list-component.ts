@@ -1,77 +1,110 @@
 import { BaseComponent } from '../base-component';
+import { loadOptions, saveOptions } from '../local-storage';
 import './style-list.css';
 
+type IListItem = {
+  id: string;
+  title: string;
+  weight: string;
+};
+
+type InputItem = {
+  idRandom: string;
+  inputTitle: BaseComponent;
+  inputWeight: BaseComponent;
+};
 export class ListComponent extends BaseComponent {
   public displayId: number = 0;
 
-  private inputAll: {
-    idRandom: string;
-    titleInput: BaseComponent;
-    weightInput: BaseComponent;
-  }[] = [];
+  private inputAll: InputItem[] = [];
   constructor(_parenNode: HTMLElement | null) {
     new BaseComponent(_parenNode, 'h1', 'app-name', 'Decision Making Tool');
     super(_parenNode, 'ul', 'list');
-    this.addListItem('', '', '');
+    const options = localStorage.getItem('options');
+    if (options) {
+      loadOptions(this);
+    } else {
+      this.addListItem('', '', '');
+    }
   }
 
-  public addListItem(id: string, title: string, weight: string): void {
+  public addListItem(id?: string, title?: string, weight?: string): void {
     const listItem = new BaseComponent(this.node, 'li', 'list-item');
     const idRandom: string = crypto.randomUUID();
-    this.displayId++;
-    const label = new BaseComponent(listItem.node, 'label', 'label-item', `#${this.displayId}`);
-    label.setAttribute('for', `#${this.displayId}`);
+    const currentId = id || `#${++this.displayId}`;
+
+    const label = new BaseComponent(listItem.node, 'label', 'label-item', currentId);
+    label.setAttribute('for', currentId);
     label.setAttribute('id', idRandom);
 
     const inputTitle = new BaseComponent(listItem.node, 'input', 'input-title');
-    inputTitle.setAttribute('id', `#${this.displayId}`);
+    inputTitle.setAttribute('id', currentId);
     inputTitle.setAttribute('type', 'text');
     inputTitle.setAttribute('placeholder', 'Title');
     inputTitle.setAttribute('name', 'title');
-    inputTitle.setAttribute('value', title);
+    inputTitle.setAttribute('value', title || ' ');
 
     const inputWeight = new BaseComponent(listItem.node, 'input', 'input-weight');
-    inputWeight.setAttribute('id', `#${this.displayId}`);
+    inputWeight.setAttribute('id', currentId);
     inputWeight.setAttribute('type', 'number');
     inputWeight.setAttribute('placeholder', 'Weight');
     inputWeight.setAttribute('name', 'weight');
-    inputWeight.setAttribute('value', weight);
+    inputWeight.setAttribute('value', weight || ' ');
 
     this.inputAll.push({
-      idRandom: id,
-      titleInput: inputTitle,
-      weightInput: inputWeight,
+      idRandom: idRandom,
+      inputTitle: inputTitle,
+      inputWeight: inputWeight,
+    });
+
+    inputTitle.setCallback('input', () => {
+      this.updateLocalStorage();
+    });
+    inputWeight.setCallback('input', () => {
+      this.updateLocalStorage();
     });
 
     const buttonDelete = new BaseComponent(listItem.node, 'button', 'button-item', 'Delete');
     buttonDelete.setAttribute('type', 'button');
-    buttonDelete.setCallback(() => {
+    buttonDelete.setCallback('click', () => {
       listItem.destroy();
       this.inputAll = this.inputAll.filter((input) => input.idRandom !== idRandom);
+      this.updateLocalStorage();
     });
+    this.updateLocalStorage();
   }
 
   public clearList(): void {
     while (this.node.firstChild) {
       this.node.firstChild.remove();
     }
-    this.displayId = 0;
+    this.inputAll = [];
   }
-  public getOptions(): { id: string; title: string; weight: string }[] {
-    const options: { id: string; title: string; weight: string }[] = [];
+
+  public getOptions(): IListItem[] {
+    const options: IListItem[] = [];
     this.inputAll.forEach((input) => {
       if (
-        input.titleInput.node instanceof HTMLInputElement &&
-        input.weightInput.node instanceof HTMLInputElement
+        input.inputTitle.node instanceof HTMLInputElement &&
+        input.inputWeight.node instanceof HTMLInputElement
       ) {
-        const title = input.titleInput.node.value.trim();
-        const weight = input.weightInput.node.value.trim();
-        const id = input.titleInput.node.id;
+        const title = input.inputTitle.node.value.trim();
+        const weight = input.inputWeight.node.value.trim();
+        const id = input.inputTitle.node.id;
         if (id) {
           options.push({ id, title, weight });
         }
       }
     });
     return options;
+  }
+
+  public updateLocalStorage(): void {
+    const options = this.getOptions();
+    const optionsSave = {
+      list: options,
+      lastId: this.displayId,
+    };
+    saveOptions(optionsSave);
   }
 }

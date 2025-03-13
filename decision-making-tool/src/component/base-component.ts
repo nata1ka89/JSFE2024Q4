@@ -1,4 +1,4 @@
-type Callback = (event: MouseEvent) => void;
+type Callback<K extends keyof HTMLElementEventMap> = (event: HTMLElementEventMap[K]) => void;
 export class BaseComponent {
   public node: HTMLElement;
 
@@ -26,8 +26,11 @@ export class BaseComponent {
     this.node.setAttribute(name, value);
   }
 
-  public setCallback(callback: Callback): void {
-    this.node.addEventListener('click', (event) => callback(event));
+  public setCallback<K extends keyof HTMLElementEventMap>(
+    eventType: K,
+    callback: Callback<K>
+  ): void {
+    this.node.addEventListener(eventType, callback);
   }
 
   public destroy(): void {

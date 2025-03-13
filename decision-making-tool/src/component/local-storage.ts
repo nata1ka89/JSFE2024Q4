@@ -1,3 +1,5 @@
+import type { ListComponent } from '../component/options/list-component';
+
 type IListItem = {
   id: string;
   title: string;
@@ -14,23 +16,20 @@ export function saveOptions(options: IJsonData): void {
   localStorage.setItem('options', JSON.stringify(options));
 }
 
-/*export function loadOptions(): { id: string; title: string; weight: string }[] {
+export function loadOptions(listComponent: ListComponent): IJsonData {
+  listComponent.clearList();
   const options = localStorage.getItem('options');
-  if (options !== null) {
-    const parsedOptions = JSON.parse(options);
-    if (
-      Array.isArray(parsedOptions) &&
-      parsedOptions.every(
-        (option) =>
-          option &&
-          typeof option === 'object' &&
-          typeof option.id === 'string' &&
-          typeof option.title === 'string' &&
-          typeof option.weight === 'string'
-      )
-    )
-    console.log(parsedOptions);
+
+  if (options) {
+    const parsedOptions: IJsonData = JSON.parse(options);
+
+    listComponent.displayId = parsedOptions.lastId;
+    parsedOptions.list.forEach((item: IListItem) => {
+      listComponent.addListItem(item.id, item.title, item.weight);
+    });
+
     return parsedOptions;
+  } else {
+    throw new TypeError('options is null');
   }
-  throw new TypeError('Invalid options structure');
-}*/
+}

@@ -53,12 +53,12 @@ export default class ModalComponent {
         }
       });
       if (this.buttonCancel) {
-        this.buttonCancel.setCallback(() => {
+        this.buttonCancel.setCallback('click', () => {
           ModalComponent.closeModal(dialogElement);
         });
       }
       if (this.buttonConfirm) {
-        this.buttonConfirm.setCallback((event) => {
+        this.buttonConfirm.setCallback('click', (event) => {
           event.preventDefault();
           console.log('Confirm clicked');
           if (textarea.node instanceof HTMLTextAreaElement) {

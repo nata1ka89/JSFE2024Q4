@@ -47,7 +47,7 @@ export default class ModalValidComponent extends ModalComponent {
         }
       });
 
-      closeButton.setCallback(() => {
+      closeButton.setCallback('click', () => {
         ModalValidComponent.closeModal(dialogElement);
       });
     } else {
