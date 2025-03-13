@@ -1,3 +1,4 @@
+import { ErrorComponent } from './error-page/error-component';
 type Route = {
   path: string;
   viewComponent: () => void;
@@ -6,10 +7,11 @@ type Route = {
 export default class Router {
   private routes: Route[] = [];
   private rootElement: HTMLElement;
+  private errorComponent: ErrorComponent;
 
   constructor(rootElement: HTMLElement) {
     this.rootElement = rootElement;
-
+    this.errorComponent = new ErrorComponent(this.rootElement, this);
     globalThis.addEventListener('popstate', () => {
       this.handleRouteChange();
     });
@@ -32,7 +34,7 @@ export default class Router {
       this.rootElement.innerHTML = '';
       route.viewComponent();
     } else {
-      throw new TypeError('Page Not Found');
+      this.errorComponent.createButtons();
     }
   }
 }
