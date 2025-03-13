@@ -4,7 +4,7 @@ import type { ListComponent } from '../options/list-component';
 import type Router from '../router';
 import './style-buttons.css';
 import ModalValidComponent from '../modal/valid-modal-component';
-import { createURL } from '../../utils/save-load-json';
+import { createURL, loadJson } from '../../utils/save-load-json';
 
 const buttonsName = ['Add Option', 'Paste List', 'Clear List', 'Save List', 'Load List', 'Start'];
 
@@ -35,7 +35,7 @@ export class ButtonsComponent extends BaseComponent {
         };
         createURL(optionsSave);
       },
-      'Load-List': () => console.log('Load List clicked'),
+      'Load-List': () => loadJson(this.listComponent),
       'Start': () => {
         const options = this.listComponent.getOptions();
         if (options.length < 2) {
