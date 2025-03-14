@@ -32,14 +32,14 @@ export class ListComponent extends BaseComponent {
     inputTitle.setAttribute('type', 'text');
     inputTitle.setAttribute('placeholder', 'Title');
     inputTitle.setAttribute('name', 'title');
-    inputTitle.setAttribute('value', title || ' ');
+    inputTitle.setAttribute('value', title || '');
 
     const inputWeight = new BaseComponent(listItem.node, 'input', 'input-weight');
     inputWeight.setAttribute('id', currentId);
     inputWeight.setAttribute('type', 'number');
     inputWeight.setAttribute('placeholder', 'Weight');
     inputWeight.setAttribute('name', 'weight');
-    inputWeight.setAttribute('value', weight || ' ');
+    inputWeight.setAttribute('value', weight || '');
 
     this.inputAll.push({
       idRandom: idRandom,
@@ -60,6 +60,7 @@ export class ListComponent extends BaseComponent {
       listItem.destroy();
       this.inputAll = this.inputAll.filter((input) => input.idRandom !== idRandom);
       this.updateLocalStorage();
+      if (this.inputAll.length === 0) this.displayId = 0;
     });
     this.updateLocalStorage();
   }

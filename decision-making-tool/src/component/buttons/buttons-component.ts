@@ -38,7 +38,12 @@ export class ButtonsComponent extends BaseComponent {
       'Load-List': () => loadJson(this.listComponent),
       'Start': () => {
         const options = this.listComponent.getOptions();
-        if (options.length < 2) {
+        let length = 0;
+        options.forEach((item) => {
+          if (Number(item.weight) > 0 && item.title !== '') length++;
+          return length;
+        });
+        if (length < 2) {
           const modalValidComponent = new ModalValidComponent(this.node);
           modalValidComponent.addValidationModal();
         } else {
