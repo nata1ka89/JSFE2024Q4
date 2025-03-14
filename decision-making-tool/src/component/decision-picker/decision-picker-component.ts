@@ -1,5 +1,6 @@
 import { BaseComponent } from '../../utils/base-component';
 import type Router from '../router';
+import { canvasComponent } from './canvas-component';
 import './style-decision.css';
 
 export class DecisionPickerComponent extends BaseComponent {
@@ -12,14 +13,15 @@ export class DecisionPickerComponent extends BaseComponent {
     this.router = router;
     this.createPickedOptionDisplay();
     this.createButtons();
-    this.createWheelCanvas();
+    this.viewCanvas();
+    /*this.createWheelCanvas();*/
   }
 
-  private createWheelCanvas(): void {
+  /*private createWheelCanvas(): void {
     const wheelCanvas = new BaseComponent(this.node, 'canvas', 'wheel-canvas');
     wheelCanvas.setAttribute('width', '500');
     wheelCanvas.setAttribute('height', '500');
-  }
+    }*/
 
   private createPickedOptionDisplay(): void {
     new BaseComponent(
@@ -61,5 +63,8 @@ export class DecisionPickerComponent extends BaseComponent {
     pickButton.setCallback('click', () => {
       console.log('Pick clicked');
     });
+  }
+  private viewCanvas(): void {
+    new canvasComponent(this.node);
   }
 }

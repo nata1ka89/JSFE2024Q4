@@ -2,7 +2,6 @@ import { BaseComponent } from '../../utils/base-component';
 import type Router from '../router';
 import './style-error.css';
 
-
 export class ErrorComponent extends BaseComponent {
   private router: Router;
 

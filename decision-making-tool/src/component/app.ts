@@ -22,12 +22,12 @@ export class App extends BaseComponent {
   }
 
   private viewFirsPage(): void {
-    this.node.innerHTML = '';
+    this.node.textContent = '';
     const list = new ListComponent(this.node);
     new ButtonsComponent(this.node, list, this.router);
   }
   private viewSecondPage(): void {
-    this.node.innerHTML = '';
+    this.node.textContent = '';
     new DecisionPickerComponent(this.node, this.router);
   }
 }

@@ -31,7 +31,7 @@ export default class Router {
     const route = this.routes.find((r) => r.path === currentPath);
 
     if (route) {
-      this.rootElement.innerHTML = '';
+      this.rootElement.textContent = '';
       route.viewComponent();
     } else {
       this.errorComponent.createButtons();
