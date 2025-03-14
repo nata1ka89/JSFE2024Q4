@@ -14,14 +14,7 @@ export class DecisionPickerComponent extends BaseComponent {
     this.createPickedOptionDisplay();
     this.createButtons();
     this.viewCanvas();
-    /*this.createWheelCanvas();*/
   }
-
-  /*private createWheelCanvas(): void {
-    const wheelCanvas = new BaseComponent(this.node, 'canvas', 'wheel-canvas');
-    wheelCanvas.setAttribute('width', '500');
-    wheelCanvas.setAttribute('height', '500');
-    }*/
 
   private createPickedOptionDisplay(): void {
     new BaseComponent(
