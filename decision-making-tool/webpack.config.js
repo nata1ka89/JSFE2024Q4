@@ -8,7 +8,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
-    /*assets: 'assets/[hash][ext]'*/
+    assetModuleFilename: 'assets/[hash][ext]',
   },
   resolve: {
     extensions: ['.ts', '.js'],
@@ -30,6 +30,10 @@ module.exports = {
       },
       {
         test: /\.(woff(2)?|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+      },
+      {
+        test: /\.(mp3|wav|ogg)$/,
         type: 'asset/resource',
       },
     ],

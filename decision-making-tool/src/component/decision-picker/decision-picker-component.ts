@@ -7,6 +7,7 @@ export class DecisionPickerComponent extends BaseComponent {
   private router: Router;
   private soundButton: BaseComponent | undefined;
   private durationInput: BaseComponent | undefined;
+  private pickedDisplay: BaseComponent | undefined;
   private wheel: CanvasComponent | undefined;
 
   private duration: number = 10;
@@ -21,7 +22,7 @@ export class DecisionPickerComponent extends BaseComponent {
   }
 
   private createPickedOptionDisplay(): void {
-    new BaseComponent(
+    this.pickedDisplay = new BaseComponent(
       this.node,
       'div',
       'picked-option-display',
@@ -34,7 +35,6 @@ export class DecisionPickerComponent extends BaseComponent {
 
     const backButton = new BaseComponent(buttonPanel.node, 'button', 'back-button', '⬅ Back');
     backButton.setCallback('click', () => {
-      console.log('Back clicked');
       this.router.navigate('/');
     });
 
@@ -57,7 +57,7 @@ export class DecisionPickerComponent extends BaseComponent {
     pickButton.setCallback('click', () => {
       const duration = this.getDurationValue();
       if (duration >= 5 && duration <= 30 && this.wheel) {
-        console.log('Input pickButton');
+        this.startWheelRotation(duration);
       }
     });
   }
@@ -77,6 +77,16 @@ export class DecisionPickerComponent extends BaseComponent {
   }
 
   private viewCanvas(): void {
-    this.wheel = new CanvasComponent(this.node);
+    if (this.pickedDisplay) {
+      this.wheel = new CanvasComponent(this.node, this.pickedDisplay.node);
+    } else {
+      throw new TypeError('this.pickedDisplay is not an instance of HTMLElement');
+    }
+  }
+
+  private startWheelRotation(duration: number): void {
+    if (this.wheel) {
+      this.wheel.rotationWheel(duration, this.isMute);
+    }
   }
 }

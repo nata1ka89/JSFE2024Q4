@@ -24,7 +24,7 @@ export class ViewSections {
     if (this.options && this.totalWeight) {
       this.options.forEach((item, index) => {
         if (this.totalWeight) {
-          const sliceAngle = (item.weight * Math.PI * 2) / this.totalWeight;
+          const sliceAngle = (item.weight / this.totalWeight) * Math.PI * 2;
           if (this.node instanceof HTMLCanvasElement) {
             const centerX = this.node.width / 2;
             const centerY = this.node.height / 2;

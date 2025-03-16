@@ -38,14 +38,14 @@ export class DataSections {
     }
   }
 
-  private static randomColor(): object {
+  public static randomColor(): object {
     const r = Math.floor(Math.random() * 255);
     const g = Math.floor(Math.random() * 255);
     const b = Math.floor(Math.random() * 255);
     return { r, g, b };
   }
 
-  private static generateSectionColors(): string[] {
+  public static generateSectionColors(): string[] {
     const options = DataSections.getOptions();
     let sectionColors: string[] = [];
     if (options) {
@@ -59,7 +59,7 @@ export class DataSections {
     }
   }
 
-  private static clipText(
+  public static clipText(
     context: CanvasRenderingContext2D,
     text: string,
     maxWidth: number
