@@ -1,12 +1,21 @@
-import { BaseComponent } from '../../utils/base-component';
-import { viewSections } from './draw-sections';
+import { BaseComponent } from '../../../utils/base-component';
+import { DataSections } from './data-section';
+import { ViewSections } from './draw-sections';
 
-export class canvasComponent extends BaseComponent {
+export class CanvasComponent extends BaseComponent {
+  private options = DataSections.getOptions();
+  private totalWeight = DataSections.getTotalWeight();
+  private color = DataSections.generateSectionColors();
+
   constructor(_parenNode: HTMLElement | null) {
     super(_parenNode, 'canvas', 'wheel-canvas');
     if (this.node instanceof HTMLCanvasElement) {
       this.createWheelCanvas();
-      new viewSections(this.node);
+      if (this.options && this.totalWeight && this.color) {
+        new ViewSections(this.node, this.options, this.totalWeight, this.color);
+      } else {
+        throw new TypeError('no data to display canvas');
+      }
       this.createCenter();
       this.createCursor();
     }
