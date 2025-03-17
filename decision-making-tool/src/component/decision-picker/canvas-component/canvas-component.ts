@@ -33,7 +33,7 @@ export class CanvasComponent extends BaseComponent {
     return Math.sin((x * Math.PI) / 2);
   }
 
-  public rotationWheel(duration: number, isMute: boolean): void {
+  public rotationWheel(duration: number, isMute: boolean, onComplete: () => void): void {
     if (this.isRotating) return;
     this.rotationAngle = 0;
     this.drawWheel();
@@ -58,6 +58,7 @@ export class CanvasComponent extends BaseComponent {
           CanvasComponent.playSound();
         }
         this.determinePickedOption();
+        onComplete();
       }
     };
     requestAnimationFrame(animate);

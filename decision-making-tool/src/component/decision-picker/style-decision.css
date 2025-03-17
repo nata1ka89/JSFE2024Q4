@@ -79,3 +79,17 @@ button {
   font-size: 1rem;
   text-align: center;
 }
+
+button:disabled {
+  cursor: not-allowed;
+  color: #666;
+  opacity: 0.6;
+  background-color: #ccc;
+}
+
+input:disabled {
+  cursor: not-allowed;
+  color: #999;
+  opacity: 0.6;
+  background-color: #f4f4f4;
+}

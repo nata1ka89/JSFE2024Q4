@@ -8,8 +8,9 @@ export class DecisionPickerComponent extends BaseComponent {
   private soundButton: BaseComponent | undefined;
   private durationInput: BaseComponent | undefined;
   private pickedDisplay: BaseComponent | undefined;
+  private pickButton: BaseComponent | undefined;
+  private backButton: BaseComponent | undefined;
   private wheel: CanvasComponent | undefined;
-
   private duration: number = 10;
   private isMute: boolean = false;
   constructor(_parenNode: HTMLElement | null, router: Router) {
@@ -33,8 +34,8 @@ export class DecisionPickerComponent extends BaseComponent {
   private createButtons(): void {
     const buttonPanel = new BaseComponent(this.node, 'div', 'button-panel');
 
-    const backButton = new BaseComponent(buttonPanel.node, 'button', 'back-button', '⬅ Back');
-    backButton.setCallback('click', () => {
+    this.backButton = new BaseComponent(buttonPanel.node, 'button', 'back-button', '⬅ Back');
+    this.backButton.setCallback('click', () => {
       this.router.navigate('/');
     });
 
@@ -53,11 +54,14 @@ export class DecisionPickerComponent extends BaseComponent {
     this.durationInput.setAttribute('placeholder', 'sec');
     this.durationInput.setAttribute('value', this.duration.toString());
 
-    const pickButton = new BaseComponent(buttonPanel.node, 'button', 'pick-button', '▶');
-    pickButton.setCallback('click', () => {
+    this.pickButton = new BaseComponent(buttonPanel.node, 'button', 'pick-button', '▶');
+    this.pickButton.setCallback('click', () => {
+      this.disableControls();
       const duration = this.getDurationValue();
       if (duration >= 5 && duration <= 30 && this.wheel) {
-        this.startWheelRotation(duration);
+        this.startWheelRotation(duration, () => {
+          this.enableControls();
+        });
       }
     });
   }
@@ -76,6 +80,20 @@ export class DecisionPickerComponent extends BaseComponent {
       this.soundButton.node.textContent = this.isMute ? '🔇 Sound: Off' : '🔊 Sound: On';
   }
 
+  private disableControls(): void {
+    this.pickButton?.setAttribute('disabled', 'true');
+    this.backButton?.setAttribute('disabled', 'true');
+    this.soundButton?.setAttribute('disabled', 'true');
+    this.durationInput?.setAttribute('disabled', 'true');
+  }
+
+  private enableControls(): void {
+    this.pickButton?.node.removeAttribute('disabled');
+    this.backButton?.node.removeAttribute('disabled');
+    this.soundButton?.node.removeAttribute('disabled');
+    this.durationInput?.node.removeAttribute('disabled');
+  }
+
   private viewCanvas(): void {
     if (this.pickedDisplay) {
       this.wheel = new CanvasComponent(this.node, this.pickedDisplay.node);
@@ -84,9 +102,9 @@ export class DecisionPickerComponent extends BaseComponent {
     }
   }
 
-  private startWheelRotation(duration: number): void {
+  private startWheelRotation(duration: number, onComplete: () => void): void {
     if (this.wheel) {
-      this.wheel.rotationWheel(duration, this.isMute);
+      this.wheel.rotationWheel(duration, this.isMute, onComplete);
     }
   }
 }
