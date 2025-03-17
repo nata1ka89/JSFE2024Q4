@@ -12,7 +12,7 @@ export class ErrorComponent extends BaseComponent {
   }
 
   public createButtons(): void {
-    this.node.innerHTML = '';
+    this.node.textContent = '';
     new BaseComponent(this.node, 'h1', 'app-name', 'Page Not Found');
     const backButton = new BaseComponent(this.node, 'button', 'back-button', '⬅ Back');
     backButton.setCallback('click', () => {

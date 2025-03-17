@@ -52,16 +52,26 @@ export class DecisionPickerComponent extends BaseComponent {
     this.durationInput = new BaseComponent(buttonPanel.node, 'input', 'duration-input');
     this.durationInput.setAttribute('type', 'number');
     this.durationInput.setAttribute('placeholder', 'sec');
+    this.durationInput.setAttribute('required', 'true');
+    this.durationInput.setAttribute('min', '5');
+    this.durationInput.setAttribute('max', '30');
     this.durationInput.setAttribute('value', this.duration.toString());
 
     this.pickButton = new BaseComponent(buttonPanel.node, 'button', 'pick-button', '▶');
     this.pickButton.setCallback('click', () => {
-      this.disableControls();
-      const duration = this.getDurationValue();
-      if (duration >= 5 && duration <= 30 && this.wheel) {
-        this.startWheelRotation(duration, () => {
-          this.enableControls();
-        });
+      if (this.durationInput && this.durationInput.node instanceof HTMLInputElement) {
+        const isValid = this.durationInput.node.checkValidity();
+        if (!isValid) {
+          this.durationInput.node.reportValidity();
+          return;
+        }
+        this.disableControls();
+        const duration = this.getDurationValue();
+        if (duration >= 5 && duration <= 30 && this.wheel) {
+          this.startWheelRotation(duration, () => {
+            this.enableControls();
+          });
+        }
       }
     });
   }

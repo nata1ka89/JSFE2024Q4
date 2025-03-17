@@ -18,22 +18,26 @@ export default class Router {
   }
 
   public addRoute(path: string, viewComponent: () => void): void {
-    this.routes.push({ path, viewComponent });
+    const basePath = '/nata1ka89-JSFE2024Q4/decision-making-tool';
+    this.routes.push({ path: basePath + path, viewComponent });
   }
 
   public navigate(url: string): void {
-    globalThis.history.pushState(null, '', url);
+    const basePath = '/nata1ka89-JSFE2024Q4/decision-making-tool';
+    globalThis.history.pushState(null, '', basePath + url);
     this.handleRouteChange();
   }
 
   public handleRouteChange(): void {
-    const currentPath = globalThis.location.pathname;
-    const route = this.routes.find((r) => r.path === currentPath);
+    const basePath = '/nata1ka89-JSFE2024Q4/decision-making-tool';
+    const currentPath = globalThis.location.pathname.replace(basePath, '');
+    const route = this.routes.find((r) => r.path === basePath + currentPath);
 
     if (route) {
       this.rootElement.textContent = '';
       route.viewComponent();
     } else {
+      this.rootElement.textContent = '';
       this.errorComponent.createButtons();
     }
   }
