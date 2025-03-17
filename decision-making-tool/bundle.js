@@ -1,1 +1,1064 @@
-(()=>{"use strict";var t={23:(t,n,e)=>{e.d(n,{A:()=>a});var o=e(601),i=e.n(o),s=e(314),r=e.n(s)()(i());r.push([t.id,".validation-dialog::backdrop {\n  background-color: rgb(0 0 0 / 50%);\n}\n\n.validation-content {\n  display: flex;\n  flex-direction: column;\n  gap: 15px;\n  align-items: center;\n\n  text-align: center;\n}\n\n.validation-message {\n  margin: 0;\n  font-size: 16px;\n  color: #333;\n}\n\n.close-button {\n  cursor: pointer;\n\n  padding: 10px 20px;\n  border: none;\n  border-radius: 4px;\n\n  font-size: 14px;\n  color: #fff;\n\n  background-color: #007bff;\n\n  transition: background-color 0.3s ease;\n}\n\n.close-button:hover {\n  background-color: #0056b3;\n}\n",""]);const a=r},56:(t,n,e)=>{t.exports=function(t){var n=e.nc;n&&t.setAttribute("nonce",n)}},72:t=>{var n=[];function e(t){for(var e=-1,o=0;o<n.length;o++)if(n[o].identifier===t){e=o;break}return e}function o(t,o){for(var s={},r=[],a=0;a<t.length;a++){var l=t[a],d=o.base?l[0]+o.base:l[0],c=s[d]||0,h="".concat(d," ").concat(c);s[d]=c+1;var u=e(h),p={css:l[1],media:l[2],sourceMap:l[3],supports:l[4],layer:l[5]};if(-1!==u)n[u].references++,n[u].updater(p);else{var b=i(p,o);o.byIndex=a,n.splice(a,0,{identifier:h,updater:b,references:1})}r.push(h)}return r}function i(t,n){var e=n.domAPI(n);return e.update(t),function(n){if(n){if(n.css===t.css&&n.media===t.media&&n.sourceMap===t.sourceMap&&n.supports===t.supports&&n.layer===t.layer)return;e.update(t=n)}else e.remove()}}t.exports=function(t,i){var s=o(t=t||[],i=i||{});return function(t){t=t||[];for(var r=0;r<s.length;r++){var a=e(s[r]);n[a].references--}for(var l=o(t,i),d=0;d<s.length;d++){var c=e(s[d]);0===n[c].references&&(n[c].updater(),n.splice(c,1))}s=l}}},113:t=>{t.exports=function(t,n){if(n.styleSheet)n.styleSheet.cssText=t;else{for(;n.firstChild;)n.removeChild(n.firstChild);n.appendChild(document.createTextNode(t))}}},208:(t,n,e)=>{e.d(n,{A:()=>a});var o=e(601),i=e.n(o),s=e(314),r=e.n(s)()(i());r.push([t.id,"body {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n\n  height: 100vh;\n  margin: 0;\n\n  background-color: #f0f0f0;\n}\n\n.main-container {\n  width: 100%;\n  max-width: 800px;\n  margin: 20px;\n  padding: 20px;\n  border: 1px solid #ddd;\n  border-radius: 8px;\n\n  font-family: Arial, sans-serif;\n\n  background-color: #f9f9f9;\n  box-shadow: 0 4px 6px rgb(0 0 0 / 10%);\n}\n\nh1.app-name {\n  margin: 20px 0;\n  font-size: 2rem;\n  color: #4a90e2;\n  text-align: center;\n}\n",""]);const a=r},314:t=>{t.exports=function(t){var n=[];return n.toString=function(){return this.map((function(n){var e="",o=void 0!==n[5];return n[4]&&(e+="@supports (".concat(n[4],") {")),n[2]&&(e+="@media ".concat(n[2]," {")),o&&(e+="@layer".concat(n[5].length>0?" ".concat(n[5]):""," {")),e+=t(n),o&&(e+="}"),n[2]&&(e+="}"),n[4]&&(e+="}"),e})).join("")},n.i=function(t,e,o,i,s){"string"==typeof t&&(t=[[null,t,void 0]]);var r={};if(o)for(var a=0;a<this.length;a++){var l=this[a][0];null!=l&&(r[l]=!0)}for(var d=0;d<t.length;d++){var c=[].concat(t[d]);o&&r[c[0]]||(void 0!==s&&(void 0===c[5]||(c[1]="@layer".concat(c[5].length>0?" ".concat(c[5]):""," {").concat(c[1],"}")),c[5]=s),e&&(c[2]?(c[1]="@media ".concat(c[2]," {").concat(c[1],"}"),c[2]=e):c[2]=e),i&&(c[4]?(c[1]="@supports (".concat(c[4],") {").concat(c[1],"}"),c[4]=i):c[4]="".concat(i)),n.push(c))}},n}},342:(t,n,e)=>{e.d(n,{A:()=>a});var o=e(601),i=e.n(o),s=e(314),r=e.n(s)()(i());r.push([t.id,"button {\n  cursor: pointer;\n\n  padding: 10px 20px;\n  border: none;\n  border-radius: 5px;\n\n  font-size: 1rem;\n  font-weight: bold;\n\n  transition: background-color 0.3s ease;\n}\n\n.back-button {\n  border: 2px solid #333;\n  color: #333;\n  background-color: #f4f4f9;\n}\n\n.back-button:hover {\n  background-color: #e0e0e0;\n}\n",""]);const a=r},410:(t,n,e)=>{e.d(n,{A:()=>a});var o=e(601),i=e.n(o),s=e(314),r=e.n(s)()(i());r.push([t.id,".buttons-container {\n  display: flex;\n  flex-direction: column;\n  gap: 20px;\n  align-items: center;\n\n  max-width: 800px;\n  margin: 0 auto;\n  padding: 20px;\n\n  font-family: Arial, sans-serif;\n\n  background-color: #f9f9f9;\n}\n\n.button {\n  cursor: pointer;\n\n  width: 50%;\n  padding: 8px 16px;\n  border: none;\n  border-radius: 4px;\n\n  font-size: 14px;\n  color: #fff;\n\n  background-color: #007bff;\n\n  transition: background-color 0.3s ease;\n}\n\n.button:hover {\n  background-color: #0056b3;\n}\n\n@media (width <=600px) {\n  .button {\n    width: 100%;\n  }\n}\n",""]);const a=r},538:(t,n,e)=>{e.d(n,{A:()=>a});var o=e(601),i=e.n(o),s=e(314),r=e.n(s)()(i());r.push([t.id,".list {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n\n.list-item {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n\n  padding: 10px 0;\n  border-bottom: 1px solid #ddd;\n}\n\n.list-item:last-child {\n  border-bottom: none;\n}\n\n.label-item {\n  flex: 0 0 50px;\n  margin-right: 10px;\n  font-weight: bold;\n  color: #333;\n}\n\n.input-title {\n  flex: 1;\n\n  margin-right: 10px;\n  padding: 8px;\n  border: 1px solid #ccc;\n  border-radius: 4px;\n\n  font-size: 14px;\n}\n\n.input-weight {\n  flex: 0 0 100px;\n\n  margin-right: 10px;\n  padding: 8px;\n  border: 1px solid #ccc;\n  border-radius: 4px;\n\n  font-size: 14px;\n}\n\n.button-item {\n  cursor: pointer;\n\n  padding: 8px 16px;\n  border: none;\n  border-radius: 4px;\n\n  font-size: 14px;\n  color: #fff;\n\n  background-color: #007bff;\n\n  transition: background-color 0.3s ease;\n}\n\n.button-item:hover {\n  background-color: #0056b3;\n}\n\n@media (width <=600px) {\n  .list-item {\n    flex-direction: column;\n    align-items: flex-start;\n  }\n\n  .label-item {\n    margin-bottom: 5px;\n  }\n\n  .input-title,\n  .input-weight {\n    width: 100%;\n    margin-right: 0;\n    margin-bottom: 10px;\n  }\n\n  .button-item {\n    width: 100%;\n  }\n}\n",""]);const a=r},540:t=>{t.exports=function(t){var n=document.createElement("style");return t.setAttributes(n,t.attributes),t.insert(n,t.options),n}},601:t=>{t.exports=function(t){return t[1]}},659:t=>{var n={};t.exports=function(t,e){var o=function(t){if(void 0===n[t]){var e=document.querySelector(t);if(window.HTMLIFrameElement&&e instanceof window.HTMLIFrameElement)try{e=e.contentDocument.head}catch(t){e=null}n[t]=e}return n[t]}(t);if(!o)throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");o.appendChild(e)}},825:t=>{t.exports=function(t){if("undefined"==typeof document)return{update:function(){},remove:function(){}};var n=t.insertStyleElement(t);return{update:function(e){!function(t,n,e){var o="";e.supports&&(o+="@supports (".concat(e.supports,") {")),e.media&&(o+="@media ".concat(e.media," {"));var i=void 0!==e.layer;i&&(o+="@layer".concat(e.layer.length>0?" ".concat(e.layer):""," {")),o+=e.css,i&&(o+="}"),e.media&&(o+="}"),e.supports&&(o+="}");var s=e.sourceMap;s&&"undefined"!=typeof btoa&&(o+="\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(s))))," */")),n.styleTagTransform(o,t,n.options)}(n,t,e)},remove:function(){!function(t){if(null===t.parentNode)return!1;t.parentNode.removeChild(t)}(n)}}}},885:(t,n,e)=>{e.d(n,{A:()=>a});var o=e(601),i=e.n(o),s=e(314),r=e.n(s)()(i());r.push([t.id,".decision-picker-container {\n  display: flex;\n  flex-direction: column;\n  gap: 20px;\n  align-items: center;\n}\n\n.wheel-canvas {\n  border-radius: 50%;\n  box-shadow: 0 0 30px rgb(0 0 0 / 80%);\n}\n\n.picked-option-display {\n  min-width: 260px;\n  padding: 10px 20px;\n  border: 2px solid #4a90e2;\n  border-radius: 8px;\n\n  font-size: 1rem;\n  font-weight: bold;\n  text-align: center;\n\n  background-color: #fff;\n}\n\n.button-panel {\n  display: flex;\n  gap: 10px;\n  justify-content: center;\n}\n\nbutton {\n  cursor: pointer;\n\n  padding: 10px 20px;\n  border: none;\n  border-radius: 5px;\n\n  font-size: 1rem;\n  font-weight: bold;\n\n  transition: background-color 0.3s ease;\n}\n\n.back-button {\n  border: 2px solid #333;\n  color: #333;\n  background-color: #f4f4f9;\n}\n\n.back-button:hover {\n  background-color: #e0e0e0;\n}\n\n.sound-button {\n  color: #fff;\n  background-color: #4a90e2;\n}\n\n.sound-button:hover {\n  background-color: #0056b3;\n}\n\n.pick-button {\n  color: #fff;\n  background-color: #28a745;\n}\n\n.pick-button:hover {\n  background-color: #218838;\n}\n\n.duration-input {\n  width: 150px;\n  padding: 10px;\n  border: 2px solid #4a90e2;\n  border-radius: 5px;\n\n  font-size: 1rem;\n  text-align: center;\n}\n\nbutton:disabled {\n  cursor: not-allowed;\n  color: #666;\n  opacity: 0.6;\n  background-color: #ccc;\n}\n\ninput:disabled {\n  cursor: not-allowed;\n  color: #999;\n  opacity: 0.6;\n  background-color: #f4f4f4;\n}",""]);const a=r},886:(t,n,e)=>{e.d(n,{A:()=>a});var o=e(601),i=e.n(o),s=e(314),r=e.n(s)()(i());r.push([t.id,".dialog {\n  width: 400px;\n  max-width: 90%;\n  padding: 20px;\n  border: 1px solid #ccc;\n  border-radius: 8px;\n\n  background-color: #fff;\n  box-shadow: 0 4px 8px rgb(0 0 0 / 20%);\n}\n\n.dialog::backdrop {\n  background-color: rgb(0 0 0 / 50%);\n}\n\n.form-container {\n  display: flex;\n  flex-direction: column;\n  gap: 15px;\n  align-items: center;\n}\n\n.textarea-content {\n  resize: none;\n\n  box-sizing: border-box;\n  width: 100%;\n  height: 150px;\n  padding: 10px;\n  border: 1px solid #ccc;\n  border-radius: 4px;\n\n  font-size: 14px;\n}\n",""]);const a=r}},n={};function e(o){var i=n[o];if(void 0!==i)return i.exports;var s=n[o]={id:o,exports:{}};return t[o](s,s.exports,e),s.exports}e.n=t=>{var n=t&&t.__esModule?()=>t.default:()=>t;return e.d(n,{a:n}),n},e.d=(t,n)=>{for(var o in n)e.o(n,o)&&!e.o(t,o)&&Object.defineProperty(t,o,{enumerable:!0,get:n[o]})},e.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(t){if("object"==typeof window)return window}}(),e.o=(t,n)=>Object.prototype.hasOwnProperty.call(t,n),(()=>{var t;e.g.importScripts&&(t=e.g.location+"");var n=e.g.document;if(!t&&n&&(n.currentScript&&"SCRIPT"===n.currentScript.tagName.toUpperCase()&&(t=n.currentScript.src),!t)){var o=n.getElementsByTagName("script");if(o.length)for(var i=o.length-1;i>-1&&(!t||!/^http(s?):/.test(t));)t=o[i--].src}if(!t)throw new Error("Automatic publicPath is not supported in this browser");t=t.replace(/^blob:/,"").replace(/#.*$/,"").replace(/\?.*$/,"").replace(/\/[^\/]+$/,"/"),e.p=t})(),e.nc=void 0;class o{constructor(t,n="main",e="",o=""){const i=document.createElement(n);if(i.className=e,i.textContent=o,!(i instanceof HTMLElement))throw new TypeError("Created element is not an instance of HTMLElement");this.node=i,t&&t.append(this.node)}setAttribute(t,n){this.node.setAttribute(t,n)}setCallback(t,n){this.node.addEventListener(t,n)}destroy(){this.node.remove()}}var i=e(72),s=e.n(i),r=e(825),a=e.n(r),l=e(659),d=e.n(l),c=e(56),h=e.n(c),u=e(540),p=e.n(u),b=e(113),f=e.n(b),g=e(886),m={};m.styleTagTransform=f(),m.setAttributes=h(),m.insert=d().bind(null,"head"),m.domAPI=a(),m.insertStyleElement=p(),s()(g.A,m),g.A&&g.A.locals&&g.A.locals;class w{constructor(t,n){n&&(this.listComponent=n),this.parenNode=t}static closeModal(t){document.body.style.overflow="",t.close(),t.remove()}addModal(){this.dialog=new o(this.parenNode,"dialog","dialog");const t=new o(this.dialog.node,"form","form-container"),n=new o(t.node,"textarea","textarea-content");n.setAttribute("placeholder","Paste your options here in CSV-like format:\nOption 1,10\nOption 2,20\nOption 3,30"),this.buttonCancel=new o(t.node,"button","button","Cancel"),this.buttonConfirm=new o(t.node,"button","button","Confirm"),this.buttonCancel.setAttribute("type","button"),this.buttonConfirm.setAttribute("type","button"),this.viewModal(n)}viewModal(t){if(!this.dialog)throw new Error("Modal has not been created.");if(!(this.dialog.node instanceof HTMLDialogElement))throw new TypeError("dialog.node is not an instance of HTMLDialogElement");{const n=this.dialog.node;n.showModal(),document.body.style.overflow="hidden",n.addEventListener("cancel",(()=>{w.closeModal(n)})),n.addEventListener("click",(t=>{t.target===n&&w.closeModal(n)})),this.buttonCancel&&this.buttonCancel.setCallback("click",(()=>{w.closeModal(n)})),this.buttonConfirm&&this.buttonConfirm.setCallback("click",(e=>{if(e.preventDefault(),console.log("Confirm clicked"),t.node instanceof HTMLTextAreaElement){const n=t.node.value.trim();console.log(n),this.parseData(n)}w.closeModal(n)}))}}parseData(t){t.split("\n").forEach((t=>{var n;const[e,o]=t.split(",");e&&o&&(null===(n=this.listComponent)||void 0===n||n.addListItem("",e.trim(),o.trim()))}))}}var v=e(410),x={};x.styleTagTransform=f(),x.setAttributes=h(),x.insert=d().bind(null,"head"),x.domAPI=a(),x.insertStyleElement=p(),s()(v.A,x),v.A&&v.A.locals&&v.A.locals;var y=e(23),A={};A.styleTagTransform=f(),A.setAttributes=h(),A.insert=d().bind(null,"head"),A.domAPI=a(),A.insertStyleElement=p(),s()(y.A,A),y.A&&y.A.locals&&y.A.locals;class k extends w{constructor(t){super(t)}static closeModal(t){document.body.style.overflow="",t.close(),t.remove()}addValidationModal(){this.dialog=new o(this.parenNode,"dialog","dialog");const t=new o(this.dialog.node,"div","validation-content");new o(t.node,"p","validation-message","Please add at least 2 valid options. An option is considered valid if its title is not empty and its weight is greater than 0.");const n=new o(t.node,"button","button close-button","Close");n.setAttribute("type","button"),this.viewValidationModal(n)}viewValidationModal(t){if(!this.dialog)throw new Error("Modal has not been created.");if(!(this.dialog.node instanceof HTMLDialogElement))throw new TypeError("dialog.node is not an instance of HTMLDialogElement");{const n=this.dialog.node;n.showModal(),document.body.style.overflow="hidden",n.addEventListener("cancel",(()=>{k.closeModal(n)})),n.addEventListener("click",(t=>{t.target===n&&k.closeModal(n)})),t.setCallback("click",(()=>{k.closeModal(n)}))}}}const C=["Add Option","Paste List","Clear List","Save List","Load List","Start"];class T extends o{constructor(t,n,e){super(t,"div","buttons-container"),this.listComponent=n,this.router=e,this.addButtons()}addButtons(){const t=new w(this.node,this.listComponent),n={"Add-Option":()=>this.listComponent.addListItem("","",""),"Paste-List":()=>t.addModal(),"Clear-List":()=>{this.listComponent.clearList(),this.listComponent.displayId=0},"Save-List":()=>{!function(t){const n=new Blob([JSON.stringify(t,null,2)],{type:"application/json"}),e=URL.createObjectURL(n),o=document.createElement("a");o.href=e,o.download="list-options.json",o.click(),URL.revokeObjectURL(e)}({list:this.listComponent.getOptions(),lastId:this.listComponent.displayId})},"Load-List":()=>function(t){const n=document.createElement("input");n.type="file",n.accept="application/json",n.addEventListener("change",(()=>{var e;const o=null===(e=n.files)||void 0===e?void 0:e[0];o&&o.text().then((n=>{try{t.clearList();const e=JSON.parse(n);e&&"object"==typeof e&&"list"in e&&"lastId"in e&&Array.isArray(e.list)&&"number"==typeof e.lastId&&(t.displayId=e.lastId,e.list.forEach((n=>{t.addListItem(n.id,n.title,n.weight)})))}catch(t){throw new TypeError("Error parsing JSON file")}})).catch((()=>{throw new TypeError("Error reading file")}))})),n.click()}(this.listComponent),Start:()=>{const t=this.listComponent.getOptions();let n=0;t.forEach((t=>(Number(t.weight)>0&&""!==t.title&&n++,n))),n<2?new k(this.node).addValidationModal():this.router.navigate("/decision-picker")}};let e;C.forEach((t=>{e=new o(this.node,"button","button",t);const i=t.split(" ").join("-");e.setAttribute("id",i),e.setCallback("click",(t=>{if(!(t.target instanceof HTMLElement))throw new TypeError("Element is not an instance of HTMLElement");{const e=t.target.id,o=n[e];"function"==typeof o?o():console.error("No action found")}}))}))}}class E{constructor(){}static getOptions(){const t=localStorage.getItem("options");if(!t)throw new TypeError("options is undefined");{const n=JSON.parse(t);if(n&&"object"==typeof n&&"list"in n&&"lastId"in n&&Array.isArray(n.list)&&"number"==typeof n.lastId)return n.list.filter((t=>t.weight&&""!==t.weight)).map((t=>({title:t.title,weight:Number(t.weight)})))}}static getTotalWeight(){const t=this.getOptions();if(t)return t.reduce(((t,n)=>t+n.weight),0)}static randomColor(){return{r:Math.floor(255*Math.random()),g:Math.floor(255*Math.random()),b:Math.floor(255*Math.random())}}static generateSectionColors(){const t=E.getOptions();let n=[];if(t)return n=t.map((()=>`rgb(${Object.values(E.randomColor()).join(",")})`)),n;throw new TypeError("option is undefined")}static clipText(t,n,e){let o=n+"…";for(;t.measureText(o).width>e;)o=o.slice(0,-4)+"…";return o}}class M{constructor(t,n,e,o){this.node=t,this.options=n,this.totalWeight=e,this.color=o,this.draw()}draw(){let t=0;this.options&&this.totalWeight&&this.options.forEach(((n,e)=>{if(this.totalWeight){const o=n.weight/this.totalWeight*Math.PI*2;if(!(this.node instanceof HTMLCanvasElement))throw new TypeError("canvas-unsupported code here");{const i=this.node.width/2,s=this.node.height/2,r=this.node.height/2,a=13*this.node.height/100/2,l=this.node.getContext("2d");if(l){l.beginPath(),l.moveTo(i,s),l.arc(i,s,r,t,o+t),l.closePath(),l.fillStyle=this.color[e],l.fill(),l.strokeStyle="white",l.lineWidth=2,l.stroke();const d=t+o/2,c=r-a;o*r-10>30&&(l.save(),l.translate(i,s),l.rotate(d),l.textAlign="center",l.textBaseline="middle",l.font="16px Arial",l.fillStyle="white",l.strokeStyle="black",l.lineWidth=3,l.measureText(n.title).width>c&&(n.title=E.clipText(l,n.title,c)),l.strokeText(n.title,(r+a)/2,0),l.fillText(n.title,(r+a)/2,0),l.restore()),t+=o}}}}))}}const I=e.p+"assets/ab7e51588ab53e975dd4.mp3";class S extends o{constructor(t,n){if(super(t,"canvas","wheel-canvas"),this.options=E.getOptions(),this.totalWeight=E.getTotalWeight(),this.color=E.generateSectionColors(),this.isRotating=!1,this.rotationAngle=0,this.pickedDisplay=n,this.node instanceof HTMLCanvasElement){if(this.createWheelCanvas(),!(this.options&&this.totalWeight&&this.color))throw new TypeError("no data to display canvas");new M(this.node,this.options,this.totalWeight,this.color),this.createCenter(),this.createCursor()}}static playSound(){new Audio(I).play()}static easeOutSine(t){return Math.sin(t*Math.PI/2)}rotationWheel(t,n,e){if(this.isRotating)return;this.rotationAngle=0,this.drawWheel(),this.isRotating=!0;const o=1e3*t,i=performance.now(),s=Math.max(5,Math.floor(o/1e3)),r=Math.random()*Math.PI*2,a=t=>{const l=t-i,d=Math.min(l/o,1),c=S.easeOutSine(d);this.rotationAngle=c*(2*Math.PI*s+r),this.drawWheel(),d<1?requestAnimationFrame(a):(this.isRotating=!1,n||S.playSound(),this.determinePickedOption(),e())};requestAnimationFrame(a)}createWheelCanvas(){this.node.setAttribute("width","500"),this.node.setAttribute("height","500")}createCenter(){if(this.node instanceof HTMLCanvasElement){const t=this.node.width/2,n=this.node.height/2,e=13*this.node.height/100/2,o=this.node.getContext("2d");if(!o)throw new TypeError("canvas-unsupported code here");o.beginPath(),o.arc(t,n,e,0,360),o.closePath(),o.fillStyle="rgb(74, 144, 226)",o.fill(),o.strokeStyle="white",o.lineWidth=2,o.stroke()}}createCursor(){if(this.node instanceof HTMLCanvasElement){const t=this.node.getContext("2d");t&&(t.beginPath(),t.moveTo(this.node.width,this.node.height/2-15),t.lineTo(this.node.width,this.node.height/2+15),t.lineTo(this.node.width-50,this.node.height/2),t.closePath(),t.fill(),t.stroke())}}drawWheel(){if(this.node instanceof HTMLCanvasElement){const t=this.node.getContext("2d");t&&(t.clearRect(0,0,this.node.width,this.node.height),t.save(),t.translate(this.node.width/2,this.node.height/2),t.rotate(this.rotationAngle),t.translate(-this.node.width/2,-this.node.height/2),this.options&&this.totalWeight&&this.color&&new M(this.node,this.options,this.totalWeight,this.color),t.restore(),this.createCenter(),this.createCursor())}}determinePickedOption(){if(this.options){const t=this.rotationAngle%(2*Math.PI);let n=0;for(const e of this.options)if(this.totalWeight){const o=e.weight/this.totalWeight*Math.PI*2;if(t>=n&&t<n+o){this.pickedDisplay.textContent=`${e.title}`;break}n+=o}}}}var L=e(885),P={};P.styleTagTransform=f(),P.setAttributes=h(),P.insert=d().bind(null,"head"),P.domAPI=a(),P.insertStyleElement=p(),s()(L.A,P),L.A&&L.A.locals&&L.A.locals;class O extends o{constructor(t,n){new o(t,"h1","app-name","Decision Making Tool"),super(t,"div","decision-picker-container"),this.duration=10,this.isMute=!1,this.router=n,this.createPickedOptionDisplay(),this.createButtons(),this.viewCanvas()}createPickedOptionDisplay(){this.pickedDisplay=new o(this.node,"div","picked-option-display","Please start the picking process")}createButtons(){const t=new o(this.node,"div","button-panel");this.backButton=new o(t.node,"button","back-button","⬅ Back"),this.backButton.setCallback("click",(()=>{this.router.navigate("/")})),this.soundButton=new o(t.node,"button","sound-button","🔊 Sound: On"),this.soundButton.setCallback("click",(()=>{this.toggleSound()})),this.durationInput=new o(t.node,"input","duration-input"),this.durationInput.setAttribute("type","number"),this.durationInput.setAttribute("placeholder","sec"),this.durationInput.setAttribute("value",this.duration.toString()),this.pickButton=new o(t.node,"button","pick-button","▶"),this.pickButton.setCallback("click",(()=>{this.disableControls();const t=this.getDurationValue();t>=5&&t<=30&&this.wheel&&this.startWheelRotation(t,(()=>{this.enableControls()}))}))}getDurationValue(){if(this.durationInput&&this.durationInput.node instanceof HTMLInputElement)return Number(this.durationInput.node.value.trim());throw new TypeError("Element is undefined")}toggleSound(){this.isMute=!this.isMute,this.soundButton&&(this.soundButton.node.textContent=this.isMute?"🔇 Sound: Off":"🔊 Sound: On")}disableControls(){var t,n,e,o;null===(t=this.pickButton)||void 0===t||t.setAttribute("disabled","true"),null===(n=this.backButton)||void 0===n||n.setAttribute("disabled","true"),null===(e=this.soundButton)||void 0===e||e.setAttribute("disabled","true"),null===(o=this.durationInput)||void 0===o||o.setAttribute("disabled","true")}enableControls(){var t,n,e,o;null===(t=this.pickButton)||void 0===t||t.node.removeAttribute("disabled"),null===(n=this.backButton)||void 0===n||n.node.removeAttribute("disabled"),null===(e=this.soundButton)||void 0===e||e.node.removeAttribute("disabled"),null===(o=this.durationInput)||void 0===o||o.node.removeAttribute("disabled")}viewCanvas(){if(!this.pickedDisplay)throw new TypeError("this.pickedDisplay is not an instance of HTMLElement");this.wheel=new S(this.node,this.pickedDisplay.node)}startWheelRotation(t,n){this.wheel&&this.wheel.rotationWheel(t,this.isMute,n)}}var W=e(538),B={};B.styleTagTransform=f(),B.setAttributes=h(),B.insert=d().bind(null,"head"),B.domAPI=a(),B.insertStyleElement=p(),s()(W.A,B),W.A&&W.A.locals&&W.A.locals;class R extends o{constructor(t){new o(t,"h1","app-name","Decision Making Tool"),super(t,"ul","list"),this.displayId=0,this.inputAll=[],localStorage.getItem("options")?function(t){t.clearList();const n=localStorage.getItem("options");if(!n)throw new TypeError("options is null");{const e=JSON.parse(n);e&&"object"==typeof e&&"list"in e&&"lastId"in e&&Array.isArray(e.list)&&"number"==typeof e.lastId&&(t.displayId=e.lastId,e.list.forEach((n=>{t.addListItem(n.id,n.title,n.weight)})))}}(this):this.addListItem("","","")}addListItem(t,n,e){const i=new o(this.node,"li","list-item"),s=crypto.randomUUID(),r=t||"#"+ ++this.displayId,a=new o(i.node,"label","label-item",r);a.setAttribute("for",r),a.setAttribute("id",s);const l=new o(i.node,"input","input-title");l.setAttribute("id",r),l.setAttribute("type","text"),l.setAttribute("placeholder","Title"),l.setAttribute("name","title"),l.setAttribute("value",n||"");const d=new o(i.node,"input","input-weight");d.setAttribute("id",r),d.setAttribute("type","number"),d.setAttribute("placeholder","Weight"),d.setAttribute("name","weight"),d.setAttribute("value",e||""),this.inputAll.push({idRandom:s,inputTitle:l,inputWeight:d}),l.setCallback("input",(()=>{this.updateLocalStorage()})),d.setCallback("input",(()=>{this.updateLocalStorage()}));const c=new o(i.node,"button","button-item","Delete");c.setAttribute("type","button"),c.setCallback("click",(()=>{i.destroy(),this.inputAll=this.inputAll.filter((t=>t.idRandom!==s)),this.updateLocalStorage(),0===this.inputAll.length&&(this.displayId=0)})),this.updateLocalStorage()}clearList(){for(;this.node.firstChild;)this.node.firstChild.remove();this.inputAll=[]}getOptions(){const t=[];return this.inputAll.forEach((n=>{if(n.inputTitle.node instanceof HTMLInputElement&&n.inputWeight.node instanceof HTMLInputElement){const e=n.inputTitle.node.value.trim(),o=n.inputWeight.node.value.trim(),i=n.inputTitle.node.id;i&&t.push({id:i,title:e,weight:o})}})),t}updateLocalStorage(){!function(t){localStorage.clear(),localStorage.setItem("options",JSON.stringify(t))}({list:this.getOptions(),lastId:this.displayId})}}var D=e(342),H={};H.styleTagTransform=f(),H.setAttributes=h(),H.insert=d().bind(null,"head"),H.domAPI=a(),H.insertStyleElement=p(),s()(D.A,H),D.A&&D.A.locals&&D.A.locals;class N extends o{constructor(t,n){super(t,"div","error-container"),this.router=n,this.createButtons()}createButtons(){this.node.innerHTML="",new o(this.node,"h1","app-name","Page Not Found"),new o(this.node,"button","back-button","⬅ Back").setCallback("click",(()=>{console.log("Back clicked"),this.router.navigate("/")}))}}class j{constructor(t){this.routes=[],this.rootElement=t,this.errorComponent=new N(this.rootElement,this),globalThis.addEventListener("popstate",(()=>{this.handleRouteChange()}))}addRoute(t,n){this.routes.push({path:t,viewComponent:n})}navigate(t){globalThis.history.pushState(null,"",t),this.handleRouteChange()}handleRouteChange(){const t=globalThis.location.pathname,n=this.routes.find((n=>n.path===t));n?(this.rootElement.textContent="",n.viewComponent()):this.errorComponent.createButtons()}}var z=e(208),U={};U.styleTagTransform=f(),U.setAttributes=h(),U.insert=d().bind(null,"head"),U.domAPI=a(),U.insertStyleElement=p(),s()(z.A,U),z.A&&z.A.locals&&z.A.locals,new class extends o{constructor(t){super(t,"main","main-container"),this.router=new j(this.node),this.router.addRoute("/",(()=>{this.viewFirsPage()})),this.router.addRoute("/decision-picker",(()=>{this.viewSecondPage()})),this.router.handleRouteChange()}viewFirsPage(){this.node.textContent="";const t=new R(this.node);new T(this.node,t,this.router)}viewSecondPage(){this.node.textContent="",new O(this.node,this.router)}}(document.body)})();
+(() => {
+  'use strict';
+  var t = {
+      23: (t, n, e) => {
+        e.d(n, { A: () => a });
+        var o = e(601),
+          i = e.n(o),
+          s = e(314),
+          r = e.n(s)()(i());
+        r.push([
+          t.id,
+          '.validation-dialog::backdrop {\n  background-color: rgb(0 0 0 / 50%);\n}\n\n.validation-content {\n  display: flex;\n  flex-direction: column;\n  gap: 15px;\n  align-items: center;\n\n  text-align: center;\n}\n\n.validation-message {\n  margin: 0;\n  font-size: 16px;\n  color: #333;\n}\n\n.close-button {\n  cursor: pointer;\n\n  padding: 10px 20px;\n  border: none;\n  border-radius: 4px;\n\n  font-size: 14px;\n  color: #fff;\n\n  background-color: #007bff;\n\n  transition: background-color 0.3s ease;\n}\n\n.close-button:hover {\n  background-color: #0056b3;\n}\n',
+          '',
+        ]);
+        const a = r;
+      },
+      56: (t, n, e) => {
+        t.exports = function (t) {
+          var n = e.nc;
+          n && t.setAttribute('nonce', n);
+        };
+      },
+      72: (t) => {
+        var n = [];
+        function e(t) {
+          for (var e = -1, o = 0; o < n.length; o++)
+            if (n[o].identifier === t) {
+              e = o;
+              break;
+            }
+          return e;
+        }
+        function o(t, o) {
+          for (var s = {}, r = [], a = 0; a < t.length; a++) {
+            var l = t[a],
+              d = o.base ? l[0] + o.base : l[0],
+              c = s[d] || 0,
+              h = ''.concat(d, ' ').concat(c);
+            s[d] = c + 1;
+            var u = e(h),
+              p = { css: l[1], media: l[2], sourceMap: l[3], supports: l[4], layer: l[5] };
+            if (-1 !== u) n[u].references++, n[u].updater(p);
+            else {
+              var b = i(p, o);
+              (o.byIndex = a), n.splice(a, 0, { identifier: h, updater: b, references: 1 });
+            }
+            r.push(h);
+          }
+          return r;
+        }
+        function i(t, n) {
+          var e = n.domAPI(n);
+          return (
+            e.update(t),
+            function (n) {
+              if (n) {
+                if (
+                  n.css === t.css &&
+                  n.media === t.media &&
+                  n.sourceMap === t.sourceMap &&
+                  n.supports === t.supports &&
+                  n.layer === t.layer
+                )
+                  return;
+                e.update((t = n));
+              } else e.remove();
+            }
+          );
+        }
+        t.exports = function (t, i) {
+          var s = o((t = t || []), (i = i || {}));
+          return function (t) {
+            t = t || [];
+            for (var r = 0; r < s.length; r++) {
+              var a = e(s[r]);
+              n[a].references--;
+            }
+            for (var l = o(t, i), d = 0; d < s.length; d++) {
+              var c = e(s[d]);
+              0 === n[c].references && (n[c].updater(), n.splice(c, 1));
+            }
+            s = l;
+          };
+        };
+      },
+      113: (t) => {
+        t.exports = function (t, n) {
+          if (n.styleSheet) n.styleSheet.cssText = t;
+          else {
+            for (; n.firstChild; ) n.removeChild(n.firstChild);
+            n.appendChild(document.createTextNode(t));
+          }
+        };
+      },
+      208: (t, n, e) => {
+        e.d(n, { A: () => a });
+        var o = e(601),
+          i = e.n(o),
+          s = e(314),
+          r = e.n(s)()(i());
+        r.push([
+          t.id,
+          'body {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n\n  height: 100vh;\n  margin: 0;\n\n  background-color: #f0f0f0;\n}\n\n.main-container {\n  width: 100%;\n  max-width: 800px;\n  margin: 20px;\n  padding: 20px;\n  border: 1px solid #ddd;\n  border-radius: 8px;\n\n  font-family: Arial, sans-serif;\n\n  background-color: #f9f9f9;\n  box-shadow: 0 4px 6px rgb(0 0 0 / 10%);\n}\n\nh1.app-name {\n  margin: 20px 0;\n  font-size: 2rem;\n  color: #4a90e2;\n  text-align: center;\n}\n',
+          '',
+        ]);
+        const a = r;
+      },
+      314: (t) => {
+        t.exports = function (t) {
+          var n = [];
+          return (
+            (n.toString = function () {
+              return this.map(function (n) {
+                var e = '',
+                  o = void 0 !== n[5];
+                return (
+                  n[4] && (e += '@supports ('.concat(n[4], ') {')),
+                  n[2] && (e += '@media '.concat(n[2], ' {')),
+                  o && (e += '@layer'.concat(n[5].length > 0 ? ' '.concat(n[5]) : '', ' {')),
+                  (e += t(n)),
+                  o && (e += '}'),
+                  n[2] && (e += '}'),
+                  n[4] && (e += '}'),
+                  e
+                );
+              }).join('');
+            }),
+            (n.i = function (t, e, o, i, s) {
+              'string' == typeof t && (t = [[null, t, void 0]]);
+              var r = {};
+              if (o)
+                for (var a = 0; a < this.length; a++) {
+                  var l = this[a][0];
+                  null != l && (r[l] = !0);
+                }
+              for (var d = 0; d < t.length; d++) {
+                var c = [].concat(t[d]);
+                (o && r[c[0]]) ||
+                  (void 0 !== s &&
+                    (void 0 === c[5] ||
+                      (c[1] = '@layer'
+                        .concat(c[5].length > 0 ? ' '.concat(c[5]) : '', ' {')
+                        .concat(c[1], '}')),
+                    (c[5] = s)),
+                  e &&
+                    (c[2]
+                      ? ((c[1] = '@media '.concat(c[2], ' {').concat(c[1], '}')), (c[2] = e))
+                      : (c[2] = e)),
+                  i &&
+                    (c[4]
+                      ? ((c[1] = '@supports ('.concat(c[4], ') {').concat(c[1], '}')), (c[4] = i))
+                      : (c[4] = ''.concat(i))),
+                  n.push(c));
+              }
+            }),
+            n
+          );
+        };
+      },
+      342: (t, n, e) => {
+        e.d(n, { A: () => a });
+        var o = e(601),
+          i = e.n(o),
+          s = e(314),
+          r = e.n(s)()(i());
+        r.push([
+          t.id,
+          'button {\n  cursor: pointer;\n\n  padding: 10px 20px;\n  border: none;\n  border-radius: 5px;\n\n  font-size: 1rem;\n  font-weight: bold;\n\n  transition: background-color 0.3s ease;\n}\n\n.back-button {\n  border: 2px solid #333;\n  color: #333;\n  background-color: #f4f4f9;\n}\n\n.back-button:hover {\n  background-color: #e0e0e0;\n}\n',
+          '',
+        ]);
+        const a = r;
+      },
+      410: (t, n, e) => {
+        e.d(n, { A: () => a });
+        var o = e(601),
+          i = e.n(o),
+          s = e(314),
+          r = e.n(s)()(i());
+        r.push([
+          t.id,
+          '.buttons-container {\n  display: flex;\n  flex-direction: column;\n  gap: 20px;\n  align-items: center;\n\n  max-width: 800px;\n  margin: 0 auto;\n  padding: 20px;\n\n  font-family: Arial, sans-serif;\n\n  background-color: #f9f9f9;\n}\n\n.button {\n  cursor: pointer;\n\n  width: 50%;\n  padding: 8px 16px;\n  border: none;\n  border-radius: 4px;\n\n  font-size: 14px;\n  color: #fff;\n\n  background-color: #007bff;\n\n  transition: background-color 0.3s ease;\n}\n\n.button:hover {\n  background-color: #0056b3;\n}\n\n@media (width <=600px) {\n  .button {\n    width: 100%;\n  }\n}\n',
+          '',
+        ]);
+        const a = r;
+      },
+      538: (t, n, e) => {
+        e.d(n, { A: () => a });
+        var o = e(601),
+          i = e.n(o),
+          s = e(314),
+          r = e.n(s)()(i());
+        r.push([
+          t.id,
+          '.list {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n\n.list-item {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n\n  padding: 10px 0;\n  border-bottom: 1px solid #ddd;\n}\n\n.list-item:last-child {\n  border-bottom: none;\n}\n\n.label-item {\n  flex: 0 0 50px;\n  margin-right: 10px;\n  font-weight: bold;\n  color: #333;\n}\n\n.input-title {\n  flex: 1;\n\n  margin-right: 10px;\n  padding: 8px;\n  border: 1px solid #ccc;\n  border-radius: 4px;\n\n  font-size: 14px;\n}\n\n.input-weight {\n  flex: 0 0 100px;\n\n  margin-right: 10px;\n  padding: 8px;\n  border: 1px solid #ccc;\n  border-radius: 4px;\n\n  font-size: 14px;\n}\n\n.button-item {\n  cursor: pointer;\n\n  padding: 8px 16px;\n  border: none;\n  border-radius: 4px;\n\n  font-size: 14px;\n  color: #fff;\n\n  background-color: #007bff;\n\n  transition: background-color 0.3s ease;\n}\n\n.button-item:hover {\n  background-color: #0056b3;\n}\n\n@media (width <=600px) {\n  .list-item {\n    flex-direction: column;\n    align-items: flex-start;\n  }\n\n  .label-item {\n    margin-bottom: 5px;\n  }\n\n  .input-title,\n  .input-weight {\n    width: 100%;\n    margin-right: 0;\n    margin-bottom: 10px;\n  }\n\n  .button-item {\n    width: 100%;\n  }\n}\n',
+          '',
+        ]);
+        const a = r;
+      },
+      540: (t) => {
+        t.exports = function (t) {
+          var n = document.createElement('style');
+          return t.setAttributes(n, t.attributes), t.insert(n, t.options), n;
+        };
+      },
+      601: (t) => {
+        t.exports = function (t) {
+          return t[1];
+        };
+      },
+      659: (t) => {
+        var n = {};
+        t.exports = function (t, e) {
+          var o = (function (t) {
+            if (void 0 === n[t]) {
+              var e = document.querySelector(t);
+              if (window.HTMLIFrameElement && e instanceof window.HTMLIFrameElement)
+                try {
+                  e = e.contentDocument.head;
+                } catch (t) {
+                  e = null;
+                }
+              n[t] = e;
+            }
+            return n[t];
+          })(t);
+          if (!o)
+            throw new Error(
+              "Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid."
+            );
+          o.appendChild(e);
+        };
+      },
+      825: (t) => {
+        t.exports = function (t) {
+          if ('undefined' == typeof document)
+            return { update: function () {}, remove: function () {} };
+          var n = t.insertStyleElement(t);
+          return {
+            update: function (e) {
+              !(function (t, n, e) {
+                var o = '';
+                e.supports && (o += '@supports ('.concat(e.supports, ') {')),
+                  e.media && (o += '@media '.concat(e.media, ' {'));
+                var i = void 0 !== e.layer;
+                i && (o += '@layer'.concat(e.layer.length > 0 ? ' '.concat(e.layer) : '', ' {')),
+                  (o += e.css),
+                  i && (o += '}'),
+                  e.media && (o += '}'),
+                  e.supports && (o += '}');
+                var s = e.sourceMap;
+                s &&
+                  'undefined' != typeof btoa &&
+                  (o += '\n/*# sourceMappingURL=data:application/json;base64,'.concat(
+                    btoa(unescape(encodeURIComponent(JSON.stringify(s)))),
+                    ' */'
+                  )),
+                  n.styleTagTransform(o, t, n.options);
+              })(n, t, e);
+            },
+            remove: function () {
+              !(function (t) {
+                if (null === t.parentNode) return !1;
+                t.parentNode.removeChild(t);
+              })(n);
+            },
+          };
+        };
+      },
+      885: (t, n, e) => {
+        e.d(n, { A: () => a });
+        var o = e(601),
+          i = e.n(o),
+          s = e(314),
+          r = e.n(s)()(i());
+        r.push([
+          t.id,
+          '.decision-picker-container {\n  display: flex;\n  flex-direction: column;\n  gap: 20px;\n  align-items: center;\n}\n\n.wheel-canvas {\n  border-radius: 50%;\n  box-shadow: 0 0 30px rgb(0 0 0 / 80%);\n}\n\n.picked-option-display {\n  min-width: 260px;\n  padding: 10px 20px;\n  border: 2px solid #4a90e2;\n  border-radius: 8px;\n\n  font-size: 1rem;\n  font-weight: bold;\n  text-align: center;\n\n  background-color: #fff;\n}\n\n.button-panel {\n  display: flex;\n  gap: 10px;\n  justify-content: center;\n}\n\nbutton {\n  cursor: pointer;\n\n  padding: 10px 20px;\n  border: none;\n  border-radius: 5px;\n\n  font-size: 1rem;\n  font-weight: bold;\n\n  transition: background-color 0.3s ease;\n}\n\n.back-button {\n  border: 2px solid #333;\n  color: #333;\n  background-color: #f4f4f9;\n}\n\n.back-button:hover {\n  background-color: #e0e0e0;\n}\n\n.sound-button {\n  color: #fff;\n  background-color: #4a90e2;\n}\n\n.sound-button:hover {\n  background-color: #0056b3;\n}\n\n.pick-button {\n  color: #fff;\n  background-color: #28a745;\n}\n\n.pick-button:hover {\n  background-color: #218838;\n}\n\n.duration-input {\n  width: 150px;\n  padding: 10px;\n  border: 2px solid #4a90e2;\n  border-radius: 5px;\n\n  font-size: 1rem;\n  text-align: center;\n}\n\nbutton:disabled {\n  cursor: not-allowed;\n  color: #666;\n  opacity: 0.6;\n  background-color: #ccc;\n}\n\ninput:disabled {\n  cursor: not-allowed;\n  color: #999;\n  opacity: 0.6;\n  background-color: #f4f4f4;\n}',
+          '',
+        ]);
+        const a = r;
+      },
+      886: (t, n, e) => {
+        e.d(n, { A: () => a });
+        var o = e(601),
+          i = e.n(o),
+          s = e(314),
+          r = e.n(s)()(i());
+        r.push([
+          t.id,
+          '.dialog {\n  width: 400px;\n  max-width: 90%;\n  padding: 20px;\n  border: 1px solid #ccc;\n  border-radius: 8px;\n\n  background-color: #fff;\n  box-shadow: 0 4px 8px rgb(0 0 0 / 20%);\n}\n\n.dialog::backdrop {\n  background-color: rgb(0 0 0 / 50%);\n}\n\n.form-container {\n  display: flex;\n  flex-direction: column;\n  gap: 15px;\n  align-items: center;\n}\n\n.textarea-content {\n  resize: none;\n\n  box-sizing: border-box;\n  width: 100%;\n  height: 150px;\n  padding: 10px;\n  border: 1px solid #ccc;\n  border-radius: 4px;\n\n  font-size: 14px;\n}\n',
+          '',
+        ]);
+        const a = r;
+      },
+    },
+    n = {};
+  function e(o) {
+    var i = n[o];
+    if (void 0 !== i) return i.exports;
+    var s = (n[o] = { id: o, exports: {} });
+    return t[o](s, s.exports, e), s.exports;
+  }
+  (e.n = (t) => {
+    var n = t && t.__esModule ? () => t.default : () => t;
+    return e.d(n, { a: n }), n;
+  }),
+    (e.d = (t, n) => {
+      for (var o in n)
+        e.o(n, o) && !e.o(t, o) && Object.defineProperty(t, o, { enumerable: !0, get: n[o] });
+    }),
+    (e.g = (function () {
+      if ('object' == typeof globalThis) return globalThis;
+      try {
+        return this || new Function('return this')();
+      } catch (t) {
+        if ('object' == typeof window) return window;
+      }
+    })()),
+    (e.o = (t, n) => Object.prototype.hasOwnProperty.call(t, n)),
+    (() => {
+      var t;
+      e.g.importScripts && (t = e.g.location + '');
+      var n = e.g.document;
+      if (
+        !t &&
+        n &&
+        (n.currentScript &&
+          'SCRIPT' === n.currentScript.tagName.toUpperCase() &&
+          (t = n.currentScript.src),
+        !t)
+      ) {
+        var o = n.getElementsByTagName('script');
+        if (o.length)
+          for (var i = o.length - 1; i > -1 && (!t || !/^http(s?):/.test(t)); ) t = o[i--].src;
+      }
+      if (!t) throw new Error('Automatic publicPath is not supported in this browser');
+      (t = t
+        .replace(/^blob:/, '')
+        .replace(/#.*$/, '')
+        .replace(/\?.*$/, '')
+        .replace(/\/[^\/]+$/, '/')),
+        (e.p = t);
+    })(),
+    (e.nc = void 0);
+  class o {
+    constructor(t, n = 'main', e = '', o = '') {
+      const i = document.createElement(n);
+      if (((i.className = e), (i.textContent = o), !(i instanceof HTMLElement)))
+        throw new TypeError('Created element is not an instance of HTMLElement');
+      (this.node = i), t && t.append(this.node);
+    }
+    setAttribute(t, n) {
+      this.node.setAttribute(t, n);
+    }
+    setCallback(t, n) {
+      this.node.addEventListener(t, n);
+    }
+    destroy() {
+      this.node.remove();
+    }
+  }
+  var i = e(72),
+    s = e.n(i),
+    r = e(825),
+    a = e.n(r),
+    l = e(659),
+    d = e.n(l),
+    c = e(56),
+    h = e.n(c),
+    u = e(540),
+    p = e.n(u),
+    b = e(113),
+    g = e.n(b),
+    f = e(886),
+    m = {};
+  (m.styleTagTransform = g()),
+    (m.setAttributes = h()),
+    (m.insert = d().bind(null, 'head')),
+    (m.domAPI = a()),
+    (m.insertStyleElement = p()),
+    s()(f.A, m),
+    f.A && f.A.locals && f.A.locals;
+  class w {
+    constructor(t, n) {
+      n && (this.listComponent = n), (this.parenNode = t);
+    }
+    static closeModal(t) {
+      (document.body.style.overflow = ''), t.close(), t.remove();
+    }
+    addModal() {
+      this.dialog = new o(this.parenNode, 'dialog', 'dialog');
+      const t = new o(this.dialog.node, 'form', 'form-container'),
+        n = new o(t.node, 'textarea', 'textarea-content');
+      n.setAttribute(
+        'placeholder',
+        'Paste your options here in CSV-like format:\nOption 1,10\nOption 2,20\nOption 3,30'
+      ),
+        (this.buttonCancel = new o(t.node, 'button', 'button', 'Cancel')),
+        (this.buttonConfirm = new o(t.node, 'button', 'button', 'Confirm')),
+        this.buttonCancel.setAttribute('type', 'button'),
+        this.buttonConfirm.setAttribute('type', 'button'),
+        this.viewModal(n);
+    }
+    viewModal(t) {
+      if (!this.dialog) throw new Error('Modal has not been created.');
+      if (!(this.dialog.node instanceof HTMLDialogElement))
+        throw new TypeError('dialog.node is not an instance of HTMLDialogElement');
+      {
+        const n = this.dialog.node;
+        n.showModal(),
+          (document.body.style.overflow = 'hidden'),
+          n.addEventListener('cancel', () => {
+            w.closeModal(n);
+          }),
+          n.addEventListener('click', (t) => {
+            t.target === n && w.closeModal(n);
+          }),
+          this.buttonCancel &&
+            this.buttonCancel.setCallback('click', () => {
+              w.closeModal(n);
+            }),
+          this.buttonConfirm &&
+            this.buttonConfirm.setCallback('click', (e) => {
+              if (
+                (e.preventDefault(),
+                console.log('Confirm clicked'),
+                t.node instanceof HTMLTextAreaElement)
+              ) {
+                const n = t.node.value.trim();
+                console.log(n), this.parseData(n);
+              }
+              w.closeModal(n);
+            });
+      }
+    }
+    parseData(t) {
+      t.split('\n').forEach((t) => {
+        var n;
+        const [e, o] = t.split(',');
+        e &&
+          o &&
+          (null === (n = this.listComponent) ||
+            void 0 === n ||
+            n.addListItem('', e.trim(), o.trim()));
+      });
+    }
+  }
+  var v = e(410),
+    x = {};
+  (x.styleTagTransform = g()),
+    (x.setAttributes = h()),
+    (x.insert = d().bind(null, 'head')),
+    (x.domAPI = a()),
+    (x.insertStyleElement = p()),
+    s()(v.A, x),
+    v.A && v.A.locals && v.A.locals;
+  var y = e(23),
+    A = {};
+  (A.styleTagTransform = g()),
+    (A.setAttributes = h()),
+    (A.insert = d().bind(null, 'head')),
+    (A.domAPI = a()),
+    (A.insertStyleElement = p()),
+    s()(y.A, A),
+    y.A && y.A.locals && y.A.locals;
+  class k extends w {
+    constructor(t) {
+      super(t);
+    }
+    static closeModal(t) {
+      (document.body.style.overflow = ''), t.close(), t.remove();
+    }
+    addValidationModal() {
+      this.dialog = new o(this.parenNode, 'dialog', 'dialog');
+      const t = new o(this.dialog.node, 'div', 'validation-content');
+      new o(
+        t.node,
+        'p',
+        'validation-message',
+        'Please add at least 2 valid options. An option is considered valid if its title is not empty and its weight is greater than 0.'
+      );
+      const n = new o(t.node, 'button', 'button close-button', 'Close');
+      n.setAttribute('type', 'button'), this.viewValidationModal(n);
+    }
+    viewValidationModal(t) {
+      if (!this.dialog) throw new Error('Modal has not been created.');
+      if (!(this.dialog.node instanceof HTMLDialogElement))
+        throw new TypeError('dialog.node is not an instance of HTMLDialogElement');
+      {
+        const n = this.dialog.node;
+        n.showModal(),
+          (document.body.style.overflow = 'hidden'),
+          n.addEventListener('cancel', () => {
+            k.closeModal(n);
+          }),
+          n.addEventListener('click', (t) => {
+            t.target === n && k.closeModal(n);
+          }),
+          t.setCallback('click', () => {
+            k.closeModal(n);
+          });
+      }
+    }
+  }
+  const C = ['Add Option', 'Paste List', 'Clear List', 'Save List', 'Load List', 'Start'];
+  class T extends o {
+    constructor(t, n, e) {
+      super(t, 'div', 'buttons-container'),
+        (this.listComponent = n),
+        (this.router = e),
+        this.addButtons();
+    }
+    addButtons() {
+      const t = new w(this.node, this.listComponent),
+        n = {
+          'Add-Option': () => this.listComponent.addListItem('', '', ''),
+          'Paste-List': () => t.addModal(),
+          'Clear-List': () => {
+            this.listComponent.clearList(), (this.listComponent.displayId = 0);
+          },
+          'Save-List': () => {
+            !(function (t) {
+              const n = new Blob([JSON.stringify(t, null, 2)], { type: 'application/json' }),
+                e = URL.createObjectURL(n),
+                o = document.createElement('a');
+              (o.href = e), (o.download = 'list-options.json'), o.click(), URL.revokeObjectURL(e);
+            })({ list: this.listComponent.getOptions(), lastId: this.listComponent.displayId });
+          },
+          'Load-List': () =>
+            (function (t) {
+              const n = document.createElement('input');
+              (n.type = 'file'),
+                (n.accept = 'application/json'),
+                n.addEventListener('change', () => {
+                  var e;
+                  const o = null === (e = n.files) || void 0 === e ? void 0 : e[0];
+                  o &&
+                    o
+                      .text()
+                      .then((n) => {
+                        try {
+                          t.clearList();
+                          const e = JSON.parse(n);
+                          e &&
+                            'object' == typeof e &&
+                            'list' in e &&
+                            'lastId' in e &&
+                            Array.isArray(e.list) &&
+                            'number' == typeof e.lastId &&
+                            ((t.displayId = e.lastId),
+                            e.list.forEach((n) => {
+                              t.addListItem(n.id, n.title, n.weight);
+                            }));
+                        } catch (t) {
+                          throw new TypeError('Error parsing JSON file');
+                        }
+                      })
+                      .catch(() => {
+                        throw new TypeError('Error reading file');
+                      });
+                }),
+                n.click();
+            })(this.listComponent),
+          Start: () => {
+            const t = this.listComponent.getOptions();
+            let n = 0;
+            t.forEach((t) => (Number(t.weight) > 0 && '' !== t.title && n++, n)),
+              n < 2
+                ? new k(this.node).addValidationModal()
+                : this.router.navigate('/decision-picker');
+          },
+        };
+      let e;
+      C.forEach((t) => {
+        e = new o(this.node, 'button', 'button', t);
+        const i = t.split(' ').join('-');
+        e.setAttribute('id', i),
+          e.setCallback('click', (t) => {
+            if (!(t.target instanceof HTMLElement))
+              throw new TypeError('Element is not an instance of HTMLElement');
+            {
+              const e = t.target.id,
+                o = n[e];
+              'function' == typeof o ? o() : console.error('No action found');
+            }
+          });
+      });
+    }
+  }
+  class E {
+    constructor() {}
+    static getOptions() {
+      const t = localStorage.getItem('options');
+      if (!t) throw new TypeError('options is undefined');
+      {
+        const n = JSON.parse(t);
+        if (
+          n &&
+          'object' == typeof n &&
+          'list' in n &&
+          'lastId' in n &&
+          Array.isArray(n.list) &&
+          'number' == typeof n.lastId
+        )
+          return n.list
+            .filter((t) => t.weight && '' !== t.weight)
+            .map((t) => ({ title: t.title, weight: Number(t.weight) }));
+      }
+    }
+    static getTotalWeight() {
+      const t = this.getOptions();
+      if (t) return t.reduce((t, n) => t + n.weight, 0);
+    }
+    static randomColor() {
+      return {
+        r: Math.floor(255 * Math.random()),
+        g: Math.floor(255 * Math.random()),
+        b: Math.floor(255 * Math.random()),
+      };
+    }
+    static generateSectionColors() {
+      const t = E.getOptions();
+      let n = [];
+      if (t) return (n = t.map(() => `rgb(${Object.values(E.randomColor()).join(',')})`)), n;
+      throw new TypeError('option is undefined');
+    }
+    static clipText(t, n, e) {
+      let o = n + '…';
+      for (; t.measureText(o).width > e; ) o = o.slice(0, -4) + '…';
+      return o;
+    }
+  }
+  class M {
+    constructor(t, n, e, o) {
+      (this.node = t), (this.options = n), (this.totalWeight = e), (this.color = o), this.draw();
+    }
+    draw() {
+      let t = 0;
+      this.options &&
+        this.totalWeight &&
+        this.options.forEach((n, e) => {
+          if (this.totalWeight) {
+            const o = (n.weight / this.totalWeight) * Math.PI * 2;
+            if (!(this.node instanceof HTMLCanvasElement))
+              throw new TypeError('canvas-unsupported code here');
+            {
+              const i = this.node.width / 2,
+                s = this.node.height / 2,
+                r = this.node.height / 2,
+                a = (13 * this.node.height) / 100 / 2,
+                l = this.node.getContext('2d');
+              if (l) {
+                l.beginPath(),
+                  l.moveTo(i, s),
+                  l.arc(i, s, r, t, o + t),
+                  l.closePath(),
+                  (l.fillStyle = this.color[e]),
+                  l.fill(),
+                  (l.strokeStyle = 'white'),
+                  (l.lineWidth = 2),
+                  l.stroke();
+                const d = t + o / 2,
+                  c = r - a;
+                o * r - 10 > 30 &&
+                  (l.save(),
+                  l.translate(i, s),
+                  l.rotate(d),
+                  (l.textAlign = 'center'),
+                  (l.textBaseline = 'middle'),
+                  (l.font = '16px Arial'),
+                  (l.fillStyle = 'white'),
+                  (l.strokeStyle = 'black'),
+                  (l.lineWidth = 3),
+                  l.measureText(n.title).width > c && (n.title = E.clipText(l, n.title, c)),
+                  l.strokeText(n.title, (r + a) / 2, 0),
+                  l.fillText(n.title, (r + a) / 2, 0),
+                  l.restore()),
+                  (t += o);
+              }
+            }
+          }
+        });
+    }
+  }
+  const S = e.p + 'assets/ab7e51588ab53e975dd4.mp3';
+  class I extends o {
+    constructor(t, n) {
+      if (
+        (super(t, 'canvas', 'wheel-canvas'),
+        (this.options = E.getOptions()),
+        (this.totalWeight = E.getTotalWeight()),
+        (this.color = E.generateSectionColors()),
+        (this.isRotating = !1),
+        (this.rotationAngle = 0),
+        (this.pickedDisplay = n),
+        this.node instanceof HTMLCanvasElement)
+      ) {
+        if ((this.createWheelCanvas(), !(this.options && this.totalWeight && this.color)))
+          throw new TypeError('no data to display canvas');
+        new M(this.node, this.options, this.totalWeight, this.color),
+          this.createCenter(),
+          this.createCursor();
+      }
+    }
+    static playSound() {
+      new Audio(S).play();
+    }
+    static easeOutSine(t) {
+      return Math.sin((t * Math.PI) / 2);
+    }
+    rotationWheel(t, n, e) {
+      if (this.isRotating) return;
+      (this.rotationAngle = 0), this.drawWheel(), (this.isRotating = !0);
+      const o = 1e3 * t,
+        i = performance.now(),
+        s = Math.max(5, Math.floor(o / 1e3)),
+        r = Math.random() * Math.PI * 2,
+        a = (t) => {
+          const l = t - i,
+            d = Math.min(l / o, 1),
+            c = I.easeOutSine(d);
+          (this.rotationAngle = c * (2 * Math.PI * s + r)),
+            this.drawWheel(),
+            d < 1
+              ? requestAnimationFrame(a)
+              : ((this.isRotating = !1), n || I.playSound(), this.determinePickedOption(), e());
+        };
+      requestAnimationFrame(a);
+    }
+    createWheelCanvas() {
+      this.node.setAttribute('width', '500'), this.node.setAttribute('height', '500');
+    }
+    createCenter() {
+      if (this.node instanceof HTMLCanvasElement) {
+        const t = this.node.width / 2,
+          n = this.node.height / 2,
+          e = (13 * this.node.height) / 100 / 2,
+          o = this.node.getContext('2d');
+        if (!o) throw new TypeError('canvas-unsupported code here');
+        o.beginPath(),
+          o.arc(t, n, e, 0, 360),
+          o.closePath(),
+          (o.fillStyle = 'rgb(74, 144, 226)'),
+          o.fill(),
+          (o.strokeStyle = 'white'),
+          (o.lineWidth = 2),
+          o.stroke();
+      }
+    }
+    createCursor() {
+      if (this.node instanceof HTMLCanvasElement) {
+        const t = this.node.getContext('2d');
+        t &&
+          (t.beginPath(),
+          t.moveTo(this.node.width, this.node.height / 2 - 15),
+          t.lineTo(this.node.width, this.node.height / 2 + 15),
+          t.lineTo(this.node.width - 50, this.node.height / 2),
+          t.closePath(),
+          t.fill(),
+          t.stroke());
+      }
+    }
+    drawWheel() {
+      if (this.node instanceof HTMLCanvasElement) {
+        const t = this.node.getContext('2d');
+        t &&
+          (t.clearRect(0, 0, this.node.width, this.node.height),
+          t.save(),
+          t.translate(this.node.width / 2, this.node.height / 2),
+          t.rotate(this.rotationAngle),
+          t.translate(-this.node.width / 2, -this.node.height / 2),
+          this.options &&
+            this.totalWeight &&
+            this.color &&
+            new M(this.node, this.options, this.totalWeight, this.color),
+          t.restore(),
+          this.createCenter(),
+          this.createCursor());
+      }
+    }
+    determinePickedOption() {
+      if (this.options) {
+        const t = this.rotationAngle % (2 * Math.PI);
+        let n = 0;
+        for (const e of this.options)
+          if (this.totalWeight) {
+            const o = (e.weight / this.totalWeight) * Math.PI * 2;
+            if (t >= n && t < n + o) {
+              this.pickedDisplay.textContent = `${e.title}`;
+              break;
+            }
+            n += o;
+          }
+      }
+    }
+  }
+  var L = e(885),
+    P = {};
+  (P.styleTagTransform = g()),
+    (P.setAttributes = h()),
+    (P.insert = d().bind(null, 'head')),
+    (P.domAPI = a()),
+    (P.insertStyleElement = p()),
+    s()(L.A, P),
+    L.A && L.A.locals && L.A.locals;
+  class O extends o {
+    constructor(t, n) {
+      new o(t, 'h1', 'app-name', 'Decision Making Tool'),
+        super(t, 'div', 'decision-picker-container'),
+        (this.duration = 10),
+        (this.isMute = !1),
+        (this.router = n),
+        this.createPickedOptionDisplay(),
+        this.createButtons(),
+        this.viewCanvas();
+    }
+    createPickedOptionDisplay() {
+      this.pickedDisplay = new o(
+        this.node,
+        'div',
+        'picked-option-display',
+        'Please start the picking process'
+      );
+    }
+    createButtons() {
+      const t = new o(this.node, 'div', 'button-panel');
+      (this.backButton = new o(t.node, 'button', 'back-button', '⬅ Back')),
+        this.backButton.setCallback('click', () => {
+          this.router.navigate('/');
+        }),
+        (this.soundButton = new o(t.node, 'button', 'sound-button', '🔊 Sound: On')),
+        this.soundButton.setCallback('click', () => {
+          this.toggleSound();
+        }),
+        (this.durationInput = new o(t.node, 'input', 'duration-input')),
+        this.durationInput.setAttribute('type', 'number'),
+        this.durationInput.setAttribute('placeholder', 'sec'),
+        this.durationInput.setAttribute('value', this.duration.toString()),
+        (this.pickButton = new o(t.node, 'button', 'pick-button', '▶')),
+        this.pickButton.setCallback('click', () => {
+          this.disableControls();
+          const t = this.getDurationValue();
+          t >= 5 &&
+            t <= 30 &&
+            this.wheel &&
+            this.startWheelRotation(t, () => {
+              this.enableControls();
+            });
+        });
+    }
+    getDurationValue() {
+      if (this.durationInput && this.durationInput.node instanceof HTMLInputElement)
+        return Number(this.durationInput.node.value.trim());
+      throw new TypeError('Element is undefined');
+    }
+    toggleSound() {
+      (this.isMute = !this.isMute),
+        this.soundButton &&
+          (this.soundButton.node.textContent = this.isMute ? '🔇 Sound: Off' : '🔊 Sound: On');
+    }
+    disableControls() {
+      var t, n, e, o;
+      null === (t = this.pickButton) || void 0 === t || t.setAttribute('disabled', 'true'),
+        null === (n = this.backButton) || void 0 === n || n.setAttribute('disabled', 'true'),
+        null === (e = this.soundButton) || void 0 === e || e.setAttribute('disabled', 'true'),
+        null === (o = this.durationInput) || void 0 === o || o.setAttribute('disabled', 'true');
+    }
+    enableControls() {
+      var t, n, e, o;
+      null === (t = this.pickButton) || void 0 === t || t.node.removeAttribute('disabled'),
+        null === (n = this.backButton) || void 0 === n || n.node.removeAttribute('disabled'),
+        null === (e = this.soundButton) || void 0 === e || e.node.removeAttribute('disabled'),
+        null === (o = this.durationInput) || void 0 === o || o.node.removeAttribute('disabled');
+    }
+    viewCanvas() {
+      if (!this.pickedDisplay)
+        throw new TypeError('this.pickedDisplay is not an instance of HTMLElement');
+      this.wheel = new I(this.node, this.pickedDisplay.node);
+    }
+    startWheelRotation(t, n) {
+      this.wheel && this.wheel.rotationWheel(t, this.isMute, n);
+    }
+  }
+  var W = e(538),
+    B = {};
+  (B.styleTagTransform = g()),
+    (B.setAttributes = h()),
+    (B.insert = d().bind(null, 'head')),
+    (B.domAPI = a()),
+    (B.insertStyleElement = p()),
+    s()(W.A, B),
+    W.A && W.A.locals && W.A.locals;
+  class R extends o {
+    constructor(t) {
+      new o(t, 'h1', 'app-name', 'Decision Making Tool'),
+        super(t, 'ul', 'list'),
+        (this.displayId = 0),
+        (this.inputAll = []),
+        localStorage.getItem('options')
+          ? (function (t) {
+              t.clearList();
+              const n = localStorage.getItem('options');
+              if (!n) throw new TypeError('options is null');
+              {
+                const e = JSON.parse(n);
+                e &&
+                  'object' == typeof e &&
+                  'list' in e &&
+                  'lastId' in e &&
+                  Array.isArray(e.list) &&
+                  'number' == typeof e.lastId &&
+                  ((t.displayId = e.lastId),
+                  e.list.forEach((n) => {
+                    t.addListItem(n.id, n.title, n.weight);
+                  }));
+              }
+            })(this)
+          : this.addListItem('', '', '');
+    }
+    addListItem(t, n, e) {
+      const i = new o(this.node, 'li', 'list-item'),
+        s = crypto.randomUUID(),
+        r = t || '#' + ++this.displayId,
+        a = new o(i.node, 'label', 'label-item', r);
+      a.setAttribute('for', r), a.setAttribute('id', s);
+      const l = new o(i.node, 'input', 'input-title');
+      l.setAttribute('id', r),
+        l.setAttribute('type', 'text'),
+        l.setAttribute('placeholder', 'Title'),
+        l.setAttribute('name', 'title'),
+        l.setAttribute('value', n || '');
+      const d = new o(i.node, 'input', 'input-weight');
+      d.setAttribute('id', r),
+        d.setAttribute('type', 'number'),
+        d.setAttribute('placeholder', 'Weight'),
+        d.setAttribute('name', 'weight'),
+        d.setAttribute('value', e || ''),
+        this.inputAll.push({ idRandom: s, inputTitle: l, inputWeight: d }),
+        l.setCallback('input', () => {
+          this.updateLocalStorage();
+        }),
+        d.setCallback('input', () => {
+          this.updateLocalStorage();
+        });
+      const c = new o(i.node, 'button', 'button-item', 'Delete');
+      c.setAttribute('type', 'button'),
+        c.setCallback('click', () => {
+          i.destroy(),
+            (this.inputAll = this.inputAll.filter((t) => t.idRandom !== s)),
+            this.updateLocalStorage(),
+            0 === this.inputAll.length && (this.displayId = 0);
+        }),
+        this.updateLocalStorage();
+    }
+    clearList() {
+      for (; this.node.firstChild; ) this.node.firstChild.remove();
+      this.inputAll = [];
+    }
+    getOptions() {
+      const t = [];
+      return (
+        this.inputAll.forEach((n) => {
+          if (
+            n.inputTitle.node instanceof HTMLInputElement &&
+            n.inputWeight.node instanceof HTMLInputElement
+          ) {
+            const e = n.inputTitle.node.value.trim(),
+              o = n.inputWeight.node.value.trim(),
+              i = n.inputTitle.node.id;
+            i && t.push({ id: i, title: e, weight: o });
+          }
+        }),
+        t
+      );
+    }
+    updateLocalStorage() {
+      !(function (t) {
+        localStorage.clear(), localStorage.setItem('options', JSON.stringify(t));
+      })({ list: this.getOptions(), lastId: this.displayId });
+    }
+  }
+  var D = e(342),
+    N = {};
+  (N.styleTagTransform = g()),
+    (N.setAttributes = h()),
+    (N.insert = d().bind(null, 'head')),
+    (N.domAPI = a()),
+    (N.insertStyleElement = p()),
+    s()(D.A, N),
+    D.A && D.A.locals && D.A.locals;
+  class j extends o {
+    constructor(t, n) {
+      super(t, 'div', 'error-container'), (this.router = n), this.createButtons();
+    }
+    createButtons() {
+      (this.node.textContent = ''),
+        new o(this.node, 'h1', 'app-name', 'Page Not Found'),
+        new o(this.node, 'button', 'back-button', '⬅ Back').setCallback('click', () => {
+          console.log('Back clicked'), this.router.navigate('/');
+        });
+    }
+  }
+  class H {
+    constructor(t) {
+      (this.routes = []),
+        (this.rootElement = t),
+        (this.errorComponent = new j(this.rootElement, this)),
+        globalThis.addEventListener('popstate', () => {
+          this.handleRouteChange();
+        });
+    }
+    addRoute(t, n) {
+      this.routes.push({
+        path: '/nata1ka89-JSFE2024Q4/decision-making-tool' + t,
+        viewComponent: n,
+      });
+    }
+    navigate(t) {
+      globalThis.history.pushState(null, '', '/nata1ka89-JSFE2024Q4/decision-making-tool' + t),
+        this.handleRouteChange();
+    }
+    handleRouteChange() {
+      const t = '/nata1ka89-JSFE2024Q4/decision-making-tool',
+        n = globalThis.location.pathname.replace(t, '');
+      console.log('Current Path:', n);
+      const e = this.routes.find((e) => e.path === t + n);
+      e
+        ? (console.log('Route Found:', e), (this.rootElement.textContent = ''), e.viewComponent())
+        : (console.log('Route Not Found, showing error page'),
+          (this.rootElement.textContent = ''),
+          this.errorComponent.createButtons());
+    }
+  }
+  var z = e(208),
+    F = {};
+  (F.styleTagTransform = g()),
+    (F.setAttributes = h()),
+    (F.insert = d().bind(null, 'head')),
+    (F.domAPI = a()),
+    (F.insertStyleElement = p()),
+    s()(z.A, F),
+    z.A && z.A.locals && z.A.locals,
+    new (class extends o {
+      constructor(t) {
+        super(t, 'main', 'main-container'),
+          (this.router = new H(this.node)),
+          this.router.addRoute('/', () => {
+            this.viewFirsPage();
+          }),
+          this.router.addRoute('/decision-picker', () => {
+            this.viewSecondPage();
+          }),
+          this.router.handleRouteChange();
+      }
+      viewFirsPage() {
+        this.node.textContent = '';
+        const t = new R(this.node);
+        new T(this.node, t, this.router);
+      }
+      viewSecondPage() {
+        (this.node.textContent = ''), new O(this.node, this.router);
+      }
+    })(document.body);
+})();
