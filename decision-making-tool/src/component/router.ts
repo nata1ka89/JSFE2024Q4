@@ -1,4 +1,5 @@
 import { ErrorComponent } from './error-page/error-component';
+
 type Route = {
   path: string;
   viewComponent: () => void;
@@ -7,38 +8,42 @@ type Route = {
 export default class Router {
   private routes: Route[] = [];
   private rootElement: HTMLElement;
-  private errorComponent: ErrorComponent;
+  private logs: string[] = [];
 
   constructor(rootElement: HTMLElement) {
     this.rootElement = rootElement;
-    this.errorComponent = new ErrorComponent(this.rootElement, this);
-    globalThis.addEventListener('popstate', () => {
+
+    globalThis.addEventListener('hashchange', () => {
       this.handleRouteChange();
     });
-  }
 
-  public addRoute(path: string, viewComponent: () => void): void {
-    const basePath = '/nata1ka89-JSFE2024Q4/decision-making-tool';
-    this.routes.push({ path: basePath + path, viewComponent });
-  }
-
-  public navigate(url: string): void {
-    const basePath = '/nata1ka89-JSFE2024Q4/decision-making-tool';
-    globalThis.history.pushState(null, '', basePath + url);
     this.handleRouteChange();
   }
 
+  public addRoute(path: string, viewComponent: () => void): void {
+    this.routes.push({ path, viewComponent });
+  }
+
+  public navigate(url: string): void {
+    this.logs.push(`Navigated to ${url}`);
+    globalThis.location.hash = `#${url}`;
+  }
+
   public handleRouteChange(): void {
-    const basePath = '/nata1ka89-JSFE2024Q4/decision-making-tool';
-    const currentPath = globalThis.location.pathname.replace(basePath, '');
-    const route = this.routes.find((r) => r.path === basePath + currentPath);
+    let currentPath = globalThis.location.hash.slice(1);
+    if (!currentPath) {
+      currentPath = '/';
+      this.navigate(currentPath);
+      return;
+    }
+    const route = this.routes.find((r) => r.path === currentPath);
 
     if (route) {
       this.rootElement.textContent = '';
       route.viewComponent();
     } else {
       this.rootElement.textContent = '';
-      this.errorComponent.createButtons();
+      new ErrorComponent(this.rootElement, this);
     }
   }
 }

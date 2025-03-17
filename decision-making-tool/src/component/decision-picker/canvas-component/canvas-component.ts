@@ -1,7 +1,7 @@
 import { BaseComponent } from '../../../utils/base-component';
 import { DataSections } from './data-section';
 import { ViewSections } from './draw-sections';
-import audioPath from '../../../assets/audio-end.mp3';
+import { easeOutSine, playSound } from '../../../utils/util-decision-picker';
 export class CanvasComponent extends BaseComponent {
   private options = DataSections.getOptions();
   private totalWeight = DataSections.getTotalWeight();
@@ -24,15 +24,6 @@ export class CanvasComponent extends BaseComponent {
     }
   }
 
-  private static playSound(): void {
-    const audio = new Audio(audioPath);
-    void audio.play();
-  }
-
-  private static easeOutSine(x: number): number {
-    return Math.sin((x * Math.PI) / 2);
-  }
-
   public rotationWheel(duration: number, isMute: boolean, onComplete: () => void): void {
     if (this.isRotating) return;
     this.rotationAngle = 0;
@@ -46,7 +37,7 @@ export class CanvasComponent extends BaseComponent {
     const animate = (currentTime: number): void => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / totalDuration, 1); // Progress from 0 to 1
-      const easedProgress = CanvasComponent.easeOutSine(progress);
+      const easedProgress = easeOutSine(progress);
       this.rotationAngle = easedProgress * (Math.PI * 2 * fullTurns + randomStopAngle); // Current rotation angle
       this.drawWheel();
 
@@ -55,7 +46,7 @@ export class CanvasComponent extends BaseComponent {
       } else {
         this.isRotating = false;
         if (!isMute) {
-          CanvasComponent.playSound();
+          playSound();
         }
         this.determinePickedOption();
         onComplete();
