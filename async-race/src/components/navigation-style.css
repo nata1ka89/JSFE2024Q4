@@ -1,0 +1,33 @@
+.navigation-container {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto;
+  padding: 20px;
+
+  font-family: Arial, sans-serif;
+
+  background-color: grey;
+}
+
+button {
+  cursor: pointer;
+
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+
+  font-size: 16px;
+  color: #fff;
+
+  background-color: #4a5560;
+  box-shadow: 0 0 4px 4px #d2d6df;
+
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  box-shadow: none;
+}
