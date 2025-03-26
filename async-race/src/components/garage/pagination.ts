@@ -1,5 +1,5 @@
-import { BaseComponent } from '../utils/base-component';
-import './pagination-style.css';
+import { BaseComponent } from '../../utils/base-component';
+import '../../style/pagination-style.css';
 
 export class Pagination extends BaseComponent {
   constructor(_parenNode: HTMLElement | null) {

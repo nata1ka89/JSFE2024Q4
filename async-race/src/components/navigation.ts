@@ -1,5 +1,5 @@
 import { BaseComponent } from '../utils/base-component';
-import './navigation-style.css';
+import '../style/navigation-style.css';
 export class Navigation extends BaseComponent {
   constructor(_parenNode: HTMLElement | null) {
     super(_parenNode, 'div', 'navigation-container');
