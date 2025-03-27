@@ -9,6 +9,11 @@ export class Cars extends BaseComponent {
     this.viewCars();
   }
 
+  public updateCars(): void {
+    this.node.innerHTML = '';
+    this.viewCars();
+  }
+
   private viewCars(): void {
     const carsData = garageState.cars;
     for (const carData of carsData) {
