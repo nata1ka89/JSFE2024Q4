@@ -15,3 +15,21 @@ export const garageState: GarageState = {
 export const setGarageState = (newState: Partial<GarageState>): void => {
   Object.assign(garageState, newState);
 };
+
+export interface InputState {
+  createInput: string;
+  createInputColor: string;
+  updateInput: string;
+  updateInputColor: string;
+}
+
+export const inputState: InputState = {
+  createInput: '',
+  createInputColor: '#ffffff',
+  updateInput: '',
+  updateInputColor: '#ffffff',
+};
+
+export const setInputState = (newInput: Partial<InputState>): void => {
+  Object.assign(inputState, newInput);
+};

@@ -1,30 +1,30 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/pagination-style.css';
-import { garageState } from '../../state/garage-state';
+import { winnersState } from '../../state/winners-state';
 import { appState } from '../../state/global-state';
 
-export class Pagination extends BaseComponent {
+export class PaginationWinners extends BaseComponent {
   constructor(_parenNode: HTMLElement | null) {
     super(_parenNode, 'div', 'pagination-container');
-    this.createPagination();
+    this.createPaginationWinners();
   }
 
-  public updatePagination(): void {
+  public updatePaginationWinners(): void {
     this.node.textContent = '';
-    if (appState.currentView === 'garage') {
-      this.createPagination();
+    if (appState.currentView === 'winners') {
+      this.createPaginationWinners();
     }
   }
 
-  private createPagination(): void {
-    const totalCars = garageState.totalCars;
-    const currentPage = garageState.currentPage;
+  private createPaginationWinners(): void {
+    const totalWinners = winnersState.totalWinners;
+    const currentPage = winnersState.currentPage;
 
     const previousButton = new BaseComponent(this.node, 'button', 'prev-button', 'Prev');
     previousButton.setCallback('click', () => console.log('click prevButton'));
     new BaseComponent(this.node, 'p', 'page', `${currentPage}`);
     const nextButton = new BaseComponent(this.node, 'button', 'next-button', 'Next');
     nextButton.setCallback('click', () => console.log('click nextButton'));
-    new BaseComponent(this.node, 'p', 'title', `Garage(${totalCars})`);
+    new BaseComponent(this.node, 'p', 'title', `Winners(${totalWinners})`);
   }
 }

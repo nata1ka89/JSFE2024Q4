@@ -1,15 +1,22 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/navigation-style.css';
+import { setAppState } from '../../state/global-state';
 export class Navigation extends BaseComponent {
-  constructor(_parenNode: HTMLElement | null) {
+  constructor(_parenNode: HTMLElement | null, updateView: () => void) {
     super(_parenNode, 'div', 'navigation-container');
-    this.createNavigation();
+    this.createNavigation(updateView);
   }
 
-  private createNavigation(): void {
+  private createNavigation(updateView: () => void): void {
     const garageButton = new BaseComponent(this.node, 'button', 'garage-button', 'To Garage');
-    garageButton.setCallback('click', () => console.log('click garageButton'));
+    garageButton.setCallback('click', () => {
+      setAppState({ currentView: 'garage' });
+      updateView();
+    });
     const winnersButton = new BaseComponent(this.node, 'button', 'winners-button', 'To Winners');
-    winnersButton.setCallback('click', () => console.log('click winnersButton'));
+    winnersButton.setCallback('click', () => {
+      setAppState({ currentView: 'winners' });
+      updateView();
+    });
   }
 }

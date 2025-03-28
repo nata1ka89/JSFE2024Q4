@@ -10,7 +10,7 @@ export class Cars extends BaseComponent {
   }
 
   public updateCars(): void {
-    this.node.innerHTML = '';
+    this.node.textContent = '';
     this.viewCars();
   }
 

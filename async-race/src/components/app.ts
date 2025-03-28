@@ -1,27 +1,31 @@
 import { BaseComponent } from '../utils/base-component';
-import { ControlButtons } from './garage/control-buttons';
-import { InputElement } from './garage/input-components';
 import { Navigation } from './navigation/navigation';
-import { Pagination } from './garage/pagination';
-import { Cars } from './garage/cars';
 import { getCars } from '../api/api-garage';
+import { appState } from '../state/global-state';
+import { RenderPages } from '../state/render-pages';
 
 export class App extends BaseComponent {
-  private carsComponent: Cars;
-  private paginationComponent: Pagination;
+  private renderPages: RenderPages | undefined;
   constructor(_parenNode: HTMLElement | null) {
     super(_parenNode);
-
-    new Navigation(this.node);
-    this.paginationComponent = new Pagination(this.node);
-    new InputElement(this.node);
-    new ControlButtons(this.node);
-    this.carsComponent = new Cars(this.node);
+    new Navigation(this.node, this.updateView.bind(this));
     void this.init();
   }
+
   private async init(): Promise<void> {
+    this.renderPages = new RenderPages(this.node);
+    appState.currentView = 'garage';
     await getCars();
-    this.carsComponent.updateCars();
-    this.paginationComponent.updatePagination();
+    this.updateView();
+  }
+
+  private updateView(): void {
+    this.renderPages?.destroyCurrentView();
+
+    if (appState.currentView === 'garage') {
+      this.renderPages?.renderGarage();
+    } else if (appState.currentView === 'winners') {
+      this.renderPages?.renderWinners();
+    }
   }
 }
