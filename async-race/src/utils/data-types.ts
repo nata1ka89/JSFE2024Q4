@@ -15,4 +15,7 @@ export type InputState = {
   createInputColor: string;
   updateInput: string;
   updateInputColor: string;
+  updateState: string;
 };
+
+export type Listener = () => void;

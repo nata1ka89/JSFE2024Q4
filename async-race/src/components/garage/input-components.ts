@@ -1,18 +1,15 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/input-style.css';
-import { inputState } from '../../state/garage-state';
+import { inputState, subscribeInputState } from '../../state/garage-state';
 import type { InputState } from '../../utils/data-types';
 import { createCar, getCars } from '../../api/api-garage';
-import type { Cars } from './cars';
-import type { Pagination } from './pagination';
 export class InputElement extends BaseComponent {
-  private cars: Cars;
-  private pagination: Pagination;
-  constructor(_parenNode: HTMLElement | null, cars: Cars, pagination: Pagination) {
+  constructor(_parenNode: HTMLElement | null) {
     super(_parenNode, 'div', 'input-container');
-    this.cars = cars;
-    this.pagination = pagination;
     this.createInputElements();
+    subscribeInputState(() => {
+      this.updateInput();
+    });
   }
 
   private static inputHandlers(input: BaseComponent, key: keyof InputState): void {
@@ -37,11 +34,9 @@ export class InputElement extends BaseComponent {
       try {
         await createCar(newCar);
         await getCars();
-        this.cars.updateCars();
         inputState.createInput = '';
         inputState.createInputColor = '#ffffff';
         this.updateInput();
-        this.pagination.updatePagination();
       } catch (error) {
         console.error('Error creating car:', error);
       }
@@ -59,15 +54,20 @@ export class InputElement extends BaseComponent {
     const createButton = new BaseComponent(createDiv.node, 'button', 'create-button', 'Create');
     createButton.setCallback('click', () => void this.createHandlers());
 
-    const updateDiv = new BaseComponent(this.node, 'div', 'create');
+    const updateDiv = new BaseComponent(this.node, 'div', 'update');
     const updateInput = new BaseComponent(updateDiv.node, 'input', 'input-update');
     updateInput.setAttribute('type', 'text');
     updateInput.setAttribute('value', inputState.updateInput);
-    updateInput.setAttribute('disabled', 'true');
     const updateInputColor = new BaseComponent(updateDiv.node, 'input', 'input-color');
     updateInputColor.setAttribute('type', 'color');
     updateInputColor.setAttribute('value', inputState.updateInputColor);
-    updateInputColor.setAttribute('disabled', 'true');
+    if (inputState.updateState === 'false') {
+      updateInput.node.removeAttribute('disabled');
+      updateInputColor.node.removeAttribute('disabled');
+    } else {
+      updateInput.setAttribute('disabled', 'true');
+      updateInputColor.setAttribute('disabled', 'true');
+    }
     const updateButton = new BaseComponent(updateDiv.node, 'button', 'update-button', 'Update');
     updateButton.setCallback('click', () => console.log('click updateButton'));
 

@@ -1,23 +1,20 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/pagination-style.css';
-import { garageState } from '../../state/garage-state';
-import { appState } from '../../state/global-state';
+import { garageState, subscribeGarageState } from '../../state/garage-state';
 import { getCars } from '../../api/api-garage';
-import type { Cars } from './cars';
 
 export class Pagination extends BaseComponent {
-  private cars: Cars;
-  constructor(_parenNode: HTMLElement | null, cars: Cars) {
+  constructor(_parenNode: HTMLElement | null) {
     super(_parenNode, 'div', 'pagination-container');
-    this.cars = cars;
     this.createPagination();
+    subscribeGarageState(() => {
+      this.updatePagination();
+    });
   }
 
   public updatePagination(): void {
     this.node.textContent = '';
-    if (appState.currentView === 'garage') {
-      this.createPagination();
-    }
+    this.createPagination();
   }
 
   private async nextHandlers(): Promise<void> {
@@ -26,19 +23,18 @@ export class Pagination extends BaseComponent {
       if (garageState.currentPage < allPage) {
         garageState.currentPage++;
         await getCars(garageState.currentPage);
-        this.cars.updateCars();
         this.updatePagination();
       }
     } catch (error) {
-      console.error('Error creating car:', error);
+      console.error('Error switching to next page:', error);
     }
   }
+
   private async prevHandlers(): Promise<void> {
     try {
       if (garageState.currentPage > 1) {
         garageState.currentPage--;
         await getCars(garageState.currentPage);
-        this.cars.updateCars();
         this.updatePagination();
       }
     } catch (error) {
