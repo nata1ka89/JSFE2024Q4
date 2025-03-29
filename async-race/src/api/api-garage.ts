@@ -1,5 +1,5 @@
 import { garageState, setGarageState } from '../state/garage-state';
-import type { CarsData } from '../utils/data-cars';
+import type { CarsData } from '../utils/data-types';
 import { isCarsData, isCarData } from '../utils/is-cars-data';
 
 const baseUrl = 'http://127.0.0.1:3000';
@@ -44,7 +44,7 @@ export const getCar = async (id: number): Promise<CarsData | undefined> => {
   }
 };
 
-export const createCar = async (newCar: CarsData): Promise<CarsData | undefined> => {
+export const createCar = async (newCar: CarsData): Promise<Partial<CarsData> | undefined> => {
   try {
     const response = await fetch(`${baseUrl}/garage`, {
       method: 'POST',

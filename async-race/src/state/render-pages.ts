@@ -15,9 +15,10 @@ export class RenderPages extends BaseComponent {
   }
   public renderGarage(): void {
     this.paginationComponent = new Pagination(this.node);
-    this.inputComponent = new InputElement(this.node);
     new ControlButtons(this.node);
     this.carsComponent = new Cars(this.node);
+    this.inputComponent = new InputElement(this.node, this.carsComponent);
+    this.node.insertBefore(this.inputComponent.node, this.carsComponent.node);
     this.carsComponent.updateCars();
     this.paginationComponent.updatePagination();
     this.inputComponent.updateInput();

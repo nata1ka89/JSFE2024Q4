@@ -1,4 +1,4 @@
-import type { CarsData } from './data-cars';
+import type { CarsData } from './data-types';
 
 export function isCarsData(data: unknown): data is CarsData[] {
   return (

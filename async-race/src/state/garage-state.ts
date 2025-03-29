@@ -1,10 +1,6 @@
-import type { CarsData } from '../utils/data-cars';
+import type { GarageState, InputState } from '../utils/data-types';
 
-interface GarageState {
-  cars: CarsData[];
-  currentPage: number;
-  totalCars: number;
-}
+
 
 export const garageState: GarageState = {
   cars: [],
@@ -16,12 +12,7 @@ export const setGarageState = (newState: Partial<GarageState>): void => {
   Object.assign(garageState, newState);
 };
 
-export interface InputState {
-  createInput: string;
-  createInputColor: string;
-  updateInput: string;
-  updateInputColor: string;
-}
+
 
 export const inputState: InputState = {
   createInput: '',

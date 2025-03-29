@@ -1,10 +1,14 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/input-style.css';
 import { inputState } from '../../state/garage-state';
-import type { InputState } from '../../state/garage-state';
+import type { InputState } from '../../utils/data-types';
+import { createCar, getCars } from '../../api/api-garage';
+import type { Cars } from './cars';
 export class InputElement extends BaseComponent {
-  constructor(_parenNode: HTMLElement | null) {
+  private cars: Cars;
+  constructor(_parenNode: HTMLElement | null, cars: Cars) {
     super(_parenNode, 'div', 'input-container');
+    this.cars = cars;
     this.createInputElements();
   }
 
@@ -21,6 +25,25 @@ export class InputElement extends BaseComponent {
     this.createInputElements();
   }
 
+  private async createHandlers(): Promise<void> {
+    if (inputState.createInput && inputState.createInputColor) {
+      const newCar = {
+        name: inputState.createInput,
+        color: inputState.createInputColor,
+      };
+      try {
+        await createCar(newCar);
+        await getCars();
+        this.cars.updateCars();
+        inputState.createInput = '';
+        inputState.createInputColor = '#ffffff';
+        this.updateInput();
+      } catch (error) {
+        console.error('Error creating car:', error);
+      }
+    }
+  }
+
   private createInputElements(): void {
     const createDiv = new BaseComponent(this.node, 'div', 'create');
     const createInput = new BaseComponent(createDiv.node, 'input', 'input-create');
@@ -30,7 +53,7 @@ export class InputElement extends BaseComponent {
     createInputColor.setAttribute('type', 'color');
     createInputColor.setAttribute('value', inputState.createInputColor);
     const createButton = new BaseComponent(createDiv.node, 'button', 'create-button', 'Create');
-    createButton.setCallback('click', () => console.log('click createButton'));
+    createButton.setCallback('click', () => void this.createHandlers());
 
     const updateDiv = new BaseComponent(this.node, 'div', 'create');
     const updateInput = new BaseComponent(updateDiv.node, 'input', 'input-update');
