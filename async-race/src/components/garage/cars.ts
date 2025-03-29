@@ -2,6 +2,7 @@ import { BaseComponent } from '../../utils/base-component';
 import { garageState } from '../../state/garage-state';
 
 import '../../style/cars-style.css';
+import { CarCvg } from './car-svg';
 
 export class Cars extends BaseComponent {
   constructor(_parenNode: HTMLElement | null) {
@@ -32,8 +33,9 @@ export class Cars extends BaseComponent {
       new BaseComponent(controlsRow.node, 'span', 'car-name', carData.name);
 
       const raceRow = new BaseComponent(carContainer.node, 'div', 'race-row');
-      const carIcon = new BaseComponent(raceRow.node, 'p', 'icon', '🏎');
-      carIcon.node.style.color = carData.color;
+      const carSvg = CarCvg.createSvg();
+      carSvg.setAttribute('fill', `${carData.color}`);
+      raceRow.node.append(carSvg);
       new BaseComponent(raceRow.node, 'p', 'flag-icon', '🏁');
     }
   }
