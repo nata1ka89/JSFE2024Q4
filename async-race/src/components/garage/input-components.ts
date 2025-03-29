@@ -4,11 +4,14 @@ import { inputState } from '../../state/garage-state';
 import type { InputState } from '../../utils/data-types';
 import { createCar, getCars } from '../../api/api-garage';
 import type { Cars } from './cars';
+import type { Pagination } from './pagination';
 export class InputElement extends BaseComponent {
   private cars: Cars;
-  constructor(_parenNode: HTMLElement | null, cars: Cars) {
+  private pagination: Pagination;
+  constructor(_parenNode: HTMLElement | null, cars: Cars, pagination: Pagination) {
     super(_parenNode, 'div', 'input-container');
     this.cars = cars;
+    this.pagination = pagination;
     this.createInputElements();
   }
 
@@ -38,6 +41,7 @@ export class InputElement extends BaseComponent {
         inputState.createInput = '';
         inputState.createInputColor = '#ffffff';
         this.updateInput();
+        this.pagination.updatePagination();
       } catch (error) {
         console.error('Error creating car:', error);
       }

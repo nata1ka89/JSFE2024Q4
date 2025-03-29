@@ -31,3 +31,9 @@ button {
 button:hover {
   box-shadow: none;
 }
+
+button[disabled] {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
