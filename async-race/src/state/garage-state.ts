@@ -1,4 +1,4 @@
-import type { GarageState, InputState, Listener } from '../utils/data-types';
+import type { GarageState, InputState, Listener } from '../utils/data-types-garage';
 
 export const garageState: GarageState = {
   cars: [],

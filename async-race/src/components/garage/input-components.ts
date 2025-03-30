@@ -1,7 +1,7 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/input-style.css';
 import { inputState, setInputState, subscribeInputState } from '../../state/garage-state';
-import type { InputState } from '../../utils/data-types';
+import type { InputState } from '../../utils/data-types-garage';
 import { createCar, getCars, updateCar } from '../../api/api-garage';
 export class InputElement extends BaseComponent {
   constructor(_parenNode: HTMLElement | null) {

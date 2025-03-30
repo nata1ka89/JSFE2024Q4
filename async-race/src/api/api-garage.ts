@@ -1,5 +1,5 @@
 import { garageState, setGarageState } from '../state/garage-state';
-import type { CarsData } from '../utils/data-types';
+import type { CarsData } from '../utils/data-types-garage';
 import { isCarsData, isCarData } from '../utils/is-cars-data';
 
 const baseUrl = 'http://127.0.0.1:3000';

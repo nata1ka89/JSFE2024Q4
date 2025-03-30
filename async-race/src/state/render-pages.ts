@@ -2,6 +2,7 @@ import { Cars } from '../components/garage/cars';
 import { ControlButtons } from '../components/garage/control-buttons';
 import { InputElement } from '../components/garage/input-components';
 import { Pagination } from '../components/garage/pagination';
+import { TableWinners } from '../components/winners/table-winners';
 import { PaginationWinners } from '../components/winners/pagination-winners';
 import { BaseComponent } from '../utils/base-component';
 
@@ -10,6 +11,7 @@ export class RenderPages extends BaseComponent {
   private paginationComponent: Pagination | undefined;
   private inputComponent: InputElement | undefined;
   private paginationWinners: PaginationWinners | undefined;
+  private tableWinners: TableWinners | undefined;
   constructor(_parenNode: HTMLElement | null) {
     super(_parenNode, 'div');
   }
@@ -26,6 +28,8 @@ export class RenderPages extends BaseComponent {
   public renderWinners(): void {
     this.paginationWinners = new PaginationWinners(this.node);
     this.paginationWinners.updatePaginationWinners();
+    this.tableWinners = new TableWinners(this.node);
+    this.tableWinners.updateTableWinners();
   }
 
   public destroyCurrentView(): void {

@@ -1,16 +1,4 @@
-export type WinnersData = {
-  id: number;
-  name: string;
-  car: string;
-  wins: number;
-  time: number;
-};
-
-interface WinnersState {
-  winners: WinnersData[];
-  currentPage: number;
-  totalWinners: number;
-}
+import type { WinnersState } from '../utils/data-types-winners';
 
 export const winnersState: WinnersState = {
   winners: [],

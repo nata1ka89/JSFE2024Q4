@@ -1,0 +1,20 @@
+.winners-table {
+  border-collapse: collapse;
+
+  width: 50%;
+  margin: 20px 10px;
+
+  font-size: 16px;
+  text-align: left;
+}
+
+.winners-table tbody,
+.winners-table thead {
+  color: #fff;
+}
+
+.winners-table th,
+.winners-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
