@@ -54,7 +54,7 @@ export class Pagination extends BaseComponent {
     previousButton.setCallback('click', () => void this.prevHandlers());
     new BaseComponent(this.node, 'p', 'page', `${currentPage}`);
     const nextButton = new BaseComponent(this.node, 'button', 'next-button', 'Next');
-    if (currentPage === totalPages) {
+    if (currentPage === totalPages || totalCars <= 7) {
       nextButton.setAttribute('disabled', 'true');
     }
     nextButton.setCallback('click', () => void this.nextHandlers());

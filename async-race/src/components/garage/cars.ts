@@ -2,7 +2,7 @@ import { BaseComponent } from '../../utils/base-component';
 import { garageState, setInputState, subscribeGarageState } from '../../state/garage-state';
 import '../../style/cars-style.css';
 import { CarCvg } from './car-svg';
-import { getCar } from '../../api/api-garage';
+import { deleteCar, getCar, getCars } from '../../api/api-garage';
 
 export class Cars extends BaseComponent {
   constructor(_parenNode: HTMLElement | null) {
@@ -28,6 +28,14 @@ export class Cars extends BaseComponent {
       console.error('Error creating car:', error);
     }
   }
+  private static async deleteHandlers(id: number): Promise<void> {
+    try {
+      await deleteCar(id);
+      await getCars();
+    } catch (error) {
+      console.error('Error creating car:', error);
+    }
+  }
 
   public updateCars(): void {
     this.node.textContent = '';
@@ -46,7 +54,9 @@ export class Cars extends BaseComponent {
         console.log(`Selected car: ${carData.id}`);
       });
       const removeButton = new BaseComponent(controlsRow.node, 'button', ' remove-button', '❌');
-      removeButton.setCallback('click', () => console.log(`Removed car: ${carData.name}`));
+      removeButton.setCallback('click', () => {
+        if (carData.id) void Cars.deleteHandlers(carData.id);
+      });
       const playButton = new BaseComponent(controlsRow.node, 'button', 'play-button', '▶️');
       playButton.setCallback('click', () => console.log(`Started car: ${carData.name}`));
       const stopButton = new BaseComponent(controlsRow.node, 'button', 'stop-button', '⏹️');

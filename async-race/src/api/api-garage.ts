@@ -96,3 +96,24 @@ export const updateCar = async (
     return undefined;
   }
 };
+
+export const deleteCar = async (id: number): Promise<CarsData | undefined> => {
+  try {
+    const response = await fetch(`${baseUrl}/garage/${id}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error(`Error fetching car: ${response.status}`);
+    }
+    const car: unknown = await response.json();
+    if (isCarData(car)) {
+      console.log(car);
+      return car;
+    } else {
+      return undefined;
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    return undefined;
+  }
+};
