@@ -16,6 +16,7 @@ export type InputState = {
   updateInput: string;
   updateInputColor: string;
   updateState: string;
+  idCar: string;
 };
 
 export type Listener = () => void;

@@ -1,8 +1,8 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/input-style.css';
-import { inputState, subscribeInputState } from '../../state/garage-state';
+import { inputState, setInputState, subscribeInputState } from '../../state/garage-state';
 import type { InputState } from '../../utils/data-types';
-import { createCar, getCars } from '../../api/api-garage';
+import { createCar, getCars, updateCar } from '../../api/api-garage';
 export class InputElement extends BaseComponent {
   constructor(_parenNode: HTMLElement | null) {
     super(_parenNode, 'div', 'input-container');
@@ -18,6 +18,27 @@ export class InputElement extends BaseComponent {
         inputState[key] = input.node.value;
       }
     });
+  }
+
+  private static async updateHandlers(id: number): Promise<void> {
+    if (inputState.updateInput && inputState.updateInputColor) {
+      try {
+        const newCar = {
+          name: inputState.updateInput,
+          color: inputState.updateInputColor,
+          id: Number(inputState.idCar),
+        };
+        await updateCar(id, newCar);
+        await getCars();
+        setInputState({
+          updateInput: '',
+          updateInputColor: '#ffffff',
+          updateState: 'true',
+        });
+      } catch (error) {
+        console.error('Error creating car:', error);
+      }
+    }
   }
 
   public updateInput(): void {
@@ -62,14 +83,17 @@ export class InputElement extends BaseComponent {
     updateInputColor.setAttribute('type', 'color');
     updateInputColor.setAttribute('value', inputState.updateInputColor);
     if (inputState.updateState === 'false') {
-      updateInput.node.removeAttribute('disabled');
-      updateInputColor.node.removeAttribute('disabled');
+      updateInput.removeAttribute('disabled');
+      updateInputColor.removeAttribute('disabled');
     } else {
       updateInput.setAttribute('disabled', 'true');
       updateInputColor.setAttribute('disabled', 'true');
     }
     const updateButton = new BaseComponent(updateDiv.node, 'button', 'update-button', 'Update');
-    updateButton.setCallback('click', () => console.log('click updateButton'));
+    updateButton.setCallback(
+      'click',
+      () => void InputElement.updateHandlers(Number(inputState.idCar))
+    );
 
     InputElement.inputHandlers(createInput, 'createInput');
     InputElement.inputHandlers(createInputColor, 'createInputColor');

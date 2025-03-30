@@ -21,6 +21,7 @@ export class Cars extends BaseComponent {
           updateInput: car.name,
           updateInputColor: car.color,
           updateState: 'false',
+          idCar: String(car.id),
         });
       }
     } catch (error) {

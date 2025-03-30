@@ -25,6 +25,7 @@ export const inputState: InputState = {
   updateInput: '',
   updateInputColor: '#ffffff',
   updateState: 'true',
+  idCar: '',
 };
 
 const inputListeners: Listener[] = [];

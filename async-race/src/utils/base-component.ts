@@ -25,6 +25,9 @@ export class BaseComponent {
   public setAttribute(name: string, value: string): void {
     this.node.setAttribute(name, value);
   }
+  public removeAttribute(name: string): void {
+    this.node.removeAttribute(name);
+  }
 
   public setCallback<K extends keyof HTMLElementEventMap>(
     eventType: K,

@@ -68,3 +68,31 @@ export const createCar = async (newCar: CarsData): Promise<Partial<CarsData> | u
     return undefined;
   }
 };
+
+export const updateCar = async (
+  id: number,
+  newCar: CarsData
+): Promise<Partial<CarsData> | undefined> => {
+  try {
+    const response = await fetch(`${baseUrl}/garage/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newCar),
+    });
+    if (!response.ok) {
+      throw new Error(`Error fetching cars: ${response.status}`);
+    }
+    const car: unknown = await response.json();
+    if (isCarData(car)) {
+      console.log(car);
+      return car;
+    } else {
+      return undefined;
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    return undefined;
+  }
+};
