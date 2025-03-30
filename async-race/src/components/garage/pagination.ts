@@ -17,8 +17,8 @@ export class Pagination extends BaseComponent {
     this.createPagination();
   }
 
-  private async nextHandlers(): Promise<void> {
-    const allPage = Math.ceil(garageState.totalCars / 7);
+  private async nextHandlers(limit: number = 7): Promise<void> {
+    const allPage = Math.ceil(garageState.totalCars / limit);
     try {
       if (garageState.currentPage < allPage) {
         garageState.currentPage++;

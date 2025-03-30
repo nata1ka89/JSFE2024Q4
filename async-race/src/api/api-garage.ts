@@ -57,12 +57,7 @@ export const createCar = async (newCar: CarsData): Promise<Partial<CarsData> | u
       throw new Error(`Error fetching cars: ${response.status}`);
     }
     const car: unknown = await response.json();
-    if (isCarData(car)) {
-      console.log(car);
-      return car;
-    } else {
-      return undefined;
-    }
+    return isCarData(car) ? car : undefined;
   } catch (error) {
     console.error('Error:', error);
     return undefined;

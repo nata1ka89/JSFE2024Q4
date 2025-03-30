@@ -1,5 +1,6 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/control-buttons-style.css';
+import { generateRandomCars } from '../../utils/generate-cars';
 
 export class ControlButtons extends BaseComponent {
   constructor(_parenNode: HTMLElement | null) {
@@ -18,6 +19,6 @@ export class ControlButtons extends BaseComponent {
       'generate-button',
       'Generate cars'
     );
-    generateButton.setCallback('click', () => console.log('click generateButton'));
+    generateButton.setCallback('click', () => void generateRandomCars());
   }
 }
