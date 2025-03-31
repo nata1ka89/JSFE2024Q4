@@ -3,6 +3,7 @@ import { garageState, setInputState, subscribeGarageState } from '../../state/ga
 import '../../style/cars-style.css';
 import { CarCvg } from './car-svg';
 import { deleteCar, getCar, getCars } from '../../api/api-garage';
+import { startStopCar, switchEngine } from '../../api/api-engine';
 
 export class Cars extends BaseComponent {
   constructor(_parenNode: HTMLElement | null) {
@@ -25,7 +26,34 @@ export class Cars extends BaseComponent {
         });
       }
     } catch (error) {
-      console.error('Error creating car:', error);
+      console.error('Error get car:', error);
+    }
+  }
+  private static async playHandlers(id: number, status: string = 'started'): Promise<void> {
+    try {
+      const startResponse = await startStopCar(id, status);
+      if (startResponse) {
+        console.log('starting animation');
+        const engineResponse = await switchEngine(id);
+        if (!engineResponse?.success) {
+          void Cars.stopHandlers(id);
+          console.log('stopped animation');
+          return;
+        }
+      }
+    } catch (error) {
+      console.error('Error starting car:', error);
+    }
+  }
+  private static async stopHandlers(id: number, status: string = 'stopped'): Promise<void> {
+    try {
+      const stopResponse = await startStopCar(id, status);
+      if (stopResponse) {
+        console.log('stopping animation');
+        return;
+      }
+    } catch (error) {
+      console.error('Error stopping car:', error);
     }
   }
   private static async deleteHandlers(id: number): Promise<void> {
@@ -33,7 +61,7 @@ export class Cars extends BaseComponent {
       await deleteCar(id);
       await getCars();
     } catch (error) {
-      console.error('Error creating car:', error);
+      console.error('Error deleting car:', error);
     }
   }
 
@@ -58,10 +86,13 @@ export class Cars extends BaseComponent {
         if (carData.id) void Cars.deleteHandlers(carData.id);
       });
       const playButton = new BaseComponent(controlsRow.node, 'button', 'play-button', '▶️');
-      playButton.setCallback('click', () => console.log(`Started car: ${carData.name}`));
+      playButton.setCallback('click', () => {
+        if (carData.id) void Cars.playHandlers(carData.id);
+      });
       const stopButton = new BaseComponent(controlsRow.node, 'button', 'stop-button', '⏹️');
-      stopButton.setCallback('click', () => console.log(`Stopped car: ${carData.name}`));
-
+      stopButton.setCallback('click', () => {
+        if (carData.id) void Cars.stopHandlers(carData.id);
+      });
       new BaseComponent(controlsRow.node, 'span', 'car-name', carData.name);
       const raceRow = new BaseComponent(carContainer.node, 'div', 'race-row');
       const carSvg = CarCvg.createSvg();

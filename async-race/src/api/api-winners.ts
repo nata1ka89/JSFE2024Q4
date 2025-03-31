@@ -45,7 +45,9 @@ export const getWinner = async (id: number): Promise<WinnersData | undefined> =>
   }
 };
 
-export const createWinner = async (newWinner: WinnersData): Promise<Partial<WinnersData> | undefined> => {
+export const createWinner = async (
+  newWinner: WinnersData
+): Promise<Partial<WinnersData> | undefined> => {
   try {
     const response = await fetch(`${baseUrl}/winners`, {
       method: 'POST',
