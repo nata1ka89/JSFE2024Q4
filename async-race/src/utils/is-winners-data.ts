@@ -8,3 +8,9 @@ export function isWinnersData(data: unknown): data is WinnersData[] {
     )
   );
 }
+
+export function isWinnerData(data: unknown): data is WinnersData {
+  return (
+    data !== null && typeof data === 'object' && 'id' in data && 'wins' in data && 'time' in data
+  );
+}
