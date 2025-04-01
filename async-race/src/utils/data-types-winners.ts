@@ -1,7 +1,7 @@
 export type WinnersData = {
   id: number;
   name: string;
-  car: SVGSVGElement;
+  car: SVGElement;
   wins: number;
   time: number;
 };

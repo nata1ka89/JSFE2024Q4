@@ -14,8 +14,6 @@ export const getCars = async (page: number = garageState.currentPage): Promise<v
     const data: unknown = await response.json();
     if (isCarsData(data)) {
       setGarageState({ cars: data, totalCars: countCars });
-      console.log(data);
-      console.log(countCars);
     } else {
       setGarageState({ cars: [], totalCars: 0 });
     }
@@ -32,12 +30,7 @@ export const getCar = async (id: number): Promise<CarsData | undefined> => {
       throw new Error(`Error fetching car: ${response.status}`);
     }
     const car: unknown = await response.json();
-    if (isCarData(car)) {
-      console.log(car);
-      return car;
-    } else {
-      return undefined;
-    }
+    return isCarData(car) ? car : undefined;
   } catch (error) {
     console.error('Error:', error);
     return undefined;
@@ -80,12 +73,7 @@ export const updateCar = async (
       throw new Error(`Error fetching cars: ${response.status}`);
     }
     const car: unknown = await response.json();
-    if (isCarData(car)) {
-      console.log(car);
-      return car;
-    } else {
-      return undefined;
-    }
+    return isCarData(car) ? car : undefined;
   } catch (error) {
     console.error('Error:', error);
     return undefined;
@@ -101,12 +89,7 @@ export const deleteCar = async (id: number): Promise<CarsData | undefined> => {
       throw new Error(`Error fetching car: ${response.status}`);
     }
     const car: unknown = await response.json();
-    if (isCarData(car)) {
-      console.log(car);
-      return car;
-    } else {
-      return undefined;
-    }
+    return isCarData(car) ? car : undefined;
   } catch (error) {
     console.error('Error:', error);
     return undefined;

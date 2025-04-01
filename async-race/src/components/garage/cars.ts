@@ -1,9 +1,15 @@
 import { BaseComponent } from '../../utils/base-component';
-import { garageState, setInputState, subscribeGarageState } from '../../state/garage-state';
+import {
+  carElements,
+  garageState,
+  setInputState,
+  subscribeGarageState,
+} from '../../state/garage-state';
 import '../../style/cars-style.css';
 import { CarCvg } from './car-svg';
 import { deleteCar, getCar, getCars } from '../../api/api-garage';
 import { startStopCar, switchEngine } from '../../api/api-engine';
+import { returnCar, startCar, stopCar } from '../../utils/cars-animation';
 
 export class Cars extends BaseComponent {
   constructor(_parenNode: HTMLElement | null) {
@@ -33,11 +39,10 @@ export class Cars extends BaseComponent {
     try {
       const startResponse = await startStopCar(id, status);
       if (startResponse) {
-        console.log('starting animation');
+        startCar(carElements[id], startResponse.velocity);
         const engineResponse = await switchEngine(id);
         if (!engineResponse?.success) {
-          void Cars.stopHandlers(id);
-          console.log('stopped animation');
+          stopCar(carElements[id]);
           return;
         }
       }
@@ -49,7 +54,7 @@ export class Cars extends BaseComponent {
     try {
       const stopResponse = await startStopCar(id, status);
       if (stopResponse) {
-        console.log('stopping animation');
+        returnCar(carElements[id]);
         return;
       }
     } catch (error) {
@@ -74,12 +79,10 @@ export class Cars extends BaseComponent {
     const carsData = garageState.cars;
     for (const carData of carsData) {
       const carContainer = new BaseComponent(this.node, 'div', 'car-container');
-
       const controlsRow = new BaseComponent(carContainer.node, 'div', 'controls-row');
       const selectButton = new BaseComponent(controlsRow.node, 'button', 'select-button', '📝');
       selectButton.setCallback('click', () => {
         if (carData.id) void Cars.selectHandlers(carData.id);
-        console.log(`Selected car: ${carData.id}`);
       });
       const removeButton = new BaseComponent(controlsRow.node, 'button', ' remove-button', '❌');
       removeButton.setCallback('click', () => {
@@ -88,15 +91,20 @@ export class Cars extends BaseComponent {
       const playButton = new BaseComponent(controlsRow.node, 'button', 'play-button', '▶️');
       playButton.setCallback('click', () => {
         if (carData.id) void Cars.playHandlers(carData.id);
+        playButton.setAttribute('disabled', '');
       });
       const stopButton = new BaseComponent(controlsRow.node, 'button', 'stop-button', '⏹️');
       stopButton.setCallback('click', () => {
         if (carData.id) void Cars.stopHandlers(carData.id);
+        playButton.removeAttribute('disabled');
       });
       new BaseComponent(controlsRow.node, 'span', 'car-name', carData.name);
       const raceRow = new BaseComponent(carContainer.node, 'div', 'race-row');
       const carSvg = CarCvg.createSvg();
       carSvg.setAttribute('fill', `${carData.color}`);
+      if (carData.id) {
+        carElements[carData.id] = carSvg;
+      }
       raceRow.node.append(carSvg);
       new BaseComponent(raceRow.node, 'p', 'flag-icon', '🏁');
     }

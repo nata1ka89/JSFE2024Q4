@@ -45,5 +45,10 @@
 
 .flag-icon {
   margin: 0;
+  margin-right: 115px;
   font-size: 50px;
+}
+
+svg {
+  padding-right: 40px;
 }

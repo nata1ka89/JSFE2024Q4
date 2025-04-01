@@ -12,12 +12,7 @@ export const startStopCar = async (id: number, status: string): Promise<RaceData
       throw new Error(`Error fetching cars: ${response.status}`);
     }
     const data: unknown = await response.json();
-    if (isRaceData(data)) {
-      console.log(data);
-      return data;
-    } else {
-      return undefined;
-    }
+    return isRaceData(data) ? data : undefined;
   } catch (error) {
     console.error('Error:', error);
     return undefined;
@@ -33,12 +28,7 @@ export const switchEngine = async (id: number): Promise<EngineData | undefined> 
       throw new Error(`Error fetching cars: ${response.status}`);
     }
     const engineStatus: unknown = await response.json();
-    if (isEngineData(engineStatus)) {
-      console.log(engineStatus);
-      return engineStatus;
-    } else {
-      return undefined;
-    }
+    return isEngineData(engineStatus) ? engineStatus : undefined;
   } catch (error) {
     console.error('Error:', error);
     return undefined;

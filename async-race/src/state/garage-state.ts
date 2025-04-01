@@ -40,3 +40,5 @@ export const setInputState = (newInput: Partial<InputState>): void => {
 export const subscribeInputState = (listener: Listener): void => {
   inputListeners.push(listener);
 };
+
+export const carElements: Record<number, SVGElement> = {};
