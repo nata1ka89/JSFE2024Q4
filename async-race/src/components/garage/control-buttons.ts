@@ -1,6 +1,9 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/control-buttons-style.css';
 import { generateRandomCars } from '../../utils/generate-cars';
+import { carElements } from '../../state/garage-state';
+import { startStopCar, switchEngine } from '../../api/api-engine';
+import { returnCar, startCar, stopCar } from '../../utils/cars-animation';
 
 export class ControlButtons extends BaseComponent {
   constructor(_parenNode: HTMLElement | null) {
@@ -8,11 +11,53 @@ export class ControlButtons extends BaseComponent {
     this.createControlButtons();
   }
 
+  private static async startHandlers(cars: string[], status: string = 'started'): Promise<void> {
+    try {
+      const promises = cars.map(async (id) => {
+        const startResponse = await startStopCar(Number(id), status);
+        if (startResponse) {
+          startCar(carElements[Number(id)], startResponse.velocity);
+          const engineResponse = await switchEngine(Number(id));
+          if (!engineResponse?.success) {
+            stopCar(carElements[Number(id)]);
+            return;
+          }
+        }
+      });
+      await Promise.allSettled(promises);
+    } catch (error) {
+      console.error('Error starting car:', error);
+    }
+  }
+  private static async resetHandlers(cars: string[], status: string = 'stopped'): Promise<void> {
+    try {
+      const promises = cars.map(async (id) => {
+        const stopResponse = await startStopCar(Number(id), status);
+        if (stopResponse) {
+          returnCar(carElements[Number(id)]);
+          return;
+        }
+      });
+      await Promise.all(promises);
+    } catch (error) {
+      console.error('Error stopping car:', error);
+    }
+  }
+
   private createControlButtons(): void {
     const startButton = new BaseComponent(this.node, 'button', 'start-button', 'Start');
-    startButton.setCallback('click', () => console.log('click startButton'));
+    startButton.setCallback('click', () => {
+      void ControlButtons.startHandlers(Object.keys(carElements));
+      startButton.setAttribute('disabled', '');
+      resetButton.removeAttribute('disabled');
+    });
     const resetButton = new BaseComponent(this.node, 'button', 'reset-button', 'Reset');
-    resetButton.setCallback('click', () => console.log('click resetButton'));
+    resetButton.setAttribute('disabled', '');
+    resetButton.setCallback('click', () => {
+      void ControlButtons.resetHandlers(Object.keys(carElements));
+      startButton.removeAttribute('disabled');
+      resetButton.setAttribute('disabled', '');
+    });
     const generateButton = new BaseComponent(
       this.node,
       'button',
