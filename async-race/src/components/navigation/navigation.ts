@@ -2,8 +2,8 @@ import { BaseComponent } from '../../utils/base-component';
 import '../../style/navigation-style.css';
 import { setAppState } from '../../state/global-state';
 export class Navigation extends BaseComponent {
-  constructor(_parenNode: HTMLElement | null, updateView: () => void) {
-    super(_parenNode, 'div', 'navigation-container');
+  constructor(_parentNode: HTMLElement | null, updateView: () => void) {
+    super(_parentNode, 'div', 'navigation-container');
     this.createNavigation(updateView);
   }
 

@@ -6,8 +6,8 @@ type ModalData = {
 };
 
 export default class Modal extends BaseComponent {
-  constructor(parenNode: HTMLElement, data: ModalData) {
-    super(parenNode, 'dialog', 'dialog');
+  constructor(parentNode: HTMLElement, data: ModalData) {
+    super(parentNode, 'dialog', 'dialog');
     this.createModal(data);
   }
 

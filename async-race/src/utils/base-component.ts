@@ -1,9 +1,10 @@
+import { checkNull } from './check-null';
+
 type Callback<K extends keyof HTMLElementEventMap> = (event: HTMLElementEventMap[K]) => void;
 export class BaseComponent {
   public node: HTMLElement;
-
   constructor(
-    _parenNode: HTMLElement | null,
+    _parentNode: HTMLElement | null,
     tagName: keyof HTMLElementTagNameMap = 'main',
     className = '',
     content = ''
@@ -11,14 +12,11 @@ export class BaseComponent {
     const element = document.createElement(tagName);
     element.className = className;
     element.textContent = content;
-
-    if (element instanceof HTMLElement) {
-      this.node = element;
-      if (_parenNode) {
-        _parenNode.append(this.node);
-      }
-    } else {
-      throw new TypeError('Created element is not an instance of HTMLElement');
+    this.node = element;
+    try {
+      checkNull(_parentNode).append(this.node);
+    } catch (error) {
+      console.error('_parentNode is null', error);
     }
   }
 

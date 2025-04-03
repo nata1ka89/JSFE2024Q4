@@ -4,8 +4,8 @@ import { inputState, setInputState, subscribeInputState } from '../../state/gara
 import type { InputState } from '../../utils/data-types-garage';
 import { createCar, getCars, updateCar } from '../../api/api-garage';
 export class InputElement extends BaseComponent {
-  constructor(_parenNode: HTMLElement | null) {
-    super(_parenNode, 'div', 'input-container');
+  constructor(_parentNode: HTMLElement | null) {
+    super(_parentNode, 'div', 'input-container');
     this.createInputElements();
     subscribeInputState(() => {
       this.updateInput();
@@ -14,30 +14,26 @@ export class InputElement extends BaseComponent {
 
   private static inputHandlers(input: BaseComponent, key: keyof InputState): void {
     input.setCallback('input', () => {
-      if (input.node instanceof HTMLInputElement) {
-        inputState[key] = input.node.value;
-      }
+      if (input.node instanceof HTMLInputElement) inputState[key] = input.node.value;
     });
   }
 
   private static async updateHandlers(id: number): Promise<void> {
-    if (inputState.updateInput && inputState.updateInputColor) {
-      try {
-        const newCar = {
-          name: inputState.updateInput,
-          color: inputState.updateInputColor,
-          id: Number(inputState.idCar),
-        };
-        await updateCar(id, newCar);
-        await getCars();
-        setInputState({
-          updateInput: '',
-          updateInputColor: '#ffffff',
-          updateState: 'true',
-        });
-      } catch (error) {
-        console.error('Error creating car:', error);
-      }
+    try {
+      const newCar = {
+        name: inputState.updateInput,
+        color: inputState.updateInputColor,
+        id: Number(inputState.idCar),
+      };
+      await updateCar(id, newCar);
+      await getCars();
+      setInputState({
+        updateInput: '',
+        updateInputColor: '#ffffff',
+        updateState: 'true',
+      });
+    } catch (error) {
+      console.error('Error creating car:', error);
     }
   }
 
@@ -47,20 +43,18 @@ export class InputElement extends BaseComponent {
   }
 
   private async createHandlers(): Promise<void> {
-    if (inputState.createInput && inputState.createInputColor) {
-      const newCar = {
-        name: inputState.createInput,
-        color: inputState.createInputColor,
-      };
-      try {
-        await createCar(newCar);
-        await getCars();
-        inputState.createInput = '';
-        inputState.createInputColor = '#ffffff';
-        this.updateInput();
-      } catch (error) {
-        console.error('Error creating car:', error);
-      }
+    const newCar = {
+      name: inputState.createInput,
+      color: inputState.createInputColor,
+    };
+    try {
+      await createCar(newCar);
+      await getCars();
+      inputState.createInput = '';
+      inputState.createInputColor = '#ffffff';
+      this.updateInput();
+    } catch (error) {
+      console.error('Error creating car:', error);
     }
   }
 

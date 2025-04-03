@@ -3,8 +3,8 @@ import '../../style/table-winners-style.css';
 import { winnersState } from '../../state/winners-state';
 import { getWinners } from '../../api/api-winners';
 export class TableWinners extends BaseComponent {
-  constructor(_parenNode: HTMLElement | null) {
-    super(_parenNode, 'table', 'winners-table');
+  constructor(_parentNode: HTMLElement | null) {
+    super(_parentNode, 'table', 'winners-table');
     void this.createTableWinners();
   }
 

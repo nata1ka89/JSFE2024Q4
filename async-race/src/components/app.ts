@@ -6,8 +6,8 @@ import { RenderPages } from '../state/render-pages';
 
 export class App extends BaseComponent {
   private renderPages: RenderPages | undefined;
-  constructor(_parenNode: HTMLElement | null) {
-    super(_parenNode);
+  constructor(_parentNode: HTMLElement | null) {
+    super(_parentNode);
     new Navigation(this.node, this.updateView.bind(this));
     void this.init();
   }

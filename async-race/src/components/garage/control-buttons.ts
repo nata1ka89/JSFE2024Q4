@@ -5,10 +5,11 @@ import { carElements, garageState } from '../../state/garage-state';
 import { startStopCar, switchEngine } from '../../api/api-engine';
 import { returnCar, startCar, stopCar } from '../../utils/cars-animation';
 import Modal from './modal-component';
+import { checkNull } from '../../utils/check-null';
 
 export class ControlButtons extends BaseComponent {
-  constructor(_parenNode: HTMLElement | null) {
-    super(_parenNode, 'div', 'control-container');
+  constructor(_parentNode: HTMLElement | null) {
+    super(_parentNode, 'div', 'control-container');
     this.createControlButtons();
   }
 
@@ -17,30 +18,24 @@ export class ControlButtons extends BaseComponent {
       let winnerDeclared = false;
       const promises = cars.map(async (id) => {
         const startResponse = await startStopCar(Number(id), status);
-        if (startResponse) {
-          const bestTime = startCar(
-            carElements[Number(id)],
-            startResponse.velocity,
-            startResponse.distance
-          );
-          const engineResponse = await switchEngine(Number(id));
-          if (!engineResponse?.success) {
-            stopCar(carElements[Number(id)]);
-            return;
+        if (!startResponse) throw new Error(`startResponse is undefined`);
+        const bestTime = startCar(
+          carElements[Number(id)],
+          startResponse.velocity,
+          startResponse.distance
+        );
+        const engineResponse = await switchEngine(Number(id));
+        if (!engineResponse?.success) stopCar(carElements[Number(id)]);
+        carElements[Number(id)].addEventListener('transitionend', () => {
+          const rect = carElements[Number(id)].getBoundingClientRect();
+          const container = carElements[Number(id)].parentElement;
+          const containerWidth = checkNull(container).getBoundingClientRect().width;
+          if (rect.right >= containerWidth && !winnerDeclared) {
+            winnerDeclared = true;
+            const carName = garageState.cars.find((car) => car.id === Number(id))?.name;
+            new Modal(document.body, { name: carName, time: Number(bestTime?.toFixed(2)) });
           }
-          carElements[Number(id)].addEventListener('transitionend', () => {
-            const rect = carElements[Number(id)].getBoundingClientRect();
-            const container = carElements[Number(id)].parentElement;
-            if (container) {
-              const containerWidth = container.getBoundingClientRect().width;
-              if (rect.right >= containerWidth && !winnerDeclared) {
-                winnerDeclared = true;
-                const carName = garageState.cars.find((car) => car.id === Number(id))?.name;
-                new Modal(document.body, { name: carName, time: Number(bestTime?.toFixed(2)) });
-              }
-            }
-          });
-        }
+        });
       });
       await Promise.allSettled(promises);
     } catch (error) {
@@ -51,10 +46,8 @@ export class ControlButtons extends BaseComponent {
     try {
       const promises = cars.map(async (id) => {
         const stopResponse = await startStopCar(Number(id), status);
-        if (stopResponse) {
-          returnCar(carElements[Number(id)]);
-          return;
-        }
+        if (!stopResponse) throw new Error(`stopResponse is undefined`);
+        returnCar(carElements[Number(id)]);
       });
       await Promise.all(promises);
     } catch (error) {
