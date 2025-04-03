@@ -39,7 +39,7 @@ export class Cars extends BaseComponent {
     try {
       const startResponse = await startStopCar(id, status);
       if (startResponse) {
-        startCar(carElements[id], startResponse.velocity);
+        startCar(carElements[id], startResponse.velocity, startResponse.distance);
         const engineResponse = await switchEngine(id);
         if (!engineResponse?.success) {
           stopCar(carElements[id]);

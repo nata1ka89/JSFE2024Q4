@@ -1,9 +1,10 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/control-buttons-style.css';
 import { generateRandomCars } from '../../utils/generate-cars';
-import { carElements } from '../../state/garage-state';
+import { carElements, garageState } from '../../state/garage-state';
 import { startStopCar, switchEngine } from '../../api/api-engine';
 import { returnCar, startCar, stopCar } from '../../utils/cars-animation';
+import Modal from './modal-component';
 
 export class ControlButtons extends BaseComponent {
   constructor(_parenNode: HTMLElement | null) {
@@ -13,15 +14,32 @@ export class ControlButtons extends BaseComponent {
 
   private static async startHandlers(cars: string[], status: string = 'started'): Promise<void> {
     try {
+      let winnerDeclared = false;
       const promises = cars.map(async (id) => {
         const startResponse = await startStopCar(Number(id), status);
         if (startResponse) {
-          startCar(carElements[Number(id)], startResponse.velocity);
+          const bestTime = startCar(
+            carElements[Number(id)],
+            startResponse.velocity,
+            startResponse.distance
+          );
           const engineResponse = await switchEngine(Number(id));
           if (!engineResponse?.success) {
             stopCar(carElements[Number(id)]);
             return;
           }
+          carElements[Number(id)].addEventListener('transitionend', () => {
+            const rect = carElements[Number(id)].getBoundingClientRect();
+            const container = carElements[Number(id)].parentElement;
+            if (container) {
+              const containerWidth = container.getBoundingClientRect().width;
+              if (rect.right >= containerWidth && !winnerDeclared) {
+                winnerDeclared = true;
+                const carName = garageState.cars.find((car) => car.id === Number(id))?.name;
+                new Modal(document.body, { name: carName, time: Number(bestTime?.toFixed(2)) });
+              }
+            }
+          });
         }
       });
       await Promise.allSettled(promises);

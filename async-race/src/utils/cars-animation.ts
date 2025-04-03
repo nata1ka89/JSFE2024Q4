@@ -1,12 +1,13 @@
-export function startCar(car: SVGElement, velocity: number): void {
+export function startCar(car: SVGElement, velocity: number, distance: number): number | undefined {
   const container = car.parentElement;
   if (container) {
     const containerWidth = container.getBoundingClientRect().width;
     const carWidth = car.getBoundingClientRect().width;
-    const distance = containerWidth - carWidth;
-    const time = distance / velocity;
-    car.style.transform = `translateX(${distance}px)`;
+    const distanceWidth = containerWidth - carWidth;
+    const time = distance / (velocity * 900);
+    car.style.transform = `translateX(${distanceWidth}px)`;
     car.style.transition = `transform ${time}s linear`;
+    return time;
   }
 }
 
