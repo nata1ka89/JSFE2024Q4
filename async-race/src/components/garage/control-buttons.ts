@@ -6,6 +6,7 @@ import { startStopCar, switchEngine } from '../../api/api-engine';
 import { returnCar, startCar, stopCar } from '../../utils/cars-animation';
 import Modal from './modal-component';
 import { checkNull } from '../../utils/check-null';
+import { createWinner } from '../../api/api-winners';
 
 export class ControlButtons extends BaseComponent {
   constructor(_parentNode: HTMLElement | null) {
@@ -27,14 +28,26 @@ export class ControlButtons extends BaseComponent {
         const engineResponse = await switchEngine(Number(id));
         if (!engineResponse?.success) stopCar(carElements[Number(id)]);
         carElements[Number(id)].addEventListener('transitionend', () => {
-          const rect = carElements[Number(id)].getBoundingClientRect();
-          const container = carElements[Number(id)].parentElement;
-          const containerWidth = checkNull(container).getBoundingClientRect().width;
-          if (rect.right >= containerWidth && !winnerDeclared) {
-            winnerDeclared = true;
-            const carName = garageState.cars.find((car) => car.id === Number(id))?.name;
-            new Modal(document.body, { name: carName, time: Number(bestTime?.toFixed(2)) });
-          }
+          void (async (): Promise<void> => {
+            const rect = carElements[Number(id)].getBoundingClientRect();
+            const container = carElements[Number(id)].parentElement;
+            const containerWidth = checkNull(container).getBoundingClientRect().width;
+            if (rect.right >= containerWidth && !winnerDeclared) {
+              winnerDeclared = true;
+              const carName = garageState.cars.find((car) => car.id === Number(id))?.name;
+              const dataWinner = {
+                name: carName,
+                time: Number(bestTime?.toFixed(2)),
+              };
+              new Modal(document.body, dataWinner);
+              const newWinner = {
+                id: Number(id),
+                wins: 1,
+                time: Number(bestTime?.toFixed(2)),
+              };
+              await createWinner(newWinner);
+            }
+          })();
         });
       });
       await Promise.allSettled(promises);

@@ -1,9 +1,6 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/modal-style.css';
-type ModalData = {
-  name?: string;
-  time: number;
-};
+import type { ModalData } from '../../utils/data-types-garage';
 
 export default class Modal extends BaseComponent {
   constructor(parentNode: HTMLElement, data: ModalData) {

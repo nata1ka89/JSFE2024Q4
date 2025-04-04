@@ -12,7 +12,6 @@ export const getWinners = async (page: number = winnersState.currentPage): Promi
       throw new Error(`Error fetching cars: ${response.status}`);
     }
     const data: unknown = await response.json();
-    console.log(data);
     if (isWinnersData(data)) {
       setWinnersState({ winners: data, totalWinners: countWinners });
       console.log(data);

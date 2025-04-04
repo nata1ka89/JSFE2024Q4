@@ -3,6 +3,7 @@ import { Navigation } from './navigation/navigation';
 import { getCars } from '../api/api-garage';
 import { appState } from '../state/global-state';
 import { RenderPages } from '../state/render-pages';
+import { getWinners } from '../api/api-winners';
 
 export class App extends BaseComponent {
   private renderPages: RenderPages | undefined;
@@ -16,6 +17,7 @@ export class App extends BaseComponent {
     this.renderPages = new RenderPages(this.node);
     appState.currentView = 'garage';
     await getCars();
+    await getWinners();
     this.updateView();
   }
 

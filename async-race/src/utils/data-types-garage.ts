@@ -20,3 +20,8 @@ export type InputState = {
 };
 
 export type Listener = () => void;
+
+export type ModalData = {
+  name?: string;
+  time: number;
+};

@@ -1,11 +1,14 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/pagination-style.css';
-import { winnersState } from '../../state/winners-state';
+import { subscribeWinnersState, winnersState } from '../../state/winners-state';
 
 export class PaginationWinners extends BaseComponent {
   constructor(_parentNode: HTMLElement | null) {
     super(_parentNode, 'div', 'pagination-container');
     this.createPaginationWinners();
+    subscribeWinnersState(() => {
+      this.updatePaginationWinners();
+    });
   }
 
   public updatePaginationWinners(): void {

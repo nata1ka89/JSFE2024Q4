@@ -70,6 +70,9 @@ export class Cars extends BaseComponent {
 
   private viewCars(): void {
     const carsData = garageState.cars;
+    for (const key in carElements) {
+      delete carElements[Number(key)];
+    }
     for (const carData of carsData) {
       const carContainer = new BaseComponent(this.node, 'div', 'car-container');
       const controlsRow = new BaseComponent(carContainer.node, 'div', 'controls-row');
