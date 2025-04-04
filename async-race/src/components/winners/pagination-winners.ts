@@ -1,6 +1,7 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/pagination-style.css';
 import { subscribeWinnersState, winnersState } from '../../state/winners-state';
+import { getWinners } from '../../api/api-winners';
 
 export class PaginationWinners extends BaseComponent {
   constructor(_parentNode: HTMLElement | null) {
@@ -16,6 +17,31 @@ export class PaginationWinners extends BaseComponent {
     this.createPaginationWinners();
   }
 
+  private async nextHandlers(limit: number = 7): Promise<void> {
+    const allPage = Math.ceil(winnersState.totalWinners / limit);
+    try {
+      if (winnersState.currentPage < allPage) {
+        winnersState.currentPage++;
+        await getWinners(winnersState.currentPage);
+        this.updatePaginationWinners();
+      }
+    } catch (error) {
+      console.error('Error switching to next page:', error);
+    }
+  }
+
+  private async prevHandlers(): Promise<void> {
+    try {
+      if (winnersState.currentPage > 1) {
+        winnersState.currentPage--;
+        await getWinners(winnersState.currentPage);
+        this.updatePaginationWinners();
+      }
+    } catch (error) {
+      console.error('Error switching to previous page:', error);
+    }
+  }
+
   private createPaginationWinners(): void {
     const totalWinners = winnersState.totalWinners;
     const currentPage = winnersState.currentPage;
@@ -27,13 +53,13 @@ export class PaginationWinners extends BaseComponent {
     if (currentPage === firstPages) {
       previousButton.setAttribute('disabled', 'true');
     }
-    previousButton.setCallback('click', () => console.log('click prevButton'));
+    previousButton.setCallback('click', () => void this.prevHandlers());
     new BaseComponent(this.node, 'p', 'page', `${currentPage}`);
     const nextButton = new BaseComponent(this.node, 'button', 'next-button', 'Next');
     if (currentPage === totalPages || totalWinners <= limitWinners) {
       nextButton.setAttribute('disabled', 'true');
     }
-    nextButton.setCallback('click', () => console.log('click nextButton'));
+    nextButton.setCallback('click', () => void this.nextHandlers());
     new BaseComponent(this.node, 'p', 'title', `Winners(${totalWinners})`);
   }
 }

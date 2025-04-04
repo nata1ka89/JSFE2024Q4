@@ -78,7 +78,7 @@ export class Cars extends BaseComponent {
       const controlsRow = new BaseComponent(carContainer.node, 'div', 'controls-row');
       const selectButton = new BaseComponent(controlsRow.node, 'button', 'select-button', '📝');
       try {
-        if (!carData.id) throw new Error(`stopResponse is undefined`);
+        if (!carData.id) throw new Error(`carData.id is undefined`);
         const carId = carData.id;
         selectButton.setCallback('click', () => void Cars.selectHandlers(carId));
         const removeButton = new BaseComponent(controlsRow.node, 'button', ' remove-button', '❌');
