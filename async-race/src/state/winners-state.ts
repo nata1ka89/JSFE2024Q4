@@ -5,6 +5,8 @@ export const winnersState: WinnersState = {
   winners: [],
   currentPage: 1,
   totalWinners: 0,
+  sort: 'id',
+  order: 'ASC',
 };
 
 const winnersListeners: Listener[] = [];

@@ -17,12 +17,12 @@ export class PaginationWinners extends BaseComponent {
     this.createPaginationWinners();
   }
 
-  private async nextHandlers(limit: number = 7): Promise<void> {
+  private async nextHandlers(limit: number = 10): Promise<void> {
     const allPage = Math.ceil(winnersState.totalWinners / limit);
     try {
       if (winnersState.currentPage < allPage) {
         winnersState.currentPage++;
-        await getWinners(winnersState.currentPage);
+        await getWinners(winnersState.currentPage, winnersState.sort, winnersState.order);
         this.updatePaginationWinners();
       }
     } catch (error) {
@@ -34,7 +34,7 @@ export class PaginationWinners extends BaseComponent {
     try {
       if (winnersState.currentPage > 1) {
         winnersState.currentPage--;
-        await getWinners(winnersState.currentPage);
+        await getWinners(winnersState.currentPage, winnersState.sort, winnersState.order);
         this.updatePaginationWinners();
       }
     } catch (error) {

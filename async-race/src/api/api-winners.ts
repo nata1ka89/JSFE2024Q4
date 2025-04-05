@@ -4,9 +4,15 @@ import { isWinnerData, isWinnersData } from '../utils/is-winners-data';
 
 const baseUrl = 'http://127.0.0.1:3000';
 
-export const getWinners = async (page: number = winnersState.currentPage): Promise<void> => {
+export const getWinners = async (
+  page: number = winnersState.currentPage,
+  sort: 'id' | 'wins' | 'time' = winnersState.sort,
+  order: 'ASC' | 'DESC' = winnersState.order
+): Promise<void> => {
   try {
-    const response = await fetch(`${baseUrl}/winners?_page=${page}&_limit=10`);
+    const response = await fetch(
+      `${baseUrl}/winners?_page=${page}&_limit=10&_sort=${sort}&_order=${order}`
+    );
     const countWinners = Number(response.headers.get('X-Total-Count'));
     if (!response.ok) {
       throw new Error(`Error fetching cars: ${response.status}`);

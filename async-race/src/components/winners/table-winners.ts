@@ -3,6 +3,7 @@ import '../../style/table-winners-style.css';
 import { subscribeWinnersState, winnersState } from '../../state/winners-state';
 import { CarCvg } from '../garage/car-svg';
 import { getCar } from '../../api/api-garage';
+import { getWinners } from '../../api/api-winners';
 export class TableWinners extends BaseComponent {
   constructor(_parentNode: HTMLElement | null) {
     super(_parentNode, 'table', 'winners-table');
@@ -10,6 +11,16 @@ export class TableWinners extends BaseComponent {
     subscribeWinnersState(() => {
       this.updateTableWinners();
     });
+  }
+
+  private static toggleSort(sortField: 'id' | 'wins' | 'time'): void {
+    if (winnersState.sort === sortField) {
+      winnersState.order = winnersState.order === 'ASC' ? 'DESC' : 'ASC';
+    } else {
+      winnersState.sort = sortField;
+      winnersState.order = 'ASC';
+    }
+    void getWinners(winnersState.currentPage, winnersState.sort, winnersState.order);
   }
 
   public updateTableWinners(): void {
@@ -23,10 +34,11 @@ export class TableWinners extends BaseComponent {
     new BaseComponent(headerRow.node, 'th', 'number-button', 'ID');
     new BaseComponent(headerRow.node, 'th', 'car-button', 'Car');
     new BaseComponent(headerRow.node, 'th', 'name-button', 'Name');
+
     const winsButton = new BaseComponent(headerRow.node, 'th', 'wins-button', 'Wins');
-    winsButton.setCallback('click', () => console.log('click winsButton'));
+    winsButton.setCallback('click', () => TableWinners.toggleSort('wins'));
     const bestButton = new BaseComponent(headerRow.node, 'th', 'best-button', 'Best time');
-    bestButton.setCallback('click', () => console.log('click bestButton'));
+    bestButton.setCallback('click', () => TableWinners.toggleSort('time'));
 
     const tbody = new BaseComponent(this.node, 'tbody');
     const winnersData = winnersState.winners;

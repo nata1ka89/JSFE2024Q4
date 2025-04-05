@@ -8,4 +8,6 @@ export type WinnersState = {
   winners: WinnersData[];
   currentPage: number;
   totalWinners: number;
+  sort: 'id' | 'wins' | 'time';
+  order: 'ASC' | 'DESC';
 };
