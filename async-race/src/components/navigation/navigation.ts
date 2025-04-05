@@ -9,11 +9,14 @@ export class Navigation extends BaseComponent {
 
   private createNavigation(updateView: () => void): void {
     const garageButton = new BaseComponent(this.node, 'button', 'garage-button', 'To Garage');
+    this.buttons.push(garageButton.node);
     garageButton.setCallback('click', () => {
       setAppState({ currentView: 'garage' });
       updateView();
     });
+
     const winnersButton = new BaseComponent(this.node, 'button', 'winners-button', 'To Winners');
+    this.buttons.push(winnersButton.node);
     winnersButton.setCallback('click', () => {
       setAppState({ currentView: 'winners' });
       updateView();

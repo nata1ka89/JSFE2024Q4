@@ -50,10 +50,12 @@ export class Pagination extends BaseComponent {
     const totalPages = Math.ceil(totalCars / limitCars);
 
     const previousButton = new BaseComponent(this.node, 'button', 'prev-button', 'Prev');
+    this.buttons.push(previousButton.node);
     if (currentPage === firstPages) previousButton.setAttribute('disabled', 'true');
     previousButton.setCallback('click', () => void this.prevHandlers());
     new BaseComponent(this.node, 'p', 'page', `${currentPage}`);
     const nextButton = new BaseComponent(this.node, 'button', 'next-button', 'Next');
+    this.buttons.push(nextButton.node);
     if (currentPage === totalPages || totalCars <= limitCars)
       nextButton.setAttribute('disabled', 'true');
     nextButton.setCallback('click', () => void this.nextHandlers());

@@ -1,4 +1,4 @@
-import { BaseComponent } from '../../utils/base-component';
+import { allButtonClasses, BaseComponent } from '../../utils/base-component';
 import '../../style/control-buttons-style.css';
 import { generateRandomCars } from '../../utils/generate-cars';
 import { carElements, garageState } from '../../state/garage-state';
@@ -9,12 +9,25 @@ import { checkNull } from '../../utils/check-null';
 import { createWinner, getWinner, getWinners, updateWinner } from '../../api/api-winners';
 
 export class ControlButtons extends BaseComponent {
+  private resetButton: BaseComponent | undefined;
+  private startButton: BaseComponent | undefined;
   constructor(_parentNode: HTMLElement | null) {
     super(_parentNode, 'div', 'control-container');
     this.createControlButtons();
   }
-
-  private static async startHandlers(cars: string[], status: string = 'started'): Promise<void> {
+  private static async resetHandlers(cars: string[], status: string = 'stopped'): Promise<void> {
+    try {
+      const promises = cars.map(async (id) => {
+        const stopResponse = await startStopCar(Number(id), status);
+        if (!stopResponse) throw new Error(`stopResponse is undefined`);
+        returnCar(carElements[Number(id)]);
+      });
+      await Promise.all(promises);
+    } catch (error) {
+      console.error('Error stopping car:', error);
+    }
+  }
+  private async startHandlers(cars: string[], status: string = 'started'): Promise<void> {
     try {
       let winnerDeclared = false;
       const promises = cars.map(async (id) => {
@@ -62,36 +75,26 @@ export class ControlButtons extends BaseComponent {
         });
       });
       await Promise.allSettled(promises);
+      if (this.resetButton) {
+        this.resetButton.removeAttribute('disabled');
+      }
     } catch (error) {
       console.error('Error starting car:', error);
     }
   }
-  private static async resetHandlers(cars: string[], status: string = 'stopped'): Promise<void> {
-    try {
-      const promises = cars.map(async (id) => {
-        const stopResponse = await startStopCar(Number(id), status);
-        if (!stopResponse) throw new Error(`stopResponse is undefined`);
-        returnCar(carElements[Number(id)]);
-      });
-      await Promise.all(promises);
-    } catch (error) {
-      console.error('Error stopping car:', error);
-    }
-  }
-
   private createControlButtons(): void {
-    const startButton = new BaseComponent(this.node, 'button', 'start-button', 'Start');
-    startButton.setCallback('click', () => {
-      void ControlButtons.startHandlers(Object.keys(carElements));
-      startButton.setAttribute('disabled', '');
-      resetButton.removeAttribute('disabled');
+    this.startButton = new BaseComponent(this.node, 'button', 'start-button', 'Start');
+    this.buttons.push(this.startButton.node);
+    this.startButton.setCallback('click', () => {
+      void this.startHandlers(Object.keys(carElements));
+      for (const button of allButtonClasses) button.offAllButtons();
     });
-    const resetButton = new BaseComponent(this.node, 'button', 'reset-button', 'Reset');
-    resetButton.setAttribute('disabled', '');
-    resetButton.setCallback('click', () => {
+    this.resetButton = new BaseComponent(this.node, 'button', 'reset-button', 'Reset');
+    this.resetButton.setAttribute('disabled', '');
+    this.resetButton.setCallback('click', () => {
       void ControlButtons.resetHandlers(Object.keys(carElements));
-      startButton.removeAttribute('disabled');
-      resetButton.setAttribute('disabled', '');
+      this.resetButton?.node.setAttribute('disabled', '');
+      for (const button of allButtonClasses) button.onAllButtons();
     });
     const generateButton = new BaseComponent(
       this.node,
@@ -100,5 +103,6 @@ export class ControlButtons extends BaseComponent {
       'Generate cars'
     );
     generateButton.setCallback('click', () => void generateRandomCars());
+    this.buttons.push(generateButton.node);
   }
 }

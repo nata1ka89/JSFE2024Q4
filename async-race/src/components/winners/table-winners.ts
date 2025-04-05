@@ -20,7 +20,7 @@ export class TableWinners extends BaseComponent {
   private async createTableWinners(): Promise<void> {
     const thead = new BaseComponent(this.node, 'thead');
     const headerRow = new BaseComponent(thead.node, 'tr');
-    new BaseComponent(headerRow.node, 'th', 'number-button', 'Number');
+    new BaseComponent(headerRow.node, 'th', 'number-button', 'ID');
     new BaseComponent(headerRow.node, 'th', 'car-button', 'Car');
     new BaseComponent(headerRow.node, 'th', 'name-button', 'Name');
     const winsButton = new BaseComponent(headerRow.node, 'th', 'wins-button', 'Wins');

@@ -20,7 +20,6 @@ export class Cars extends BaseComponent {
       this.updateCars();
     });
   }
-
   private static async selectHandlers(id: number): Promise<void> {
     try {
       const car = await getCar(id);
@@ -65,12 +64,10 @@ export class Cars extends BaseComponent {
       console.error('Error deleting car:', error);
     }
   }
-
   public updateCars(): void {
     this.node.textContent = '';
     this.viewCars();
   }
-
   private viewCars(): void {
     const carsData = garageState.cars;
     for (const key in carElements) {
@@ -80,18 +77,22 @@ export class Cars extends BaseComponent {
       const carContainer = new BaseComponent(this.node, 'div', 'car-container');
       const controlsRow = new BaseComponent(carContainer.node, 'div', 'controls-row');
       const selectButton = new BaseComponent(controlsRow.node, 'button', 'select-button', '📝');
+      this.buttons.push(selectButton.node);
+      const removeButton = new BaseComponent(controlsRow.node, 'button', ' remove-button', '❌');
+      this.buttons.push(removeButton.node);
+      const playButton = new BaseComponent(controlsRow.node, 'button', 'play-button', '▶️');
+      this.buttons.push(playButton.node);
+      const stopButton = new BaseComponent(controlsRow.node, 'button', 'stop-button', '⏹️');
+      this.buttons.push(stopButton.node);
       try {
         if (!carData.id) throw new Error(`carData.id is undefined`);
         const carId = carData.id;
         selectButton.setCallback('click', () => void Cars.selectHandlers(carId));
-        const removeButton = new BaseComponent(controlsRow.node, 'button', ' remove-button', '❌');
         removeButton.setCallback('click', () => void Cars.deleteHandlers(carId));
-        const playButton = new BaseComponent(controlsRow.node, 'button', 'play-button', '▶️');
         playButton.setCallback('click', () => {
           void Cars.playHandlers(carId);
           playButton.setAttribute('disabled', '');
         });
-        const stopButton = new BaseComponent(controlsRow.node, 'button', 'stop-button', '⏹️');
         stopButton.setCallback('click', () => {
           void Cars.stopHandlers(carId);
           playButton.removeAttribute('disabled');

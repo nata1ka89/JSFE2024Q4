@@ -68,7 +68,7 @@ export class InputElement extends BaseComponent {
     createInputColor.setAttribute('value', inputState.createInputColor);
     const createButton = new BaseComponent(createDiv.node, 'button', 'create-button', 'Create');
     createButton.setCallback('click', () => void this.createHandlers());
-
+    this.buttons.push(createButton.node);
     const updateDiv = new BaseComponent(this.node, 'div', 'update');
     const updateInput = new BaseComponent(updateDiv.node, 'input', 'input-update');
     updateInput.setAttribute('type', 'text');
@@ -76,18 +76,20 @@ export class InputElement extends BaseComponent {
     const updateInputColor = new BaseComponent(updateDiv.node, 'input', 'input-color');
     updateInputColor.setAttribute('type', 'color');
     updateInputColor.setAttribute('value', inputState.updateInputColor);
-    if (inputState.updateState === 'false') {
-      updateInput.removeAttribute('disabled');
-      updateInputColor.removeAttribute('disabled');
-    } else {
-      updateInput.setAttribute('disabled', 'true');
-      updateInputColor.setAttribute('disabled', 'true');
-    }
     const updateButton = new BaseComponent(updateDiv.node, 'button', 'update-button', 'Update');
     updateButton.setCallback(
       'click',
       () => void InputElement.updateHandlers(Number(inputState.idCar))
     );
+    if (inputState.updateState === 'false') {
+      updateInput.removeAttribute('disabled');
+      updateInputColor.removeAttribute('disabled');
+      updateButton.removeAttribute('disabled');
+    } else {
+      updateInput.setAttribute('disabled', 'true');
+      updateInputColor.setAttribute('disabled', 'true');
+      updateButton.setAttribute('disabled', 'true');
+    }
 
     InputElement.inputHandlers(createInput, 'createInput');
     InputElement.inputHandlers(createInputColor, 'createInputColor');

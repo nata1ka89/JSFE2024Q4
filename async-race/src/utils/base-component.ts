@@ -1,8 +1,10 @@
 import { checkNull } from './check-null';
 
 type Callback<K extends keyof HTMLElementEventMap> = (event: HTMLElementEventMap[K]) => void;
+export const allButtonClasses: BaseComponent[] = [];
 export class BaseComponent {
   public node: HTMLElement;
+  public buttons: HTMLElement[] = [];
   constructor(
     _parentNode: HTMLElement | null,
     tagName: keyof HTMLElementTagNameMap = 'main',
@@ -18,6 +20,7 @@ export class BaseComponent {
     } catch (error) {
       console.error('_parentNode is null', error);
     }
+    allButtonClasses.push(this);
   }
 
   public setAttribute(name: string, value: string): void {
@@ -36,5 +39,16 @@ export class BaseComponent {
 
   public destroy(): void {
     this.node.remove();
+  }
+
+  public offAllButtons(): void {
+    for (const button of this.buttons) {
+      button.setAttribute('disabled', '');
+    }
+  }
+  public onAllButtons(): void {
+    for (const button of this.buttons) {
+      button.removeAttribute('disabled');
+    }
   }
 }
