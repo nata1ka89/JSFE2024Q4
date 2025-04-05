@@ -6,7 +6,7 @@ import { startStopCar, switchEngine } from '../../api/api-engine';
 import { returnCar, startCar, stopCar } from '../../utils/cars-animation';
 import Modal from './modal-component';
 import { checkNull } from '../../utils/check-null';
-import { createWinner } from '../../api/api-winners';
+import { createWinner, getWinner, getWinners, updateWinner } from '../../api/api-winners';
 
 export class ControlButtons extends BaseComponent {
   constructor(_parentNode: HTMLElement | null) {
@@ -40,12 +40,23 @@ export class ControlButtons extends BaseComponent {
                 time: Number(bestTime?.toFixed(2)),
               };
               new Modal(document.body, dataWinner);
-              const newWinner = {
-                id: Number(id),
-                wins: 1,
-                time: Number(bestTime?.toFixed(2)),
-              };
-              await createWinner(newWinner);
+              const checkWinner = await getWinner(Number(id));
+              if (checkWinner) {
+                const upWinner = {
+                  id: checkWinner.id,
+                  wins: checkWinner.wins + 1,
+                  time: Math.min(Number(bestTime?.toFixed(2)), checkWinner.time),
+                };
+                if (checkWinner.id) await updateWinner(checkWinner.id, upWinner);
+              } else {
+                const newWinner = {
+                  id: Number(id),
+                  wins: 1,
+                  time: Number(bestTime?.toFixed(2)),
+                };
+                await createWinner(newWinner);
+              }
+              await getWinners();
             }
           })();
         });

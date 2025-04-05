@@ -96,7 +96,7 @@ export const updateWinner = async (
 
 export const deleteWinner = async (id: number): Promise<WinnersData | undefined> => {
   try {
-    const response = await fetch(`${baseUrl}/garage/${id}`, {
+    const response = await fetch(`${baseUrl}/winners/${id}`, {
       method: 'DELETE',
     });
     if (!response.ok) {

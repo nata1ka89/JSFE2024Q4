@@ -10,6 +10,7 @@ import { CarCvg } from './car-svg';
 import { deleteCar, getCar, getCars } from '../../api/api-garage';
 import { startStopCar, switchEngine } from '../../api/api-engine';
 import { returnCar, startCar, stopCar } from '../../utils/cars-animation';
+import { deleteWinner, getWinners } from '../../api/api-winners';
 
 export class Cars extends BaseComponent {
   constructor(_parentNode: HTMLElement | null) {
@@ -57,7 +58,9 @@ export class Cars extends BaseComponent {
   private static async deleteHandlers(id: number): Promise<void> {
     try {
       await deleteCar(id);
+      await deleteWinner(id);
       await getCars();
+      await getWinners();
     } catch (error) {
       console.error('Error deleting car:', error);
     }
