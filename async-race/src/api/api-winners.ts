@@ -20,8 +20,6 @@ export const getWinners = async (
     const data: unknown = await response.json();
     if (isWinnersData(data)) {
       setWinnersState({ winners: data, totalWinners: countWinners });
-      console.log(data);
-      console.log(countWinners);
     } else {
       setWinnersState({ winners: [], totalWinners: 0 });
     }
@@ -38,12 +36,7 @@ export const getWinner = async (id: number): Promise<WinnersData | undefined> =>
       throw new Error(`Error fetching car: ${response.status}`);
     }
     const winner: unknown = await response.json();
-    if (isWinnerData(winner)) {
-      console.log(winner);
-      return winner;
-    } else {
-      return undefined;
-    }
+    return isWinnerData(winner) ? winner : undefined;
   } catch (error) {
     console.error('Error:', error);
     return undefined;
@@ -88,12 +81,7 @@ export const updateWinner = async (
       throw new Error(`Error fetching cars: ${response.status}`);
     }
     const winner: unknown = await response.json();
-    if (isWinnerData(winner)) {
-      console.log(winner);
-      return winner;
-    } else {
-      return undefined;
-    }
+    return isWinnerData(winner) ? winner : undefined;
   } catch (error) {
     console.error('Error:', error);
     return undefined;
@@ -109,12 +97,7 @@ export const deleteWinner = async (id: number): Promise<WinnersData | undefined>
       throw new Error(`Error fetching car: ${response.status}`);
     }
     const winner: unknown = await response.json();
-    if (isWinnerData(winner)) {
-      console.log(winner);
-      return winner;
-    } else {
-      return undefined;
-    }
+    return isWinnerData(winner) ? winner : undefined;
   } catch (error) {
     console.error('Error:', error);
     return undefined;

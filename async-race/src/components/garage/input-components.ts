@@ -48,6 +48,7 @@ export class InputElement extends BaseComponent {
       color: inputState.createInputColor,
     };
     try {
+      if (!newCar.name.trim()) return;
       await createCar(newCar);
       await getCars();
       inputState.createInput = '';
