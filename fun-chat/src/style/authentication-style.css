@@ -62,3 +62,15 @@ button {
 button:hover {
   box-shadow: none;
 }
+
+button[disabled] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.error-message {
+  display: none;
+  margin-top: 5px;
+  font-size: 0.9rem;
+  color: red;
+}
