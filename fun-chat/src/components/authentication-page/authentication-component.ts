@@ -1,5 +1,7 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/authentication-style.css';
+import { doSend } from '../../api/authentication-api';
+import type { User } from '../../utils/data-types';
 export class Authentication extends BaseComponent {
   constructor(_parentNode: HTMLElement | null) {
     super(_parentNode, 'form', 'form-authentication');
@@ -63,9 +65,26 @@ export class Authentication extends BaseComponent {
 
     const buttonsDiv = new BaseComponent(fieldset.node, 'div', 'container-buttons');
     const logButton = new BaseComponent(buttonsDiv.node, 'button', 'log-button', 'Log in');
-    logButton.setAttribute('type', 'submit');
     logButton.setAttribute('disabled', 'true');
-    logButton.setCallback('click', () => console.log('click logButton'));
+    logButton.setCallback('click', (event) => {
+      event.preventDefault();
+      if (
+        nameInput.node instanceof HTMLInputElement &&
+        passwordInput.node instanceof HTMLInputElement
+      ) {
+        const newUser: User = {
+          id: crypto.randomUUID(),
+          type: 'USER_LOGIN',
+          payload: {
+            user: {
+              login: nameInput.node.value,
+              password: passwordInput.node.value,
+            },
+          },
+        };
+        doSend(newUser);
+      }
+    });
     const infoButton = new BaseComponent(buttonsDiv.node, 'button', 'info-button', 'Info');
     infoButton.setCallback('click', () => console.log('click infoButton'));
     infoButton.setAttribute('type', 'button');
