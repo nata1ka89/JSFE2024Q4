@@ -2,9 +2,12 @@ import { BaseComponent } from '../../utils/base-component';
 import '../../style/authentication-style.css';
 import { doSend } from '../../api/authentication-api';
 import type { User } from '../../utils/data-types';
+import type Router from '../router';
 export class Authentication extends BaseComponent {
-  constructor(_parentNode: HTMLElement | null) {
+  private router: Router;
+  constructor(_parentNode: HTMLElement | null, router: Router) {
     super(_parentNode, 'form', 'form-authentication');
+    this.router = router;
     this.createForm();
   }
 
@@ -84,6 +87,7 @@ export class Authentication extends BaseComponent {
         };
         doSend(newUser);
       }
+      this.router.navigate('/main');
     });
     const infoButton = new BaseComponent(buttonsDiv.node, 'button', 'info-button', 'Info');
     infoButton.setCallback('click', () => console.log('click infoButton'));

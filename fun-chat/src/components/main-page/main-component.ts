@@ -3,10 +3,13 @@ import '../../style/main-style.css';
 import { Header } from './header-component';
 import { UserList } from './user-list-component';
 import { Footer } from './footer-component';
+import type Router from '../router';
 export class Main extends BaseComponent {
-  constructor(_parentNode: HTMLElement | null) {
+  private router: Router;
+  constructor(_parentNode: HTMLElement | null, router: Router) {
     super(_parentNode, 'main', 'main');
-    new Header(this.node);
+    this.router = router;
+    new Header(this.node, this.router);
     new UserList(this.node);
     new Footer(this.node);
   }
