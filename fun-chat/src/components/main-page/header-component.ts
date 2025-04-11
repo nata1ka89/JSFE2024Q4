@@ -12,11 +12,14 @@ export class Header extends BaseComponent {
   private createHeader(): void {
     const divHeader = new BaseComponent(this.node, 'div', 'header-content');
     new BaseComponent(divHeader.node, 'label', '', 'User');
-    new BaseComponent(divHeader.node, 'label', '', 'Funny chat');
+    new BaseComponent(divHeader.node, 'label', '', 'JollyTalk');
     const exitButton = new BaseComponent(this.node, 'button', 'exit-button', 'Exit');
-    exitButton.setCallback('click', () => this.router.navigate('/'));
+    exitButton.setCallback('click', () => {
+      localStorage.setItem('isAuthenticated', 'false');
+      this.router.navigate('/');
+    });
 
     const infoButton = new BaseComponent(this.node, 'button', 'info-button', 'Info');
-    infoButton.setCallback('click', () => console.log('click infoButton'));
+    infoButton.setCallback('click', () => this.router.navigate('/about'));
   }
 }

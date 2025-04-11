@@ -29,9 +29,19 @@ export default class Router {
 
   public handleRouteChange(): void {
     let currentPath = globalThis.location.hash.slice(1);
+    const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
     if (!currentPath) {
       currentPath = '/';
       this.navigate(currentPath);
+      return;
+    }
+
+    if (currentPath === '/' && isAuthenticated) {
+      this.navigate('/main');
+      return;
+    }
+    if (currentPath === '/main' && !isAuthenticated) {
+      this.navigate('/');
       return;
     }
     const route = this.routes.find((r) => r.path === currentPath);
@@ -39,8 +49,6 @@ export default class Router {
     if (route) {
       this.rootElement.textContent = '';
       route.viewComponent();
-    } else {
-      this.rootElement.textContent = '';
     }
   }
 }

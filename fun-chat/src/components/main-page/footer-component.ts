@@ -10,7 +10,7 @@ export class Footer extends BaseComponent {
     new BaseComponent(this.node, 'label', '', '2025');
 
     const logoDiv = new BaseComponent(this.node, 'a', 'rss-link');
-    logoDiv.setAttribute('href', 'https://rs.school/courses/javascript-preschool-ru');
+    logoDiv.setAttribute('href', 'https://rs.school/courses/javascript-ru');
     logoDiv.setAttribute('target', '_blank');
 
     const logo = new BaseComponent(logoDiv.node, 'img', 'image');
@@ -18,7 +18,7 @@ export class Footer extends BaseComponent {
     logo.setAttribute('alt', 'rollingScopesImage');
     new BaseComponent(logoDiv.node, 'label', '', 'RSSchool');
 
-    const github = new BaseComponent(this.node, 'a', '', 'nata1ka89');
+    const github = new BaseComponent(this.node, 'a', '', 'Natallia Katsuba');
     github.setAttribute('href', 'https://github.com/nata1ka89');
     github.setAttribute('target', '_blank');
   }

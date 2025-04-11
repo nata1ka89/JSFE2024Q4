@@ -1,0 +1,31 @@
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+  width: 95vw;
+  max-width: 770px;
+  height: 90vh;
+  max-height: 300px;
+  padding: 20px;
+  border-radius: 8px;
+
+  text-align: center;
+
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgb(0 0 0 / 10%);
+}
+
+h3 {
+  margin: 12px;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+label {
+  font-size: 1rem;
+  color: #333;
+}

@@ -86,11 +86,12 @@ export class Authentication extends BaseComponent {
           },
         };
         doSend(newUser);
+        localStorage.setItem('isAuthenticated', 'true');
       }
       this.router.navigate('/main');
     });
     const infoButton = new BaseComponent(buttonsDiv.node, 'button', 'info-button', 'Info');
-    infoButton.setCallback('click', () => console.log('click infoButton'));
+    infoButton.setCallback('click', () => this.router.navigate('/about'));
     infoButton.setAttribute('type', 'button');
     const inputs = [nameInput, passwordInput];
     for (const input of inputs) {
