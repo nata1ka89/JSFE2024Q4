@@ -1,8 +1,11 @@
-import type { User } from '../utils/data-types';
-
+import Modal from '../components/authentication-page/modal-error-component';
+import type { UserLog } from '../utils/data-types';
+import Router from '../components/router';
+import { userState } from '../utils/user-state';
+import { isValidJsonUserError, isValidJsonUserLog } from '../utils/check-json-data';
 let websocket: WebSocket;
 const URL = 'ws://localhost:4000';
-
+const router = new Router(document.body);
 export function connectWebSocket(): void {
   websocket = new WebSocket(URL);
   websocket.addEventListener('open', onOpen);
@@ -32,10 +35,44 @@ function onError(): void {
 }
 
 function onMessage(event: MessageEvent): void {
-  writeToScreen(`RECEIVED: ${event.data}`);
+  try {
+    if (typeof event.data === 'string') {
+      const jsonObject: unknown = JSON.parse(event.data);
+      if (isValidJsonUserError(jsonObject)) {
+        const error = jsonObject.payload.error;
+        new Modal(document.body, error);
+        const userId = jsonObject.id;
+        if (userState[userId]) {
+          userState[userId].isLogined = false;
+        }
+        writeToScreen(`Error: ${error}`);
+        router.navigate('/');
+      } else if (isValidJsonUserLog(jsonObject)) {
+        if (jsonObject.payload.user.isLogined) {
+          const userId = jsonObject.id;
+
+          if (userState[userId]) {
+            userState[userId].isLogined = true;
+          }
+          writeToScreen(`RECEIVED: ${event.data}`);
+          router.navigate('/main');
+        } else {
+          const userId = jsonObject.id;
+
+          if (userState[userId]) {
+            userState[userId].isLogined = false;
+          }
+          writeToScreen(`RECEIVED: ${event.data}`);
+          router.navigate('/');
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
 }
 
-export function doSend(message: User): void {
+export function doSend(message: UserLog): void {
   if (websocket.readyState === WebSocket.OPEN) {
     writeToScreen(`SENT: ${JSON.stringify(message)}`);
     websocket.send(JSON.stringify(message));

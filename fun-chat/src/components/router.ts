@@ -1,3 +1,5 @@
+import { userState } from '../utils/user-state';
+
 type Route = {
   path: string;
   viewComponent: () => void;
@@ -29,20 +31,21 @@ export default class Router {
 
   public handleRouteChange(): void {
     let currentPath = globalThis.location.hash.slice(1);
-    const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
     if (!currentPath) {
       currentPath = '/';
       this.navigate(currentPath);
       return;
     }
-
-    if (currentPath === '/' && isAuthenticated) {
-      this.navigate('/main');
-      return;
-    }
-    if (currentPath === '/main' && !isAuthenticated) {
-      this.navigate('/');
-      return;
+    const currentUserId = sessionStorage.getItem('currentUserId');
+    if (currentUserId && userState[currentUserId]) {
+      if (currentPath === '/' && userState[currentUserId].isLogined) {
+        this.navigate('/main');
+        return;
+      }
+      if (currentPath === '/main' && !userState[currentUserId].isLogined) {
+        this.navigate('/');
+        return;
+      }
     }
     const route = this.routes.find((r) => r.path === currentPath);
 

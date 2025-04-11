@@ -15,6 +15,7 @@ export class App extends BaseComponent {
     this.router.addRoute('/', () => this.viewAuthenticationPage());
     this.router.addRoute('/main', () => this.viewMainPage());
     this.router.addRoute('/about', () => this.viewAboutPage());
+    this.router.handleRouteChange();
   }
 
   private viewAuthenticationPage(): void {

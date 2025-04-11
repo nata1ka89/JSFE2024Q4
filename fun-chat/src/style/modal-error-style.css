@@ -1,0 +1,27 @@
+.dialog {
+  max-width: 90%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+
+  background-color: #fff;
+}
+
+.dialog::backdrop {
+  background-color: rgb(0 0 0 / 50%);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+
+  text-align: center;
+}
+
+.message {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}

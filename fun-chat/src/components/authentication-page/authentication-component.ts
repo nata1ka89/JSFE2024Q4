@@ -1,8 +1,9 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/authentication-style.css';
 import { doSend } from '../../api/authentication-api';
-import type { User } from '../../utils/data-types';
+import type { UserLog } from '../../utils/data-types';
 import type Router from '../router';
+import { userState } from '../../utils/user-state';
 export class Authentication extends BaseComponent {
   private router: Router;
   constructor(_parentNode: HTMLElement | null, router: Router) {
@@ -75,7 +76,7 @@ export class Authentication extends BaseComponent {
         nameInput.node instanceof HTMLInputElement &&
         passwordInput.node instanceof HTMLInputElement
       ) {
-        const newUser: User = {
+        const newUser: UserLog = {
           id: crypto.randomUUID(),
           type: 'USER_LOGIN',
           payload: {
@@ -86,9 +87,13 @@ export class Authentication extends BaseComponent {
           },
         };
         doSend(newUser);
-        localStorage.setItem('isAuthenticated', 'true');
+        userState[newUser.id] = {
+          login: newUser.payload.user.login,
+          password: newUser.payload.user.password,
+          isLogined: true,
+        };
+        sessionStorage.setItem('currentUserId', newUser.id);
       }
-      this.router.navigate('/main');
     });
     const infoButton = new BaseComponent(buttonsDiv.node, 'button', 'info-button', 'Info');
     infoButton.setCallback('click', () => this.router.navigate('/about'));
