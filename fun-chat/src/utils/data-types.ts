@@ -14,7 +14,7 @@ export type UserLogResponse = {
   payload: {
     user: {
       login: string;
-      isLogined: string;
+      isLogined: boolean;
     };
   };
 };
@@ -31,3 +31,17 @@ export type UserData = {
   password: string;
   isLogined: boolean;
 };
+
+export type UsersAllResponse = {
+  id: string,
+  type: string,
+  payload: {
+    users: [],
+  }
+}
+
+export type UsersActive = {
+  id: string,
+  type: "USER_ACTIVE",
+  payload: null
+}

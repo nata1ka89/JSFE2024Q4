@@ -5,13 +5,15 @@ import { UserList } from './user-list-component';
 import { Footer } from './footer-component';
 import type Router from '../router';
 
+export let userList: UserList | undefined;
 export class Main extends BaseComponent {
   private router: Router;
+
   constructor(_parentNode: HTMLElement | null, router: Router) {
     super(_parentNode, 'main', 'main');
     this.router = router;
     new Header(this.node, this.router);
-    new UserList(this.node);
+    userList = new UserList(this.node);
     new Footer(this.node);
   }
 }

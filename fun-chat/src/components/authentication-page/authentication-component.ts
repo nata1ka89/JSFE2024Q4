@@ -1,7 +1,7 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/authentication-style.css';
 import { doSend } from '../../api/authentication-api';
-import type { UserLog } from '../../utils/data-types';
+import type { UserLog, UsersActive } from '../../utils/data-types';
 import type Router from '../router';
 import { userState } from '../../utils/user-state';
 import {
@@ -98,7 +98,14 @@ export class Authentication extends BaseComponent {
             },
           },
         };
+        const activeUser: UsersActive = {
+          id: crypto.randomUUID(),
+          type: "USER_ACTIVE",
+          payload: null, // eslint-disable-line unicorn/no-null
+        }
         doSend(newUser);
+        doSend(activeUser);
+
         userState[newUser.id] = {
           login: newUser.payload.user.login,
           password: newUser.payload.user.password,

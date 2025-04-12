@@ -1,4 +1,4 @@
-import type { UserErrorResponse, UserLogResponse } from './data-types';
+import type { UserErrorResponse, UserLogResponse, UsersAllResponse } from './data-types';
 
 export function isValidJsonUserLog(data: unknown): data is UserLogResponse {
   return (
@@ -25,5 +25,19 @@ export function isValidJsonUserError(data: unknown): data is UserErrorResponse {
     typeof data.payload === 'object' &&
     data.payload !== null &&
     'error' in data.payload
+  );
+}
+
+export function isValidJsonUserActive(data: unknown): data is UsersAllResponse {
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    'type' in data &&
+    'payload' in data &&
+    typeof data.payload === 'object' &&
+    data.payload !== null &&
+    'users' in data.payload &&
+    typeof data.payload.users === 'object' &&
+    data.payload.users !== null
   );
 }

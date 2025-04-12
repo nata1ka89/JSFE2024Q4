@@ -1,19 +1,15 @@
-import Modal from '../components/authentication-page/modal-valid-component';
-import type { UserLog } from '../utils/data-types';
-import Router from '../components/router';
+import type { UserLog, UsersActive } from '../utils/data-types';
 import { userState } from '../utils/user-state';
-import { isValidJsonUserError, isValidJsonUserLog } from '../utils/check-json-data';
+import { isValidJsonUserActive, isValidJsonUserError, isValidJsonUserLog } from '../utils/check-json-data';
 import {
   CONNECTION_CLOSED,
-  LOGIN_ROUTE,
-  MAIN_ROUTE,
   OFFLINE,
   WEBSOCKET_URL,
 } from '../utils/constants';
 import ModalServer from './modal-server';
+import { handleUserActive, handleUserError, handleUserExternalLogin, handleUserLogin, writeToScreen } from './handle-response-server';
 
 let websocket: WebSocket;
-const router = new Router(document.body);
 let serverModal: ModalServer | undefined;
 
 export function connectWebSocket(): void {
@@ -52,7 +48,6 @@ function onClose(event: CloseEvent): void {
     if (!serverModal) {
       serverModal = new ModalServer(document.body, CONNECTION_CLOSED);
     }
-
     setTimeout(() => {
       connectWebSocket();
     }, 3000);
@@ -71,30 +66,17 @@ function onMessage(event: MessageEvent): void {
     if (typeof event.data === 'string') {
       const jsonObject: unknown = JSON.parse(event.data);
       if (isValidJsonUserError(jsonObject)) {
-        const error = jsonObject.payload.error;
-        new Modal(document.body, error);
-        const userId = jsonObject.id;
-        if (userState[userId]) {
-          userState[userId].isLogined = false;
-        }
-        writeToScreen(`Error: ${error}`);
-        router.navigate(LOGIN_ROUTE);
-      } else if (isValidJsonUserLog(jsonObject)) {
-        if (jsonObject.payload.user.isLogined) {
-          const userId = jsonObject.id;
-          if (userState[userId]) {
-            userState[userId].isLogined = true;
-          }
-          writeToScreen(`RECEIVED: ${event.data}`);
-          router.navigate(MAIN_ROUTE);
+        handleUserError(jsonObject);
+      }
+      if (isValidJsonUserLog(jsonObject)) {
+        if (jsonObject.type === 'USER_EXTERNAL_LOGIN') {
+          handleUserExternalLogin(jsonObject);
         } else {
-          const userId = jsonObject.id;
-          if (userState[userId]) {
-            userState[userId].isLogined = false;
-          }
-          writeToScreen(`RECEIVED: ${event.data}`);
-          router.navigate(LOGIN_ROUTE);
+          handleUserLogin(jsonObject);
         }
+      }
+      if (isValidJsonUserActive(jsonObject)) {
+        handleUserActive(jsonObject)
       }
     }
   } catch (error) {
@@ -102,13 +84,10 @@ function onMessage(event: MessageEvent): void {
   }
 }
 
-export function doSend(message: UserLog): void {
+export function doSend(message: UserLog | UsersActive): void {
   if (websocket.readyState === WebSocket.OPEN) {
     writeToScreen(`SENT: ${JSON.stringify(message)}`);
     websocket.send(JSON.stringify(message));
   }
 }
 
-function writeToScreen(message: string): void {
-  console.log(message);
-}
