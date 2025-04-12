@@ -3,14 +3,21 @@ import type { UserLog } from '../utils/data-types';
 import Router from '../components/router';
 import { userState } from '../utils/user-state';
 import { isValidJsonUserError, isValidJsonUserLog } from '../utils/check-json-data';
-import { LOGIN_ROUTE, MAIN_ROUTE, OFFLINE } from '../utils/constants';
+import {
+  CONNECTION_CLOSED,
+  LOGIN_ROUTE,
+  MAIN_ROUTE,
+  OFFLINE,
+  WEBSOCKET_URL,
+} from '../utils/constants';
+import ModalServer from './modal-server';
 
 let websocket: WebSocket;
-const URL = 'ws://localhost:4000';
 const router = new Router(document.body);
+let serverModal: ModalServer | undefined;
 
 export function connectWebSocket(): void {
-  websocket = new WebSocket(URL);
+  websocket = new WebSocket(WEBSOCKET_URL);
   websocket.addEventListener('open', onOpen);
   websocket.addEventListener('close', onClose);
   websocket.addEventListener('error', onError);
@@ -18,12 +25,34 @@ export function connectWebSocket(): void {
 }
 
 function onOpen(): void {
+  if (serverModal) {
+    serverModal.closeModal();
+    serverModal = undefined;
+  }
+  const currentUserId = sessionStorage.getItem('currentUserId');
+  if (currentUserId) {
+    const newUser: UserLog = {
+      id: currentUserId,
+      type: 'USER_LOGIN',
+      payload: {
+        user: {
+          login: userState[currentUserId].login,
+          password: userState[currentUserId].password,
+        },
+      },
+    };
+    doSend(newUser);
+  }
   writeToScreen('Connection established');
 }
 
 function onClose(event: CloseEvent): void {
   writeToScreen(`Connection closed: ${event.code} - ${event.reason}`);
   if (event.code != 1000) {
+    if (!serverModal) {
+      serverModal = new ModalServer(document.body, CONNECTION_CLOSED);
+    }
+
     setTimeout(() => {
       connectWebSocket();
     }, 3000);

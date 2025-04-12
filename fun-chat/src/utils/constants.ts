@@ -36,6 +36,7 @@ export const LOGIN_ROUTE = '/login';
 export const ABOUT_ROUTE = '/about';
 export const MAIN_ROUTE = '/main';
 
+export const WEBSOCKET_URL = 'ws://localhost:4000';
 export const CONNECTION_CLOSED = 'Connection to server';
 export const OFFLINE = 'You are offline. Please connect to the Internet and try again.';
 

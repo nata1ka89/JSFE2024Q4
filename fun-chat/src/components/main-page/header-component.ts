@@ -34,6 +34,7 @@ export class Header extends BaseComponent {
         };
         doSend(offUser);
       }
+      sessionStorage.removeItem('currentUserId');
     });
     const infoButton = new BaseComponent(this.node, 'button', 'info-button', BUTTON_INFO);
     infoButton.setCallback('click', () => this.router.navigate(ABOUT_ROUTE));
