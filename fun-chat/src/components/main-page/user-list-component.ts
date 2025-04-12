@@ -6,19 +6,18 @@ import {
   PLACEHOLDER_INPUT_SEARCH,
   PLACEHOLDER_MESSAGE,
 } from '../../utils/constants';
-import type { UserData } from '../../utils/data-types';
+import type { User } from '../../utils/server-data-type';
 
 export class UserList extends BaseComponent {
-  private userDiv: BaseComponent | undefined
+  private userDiv: BaseComponent | undefined;
   constructor(_parentNode: HTMLElement | null) {
     super(_parentNode, 'section', 'user-section');
     this.createUserList([]);
-    this.createDialogContainer()
+    this.createDialogContainer();
   }
 
-
-  public createUserList(users: Array<UserData>): void {
-    if (this.userDiv) this.userDiv.destroy()
+  public createUserList(users: User[]): void {
+    if (this.userDiv) this.userDiv.destroy();
     this.userDiv = new BaseComponent(this.node, 'div', 'user-container');
     const searchInput = new BaseComponent(this.userDiv.node, 'input', 'input');
     searchInput.setAttribute('type', 'text');
@@ -29,8 +28,7 @@ export class UserList extends BaseComponent {
       const listItem = new BaseComponent(list.node, 'li', 'list-item');
       new BaseComponent(listItem.node, 'div', 'user-status');
       new BaseComponent(listItem.node, 'label', 'user-name', user.login);
-    };
-
+    }
   }
 
   private createDialogContainer(): void {

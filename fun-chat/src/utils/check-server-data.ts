@@ -1,6 +1,6 @@
-import type { UserErrorResponse, UserLogResponse, UsersAllResponse } from './data-types';
+import type { UserResponse, UserErrorResponse, AllUsersResponse } from './server-data-type';
 
-export function isValidJsonUserLog(data: unknown): data is UserLogResponse {
+export function isValidUser(data: unknown): data is UserResponse {
   return (
     typeof data === 'object' &&
     data !== null &&
@@ -16,7 +16,7 @@ export function isValidJsonUserLog(data: unknown): data is UserLogResponse {
   );
 }
 
-export function isValidJsonUserError(data: unknown): data is UserErrorResponse {
+export function isValidUserError(data: unknown): data is UserErrorResponse {
   return (
     typeof data === 'object' &&
     data !== null &&
@@ -28,7 +28,7 @@ export function isValidJsonUserError(data: unknown): data is UserErrorResponse {
   );
 }
 
-export function isValidJsonUserActive(data: unknown): data is UsersAllResponse {
+export function isValidUserActive(data: unknown): data is AllUsersResponse {
   return (
     typeof data === 'object' &&
     data !== null &&

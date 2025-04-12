@@ -1,10 +1,16 @@
-import Modal from "../components/authentication-page/modal-valid-component";
-import { userList } from "../components/main-page/main-component";
-import Router from "../components/router";
-import { LOGIN_ROUTE, MAIN_ROUTE } from "../utils/constants";
-import type { UserErrorResponse, UserLogResponse, UsersActive, UsersAllResponse } from "../utils/data-types";
-import { userState } from "../utils/user-state";
-import { doSend } from "./authentication-api";
+import Modal from '../components/authentication-page/modal-valid-component';
+import { userList } from '../components/main-page/main-component';
+import Router from '../components/router';
+import { LOGIN_ROUTE, MAIN_ROUTE } from '../utils/constants';
+import { Type } from '../utils/server-data-type';
+import type {
+  AllUsersRequest,
+  AllUsersResponse,
+  UserErrorResponse,
+  UserResponse,
+} from '../utils/server-data-type';
+import { userState } from '../utils/user-state';
+import { doSend } from './authentication-api';
 
 const router = new Router(document.body);
 export function handleUserError(jsonObject: UserErrorResponse): void {
@@ -18,7 +24,7 @@ export function handleUserError(jsonObject: UserErrorResponse): void {
   router.navigate(LOGIN_ROUTE);
 }
 
-export function handleUserLogin(jsonObject: UserLogResponse): void {
+export function handleUserLogin(jsonObject: UserResponse): void {
   const userId = jsonObject.id;
   if (jsonObject.payload.user.isLogined) {
     if (userState[userId]) {
@@ -35,20 +41,19 @@ export function handleUserLogin(jsonObject: UserLogResponse): void {
   }
 }
 
-export function handleUserActive(jsonObject: UsersAllResponse): void {
+export function handleUserActive(jsonObject: AllUsersResponse): void {
   const users = jsonObject.payload.users;
-  if (userList)
-    userList.createUserList(users);
-  writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`)
+  if (userList) userList.createUserList(users);
+  writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
 }
 
-export function handleUserExternalLogin(jsonObject: UserLogResponse): void {
+export function handleUserExternalLogin(jsonObject: UserResponse): void {
   const externalUser = jsonObject.payload.user;
   console.log(`External user logged in: ${externalUser.login}`);
 
-  const activeUserRequest: UsersActive = {
+  const activeUserRequest: AllUsersRequest = {
     id: crypto.randomUUID(),
-    type: 'USER_ACTIVE',
+    type: Type.USER_ACTIVE,
     payload: null, // eslint-disable-line unicorn/no-null
   };
 

@@ -1,0 +1,53 @@
+export enum Type {
+  USER_LOGIN = 'USER_LOGIN',
+  USER_LOGOUT = 'USER_LOGOUT',
+  ERROR = 'ERROR',
+  USER_EXTERNAL_LOGIN = 'USER_EXTERNAL_LOGIN',
+  USER_EXTERNAL_LOGOUT = 'USER_EXTERNAL_LOGOUT',
+  USER_ACTIVE = 'USER_ACTIVE',
+  USER_INACTIVE = 'USER_INACTIVE',
+}
+
+export type User = {
+  login: string;
+  isLogined: boolean;
+};
+
+export type UserRequest = {
+  id: string;
+  type: Type.USER_LOGIN | Type.USER_LOGOUT;
+  payload: {
+    user: {
+      login: string;
+      password: string;
+    };
+  };
+};
+export type UserResponse = {
+  id: string; //null
+  type: Type.USER_LOGIN | Type.USER_LOGOUT | Type.USER_EXTERNAL_LOGIN | Type.USER_EXTERNAL_LOGOUT;
+  payload: {
+    user: User;
+  };
+};
+export type UserErrorResponse = {
+  id: string;
+  type: Type.ERROR;
+  payload: {
+    error: string;
+  };
+};
+
+export type AllUsersRequest = {
+  id: string;
+  type: Type.USER_ACTIVE | Type.USER_INACTIVE;
+  payload: null;
+};
+
+export type AllUsersResponse = {
+  id: string;
+  type: Type.USER_ACTIVE | Type.USER_INACTIVE;
+  payload: {
+    users: User[];
+  };
+};

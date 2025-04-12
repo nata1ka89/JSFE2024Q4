@@ -1,13 +1,16 @@
-import type { UserLog, UsersActive } from '../utils/data-types';
 import { userState } from '../utils/user-state';
-import { isValidJsonUserActive, isValidJsonUserError, isValidJsonUserLog } from '../utils/check-json-data';
-import {
-  CONNECTION_CLOSED,
-  OFFLINE,
-  WEBSOCKET_URL,
-} from '../utils/constants';
+import { CONNECTION_CLOSED, OFFLINE, WEBSOCKET_URL } from '../utils/constants';
 import ModalServer from './modal-server';
-import { handleUserActive, handleUserError, handleUserExternalLogin, handleUserLogin, writeToScreen } from './handle-response-server';
+import {
+  handleUserActive,
+  handleUserError,
+  handleUserExternalLogin,
+  handleUserLogin,
+  writeToScreen,
+} from './handle-response-server';
+import type { AllUsersRequest, UserRequest } from '../utils/server-data-type';
+import { Type } from '../utils/server-data-type';
+import { isValidUser, isValidUserActive, isValidUserError } from '../utils/check-server-data';
 
 let websocket: WebSocket;
 let serverModal: ModalServer | undefined;
@@ -27,9 +30,9 @@ function onOpen(): void {
   }
   const currentUserId = sessionStorage.getItem('currentUserId');
   if (currentUserId) {
-    const newUser: UserLog = {
+    const newUser: UserRequest = {
       id: currentUserId,
-      type: 'USER_LOGIN',
+      type: Type.USER_LOGIN,
       payload: {
         user: {
           login: userState[currentUserId].login,
@@ -65,18 +68,18 @@ function onMessage(event: MessageEvent): void {
   try {
     if (typeof event.data === 'string') {
       const jsonObject: unknown = JSON.parse(event.data);
-      if (isValidJsonUserError(jsonObject)) {
+      if (isValidUserError(jsonObject)) {
         handleUserError(jsonObject);
       }
-      if (isValidJsonUserLog(jsonObject)) {
-        if (jsonObject.type === 'USER_EXTERNAL_LOGIN') {
+      if (isValidUser(jsonObject)) {
+        if (jsonObject.type === Type.USER_EXTERNAL_LOGIN) {
           handleUserExternalLogin(jsonObject);
         } else {
           handleUserLogin(jsonObject);
         }
       }
-      if (isValidJsonUserActive(jsonObject)) {
-        handleUserActive(jsonObject)
+      if (isValidUserActive(jsonObject)) {
+        handleUserActive(jsonObject);
       }
     }
   } catch (error) {
@@ -84,10 +87,9 @@ function onMessage(event: MessageEvent): void {
   }
 }
 
-export function doSend(message: UserLog | UsersActive): void {
+export function doSend(message: UserRequest | AllUsersRequest): void {
   if (websocket.readyState === WebSocket.OPEN) {
     writeToScreen(`SENT: ${JSON.stringify(message)}`);
     websocket.send(JSON.stringify(message));
   }
 }
-

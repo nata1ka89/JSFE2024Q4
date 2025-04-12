@@ -1,3 +1,7 @@
-import type { UserData } from './data-types';
+export type UserSave = {
+  login: string;
+  password: string;
+  isLogined: boolean;
+};
 
-export const userState: Record<string, UserData> = {};
+export const userState: Record<string, UserSave> = {};

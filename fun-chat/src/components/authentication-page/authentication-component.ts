@@ -1,7 +1,6 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/authentication-style.css';
 import { doSend } from '../../api/authentication-api';
-import type { UserLog, UsersActive } from '../../utils/data-types';
 import type Router from '../router';
 import { userState } from '../../utils/user-state';
 import {
@@ -18,6 +17,8 @@ import {
   VALID_LOGIN,
   VALID_PASSWORD,
 } from '../../utils/constants';
+import { Type } from '../../utils/server-data-type';
+import type { AllUsersRequest, UserRequest } from '../../utils/server-data-type';
 
 export class Authentication extends BaseComponent {
   private router: Router;
@@ -88,9 +89,9 @@ export class Authentication extends BaseComponent {
         nameInput.node instanceof HTMLInputElement &&
         passwordInput.node instanceof HTMLInputElement
       ) {
-        const newUser: UserLog = {
+        const newUser: UserRequest = {
           id: crypto.randomUUID(),
-          type: 'USER_LOGIN',
+          type: Type.USER_LOGIN,
           payload: {
             user: {
               login: nameInput.node.value,
@@ -98,13 +99,13 @@ export class Authentication extends BaseComponent {
             },
           },
         };
-        const activeUser: UsersActive = {
+        const activeUsers: AllUsersRequest = {
           id: crypto.randomUUID(),
-          type: "USER_ACTIVE",
+          type: Type.USER_ACTIVE,
           payload: null, // eslint-disable-line unicorn/no-null
-        }
+        };
         doSend(newUser);
-        doSend(activeUser);
+        doSend(activeUsers);
 
         userState[newUser.id] = {
           login: newUser.payload.user.login,
