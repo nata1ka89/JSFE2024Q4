@@ -1,3 +1,4 @@
+import { LOGIN_ROUTE, MAIN_ROUTE } from '../utils/constants';
 import { userState } from '../utils/user-state';
 
 type Route = {
@@ -32,18 +33,18 @@ export default class Router {
   public handleRouteChange(): void {
     let currentPath = globalThis.location.hash.slice(1);
     if (!currentPath) {
-      currentPath = '/';
+      currentPath = LOGIN_ROUTE;
       this.navigate(currentPath);
       return;
     }
     const currentUserId = sessionStorage.getItem('currentUserId');
     if (currentUserId && userState[currentUserId]) {
-      if (currentPath === '/' && userState[currentUserId].isLogined) {
-        this.navigate('/main');
+      if (currentPath === LOGIN_ROUTE && userState[currentUserId].isLogined) {
+        this.navigate(MAIN_ROUTE);
         return;
       }
-      if (currentPath === '/main' && !userState[currentUserId].isLogined) {
-        this.navigate('/');
+      if (currentPath === MAIN_ROUTE && !userState[currentUserId].isLogined) {
+        this.navigate(LOGIN_ROUTE);
         return;
       }
     }

@@ -4,6 +4,8 @@ import type Router from '../router';
 import type { UserLog } from '../../utils/data-types';
 import { userState } from '../../utils/user-state';
 import { doSend } from '../../api/authentication-api';
+import { ABOUT_ROUTE, BUTTON_EXIT, BUTTON_INFO, NAME_APP, LABEL_USER } from '../../utils/constants';
+
 export class Header extends BaseComponent {
   private router: Router;
   constructor(_parentNode: HTMLElement | null, router: Router) {
@@ -14,9 +16,9 @@ export class Header extends BaseComponent {
 
   private createHeader(): void {
     const divHeader = new BaseComponent(this.node, 'div', 'header-content');
-    new BaseComponent(divHeader.node, 'label', '', 'User');
-    new BaseComponent(divHeader.node, 'label', '', 'JollyTalk');
-    const exitButton = new BaseComponent(this.node, 'button', 'exit-button', 'Exit');
+    new BaseComponent(divHeader.node, 'label', '', LABEL_USER);
+    new BaseComponent(divHeader.node, 'label', '', NAME_APP);
+    const exitButton = new BaseComponent(this.node, 'button', 'exit-button', BUTTON_EXIT);
     exitButton.setCallback('click', () => {
       const currentUserId = sessionStorage.getItem('currentUserId');
       if (currentUserId && userState[currentUserId]) {
@@ -33,8 +35,7 @@ export class Header extends BaseComponent {
         doSend(offUser);
       }
     });
-
-    const infoButton = new BaseComponent(this.node, 'button', 'info-button', 'Info');
-    infoButton.setCallback('click', () => this.router.navigate('/about'));
+    const infoButton = new BaseComponent(this.node, 'button', 'info-button', BUTTON_INFO);
+    infoButton.setCallback('click', () => this.router.navigate(ABOUT_ROUTE));
   }
 }

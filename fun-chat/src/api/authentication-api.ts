@@ -1,11 +1,14 @@
-import Modal from '../components/authentication-page/modal-error-component';
+import Modal from '../components/authentication-page/modal-valid-component';
 import type { UserLog } from '../utils/data-types';
 import Router from '../components/router';
 import { userState } from '../utils/user-state';
 import { isValidJsonUserError, isValidJsonUserLog } from '../utils/check-json-data';
+import { LOGIN_ROUTE, MAIN_ROUTE, OFFLINE } from '../utils/constants';
+
 let websocket: WebSocket;
 const URL = 'ws://localhost:4000';
 const router = new Router(document.body);
+
 export function connectWebSocket(): void {
   websocket = new WebSocket(URL);
   websocket.addEventListener('open', onOpen);
@@ -25,7 +28,7 @@ function onClose(event: CloseEvent): void {
       connectWebSocket();
     }, 3000);
     if (!navigator.onLine) {
-      writeToScreen('You are offline. Please connect to the Internet and try again.');
+      writeToScreen(OFFLINE);
     }
   }
 }
@@ -46,24 +49,22 @@ function onMessage(event: MessageEvent): void {
           userState[userId].isLogined = false;
         }
         writeToScreen(`Error: ${error}`);
-        router.navigate('/');
+        router.navigate(LOGIN_ROUTE);
       } else if (isValidJsonUserLog(jsonObject)) {
         if (jsonObject.payload.user.isLogined) {
           const userId = jsonObject.id;
-
           if (userState[userId]) {
             userState[userId].isLogined = true;
           }
           writeToScreen(`RECEIVED: ${event.data}`);
-          router.navigate('/main');
+          router.navigate(MAIN_ROUTE);
         } else {
           const userId = jsonObject.id;
-
           if (userState[userId]) {
             userState[userId].isLogined = false;
           }
           writeToScreen(`RECEIVED: ${event.data}`);
-          router.navigate('/');
+          router.navigate(LOGIN_ROUTE);
         }
       }
     }

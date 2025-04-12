@@ -4,6 +4,7 @@ import { Header } from './header-component';
 import { UserList } from './user-list-component';
 import { Footer } from './footer-component';
 import type Router from '../router';
+
 export class Main extends BaseComponent {
   private router: Router;
   constructor(_parentNode: HTMLElement | null, router: Router) {

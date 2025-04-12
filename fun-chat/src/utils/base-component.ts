@@ -1,4 +1,5 @@
 import { checkNull } from './check-null';
+import { ERROR_ELEMENT_NULL } from './constants';
 
 type Callback<K extends keyof HTMLElementEventMap> = (event: HTMLElementEventMap[K]) => void;
 export const allButtonClasses: BaseComponent[] = [];
@@ -18,7 +19,7 @@ export class BaseComponent {
     try {
       checkNull(_parentNode).append(this.node);
     } catch (error) {
-      console.error('_parentNode is null', error);
+      console.error(ERROR_ELEMENT_NULL, error);
     }
     allButtonClasses.push(this);
   }

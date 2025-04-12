@@ -1,5 +1,6 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/modal-error-style.css';
+import { BUTTON_CLOSE } from '../../utils/constants';
 
 export default class Modal extends BaseComponent {
   constructor(parentNode: HTMLElement, error: string) {
@@ -17,7 +18,12 @@ export default class Modal extends BaseComponent {
   public createModal(error: string): void {
     const content = new BaseComponent(this.node, 'div', 'content');
     new BaseComponent(content.node, 'p', 'message', `${error}`);
-    const closeButton = new BaseComponent(content.node, 'button', 'button close-button', 'Close');
+    const closeButton = new BaseComponent(
+      content.node,
+      'button',
+      'button close-button',
+      BUTTON_CLOSE
+    );
     closeButton.setAttribute('type', 'button');
     closeButton.setCallback('click', () => this.closeModal());
     this.viewModal();

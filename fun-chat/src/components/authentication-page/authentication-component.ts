@@ -4,6 +4,21 @@ import { doSend } from '../../api/authentication-api';
 import type { UserLog } from '../../utils/data-types';
 import type Router from '../router';
 import { userState } from '../../utils/user-state';
+import {
+  ABOUT_ROUTE,
+  AUTHENTICATION_TITLE,
+  BUTTON_INFO,
+  BUTTON_LOGIN,
+  LABEL_NAME,
+  LABEL_PASSWORD,
+  MAX_LENGTH,
+  MIN_LENGTH,
+  PLACEHOLDER_LOGIN,
+  PLACEHOLDER_PASSWORD,
+  VALID_LOGIN,
+  VALID_PASSWORD,
+} from '../../utils/constants';
+
 export class Authentication extends BaseComponent {
   private router: Router;
   constructor(_parentNode: HTMLElement | null, router: Router) {
@@ -14,7 +29,9 @@ export class Authentication extends BaseComponent {
 
   private static validateInput(input: BaseComponent, error: BaseComponent): void {
     if (input.node instanceof HTMLInputElement) {
-      const isValid = input.node.value.trim().length >= 4 && input.node.value.trim().length <= 20;
+      const isValid =
+        input.node.value.trim().length >= MIN_LENGTH &&
+        input.node.value.trim().length <= MAX_LENGTH;
       error.node.style.display = isValid ? 'none' : 'block';
     }
   }
@@ -22,7 +39,10 @@ export class Authentication extends BaseComponent {
   private static validateForm(inputs: BaseComponent[], logButton: BaseComponent): void {
     const allValid = inputs.every((input) => {
       if (input.node instanceof HTMLInputElement) {
-        return input.node.value.trim().length >= 4 && input.node.value.trim().length <= 20;
+        return (
+          input.node.value.trim().length >= MIN_LENGTH &&
+          input.node.value.trim().length <= MAX_LENGTH
+        );
       }
       return false;
     });
@@ -35,40 +55,32 @@ export class Authentication extends BaseComponent {
 
   private createForm(): void {
     const fieldset = new BaseComponent(this.node, 'fieldset', 'fieldset');
-    new BaseComponent(fieldset.node, 'legend', 'fieldset', 'Authentication');
-
+    new BaseComponent(fieldset.node, 'legend', 'fieldset', AUTHENTICATION_TITLE);
     const nameDiv = new BaseComponent(fieldset.node, 'div', 'container-filed');
-    new BaseComponent(nameDiv.node, 'label', '', 'Name');
+    new BaseComponent(nameDiv.node, 'label', '', LABEL_NAME);
     const nameInput = new BaseComponent(nameDiv.node, 'input', 'input');
     nameInput.setAttribute('type', 'text');
-    nameInput.setAttribute('placeholder', 'Enter your name');
+    nameInput.setAttribute('placeholder', PLACEHOLDER_LOGIN);
     nameInput.setAttribute('required', 'true');
-    nameInput.setAttribute('minlength', '4');
-    nameInput.setAttribute('maxlength', '20');
-    const nameError = new BaseComponent(
-      nameDiv.node,
-      'span',
-      'error-message',
-      'Name must be between 4 and 20 characters'
-    );
-
+    nameInput.setAttribute('minlength', MIN_LENGTH.toString());
+    nameInput.setAttribute('maxlength', MAX_LENGTH.toString());
+    const nameError = new BaseComponent(nameDiv.node, 'span', 'error-message', VALID_LOGIN);
     const passwordDiv = new BaseComponent(fieldset.node, 'div', 'container-filed');
-    new BaseComponent(passwordDiv.node, 'label', '', 'Password');
+    new BaseComponent(passwordDiv.node, 'label', '', LABEL_PASSWORD);
     const passwordInput = new BaseComponent(passwordDiv.node, 'input', 'input');
     passwordInput.setAttribute('type', 'password');
-    passwordInput.setAttribute('placeholder', 'Enter password');
+    passwordInput.setAttribute('placeholder', PLACEHOLDER_PASSWORD);
     passwordInput.setAttribute('required', 'true');
-    passwordInput.setAttribute('minlength', '4');
-    passwordInput.setAttribute('maxlength', '20');
+    passwordInput.setAttribute('minlength', MIN_LENGTH.toString());
+    passwordInput.setAttribute('maxlength', MAX_LENGTH.toString());
     const passwordError = new BaseComponent(
       passwordDiv.node,
       'span',
       'error-message',
-      'Password must be between 4 and 20 characters'
+      VALID_PASSWORD
     );
-
     const buttonsDiv = new BaseComponent(fieldset.node, 'div', 'container-buttons');
-    const logButton = new BaseComponent(buttonsDiv.node, 'button', 'log-button', 'Log in');
+    const logButton = new BaseComponent(buttonsDiv.node, 'button', 'log-button', BUTTON_LOGIN);
     logButton.setAttribute('disabled', 'true');
     logButton.setCallback('click', (event) => {
       event.preventDefault();
@@ -95,8 +107,8 @@ export class Authentication extends BaseComponent {
         sessionStorage.setItem('currentUserId', newUser.id);
       }
     });
-    const infoButton = new BaseComponent(buttonsDiv.node, 'button', 'info-button', 'Info');
-    infoButton.setCallback('click', () => this.router.navigate('/about'));
+    const infoButton = new BaseComponent(buttonsDiv.node, 'button', 'info-button', BUTTON_INFO);
+    infoButton.setCallback('click', () => this.router.navigate(ABOUT_ROUTE));
     infoButton.setAttribute('type', 'button');
     const inputs = [nameInput, passwordInput];
     for (const input of inputs) {
