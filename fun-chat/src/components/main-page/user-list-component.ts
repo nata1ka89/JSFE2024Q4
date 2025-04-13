@@ -23,7 +23,6 @@ export class UserList extends BaseComponent {
     searchInput.setAttribute('type', 'text');
     searchInput.setAttribute('placeholder', PLACEHOLDER_INPUT_SEARCH);
     const list = new BaseComponent(this.userDiv.node, 'ul', 'list');
-    console.log(users);
     for (const user of users) {
       const listItem = new BaseComponent(list.node, 'li', 'list-item');
       new BaseComponent(listItem.node, 'div', 'user-status');

@@ -112,7 +112,6 @@ export class Authentication extends BaseComponent {
           password: newUser.payload.user.password,
           isLogined: true,
         };
-        sessionStorage.setItem('currentUserId', newUser.id);
       }
     });
     const infoButton = new BaseComponent(buttonsDiv.node, 'button', 'info-button', BUTTON_INFO);

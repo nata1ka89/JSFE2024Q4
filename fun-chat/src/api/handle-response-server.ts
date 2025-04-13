@@ -26,10 +26,13 @@ export function handleUserError(jsonObject: UserErrorResponse): void {
 
 export function handleUserLogin(jsonObject: UserResponse): void {
   const userId = jsonObject.id;
+  const userLogin = jsonObject.payload.user.login;
   if (jsonObject.payload.user.isLogined) {
     if (userState[userId]) {
       userState[userId].isLogined = true;
     }
+    sessionStorage.setItem('currentUserId', userId);
+    sessionStorage.setItem('currentUserLogin', userLogin);
     writeToScreen(`RECEIVED: ${JSON.stringify(jsonObject)}`);
     router.navigate(MAIN_ROUTE);
   } else {
@@ -43,7 +46,12 @@ export function handleUserLogin(jsonObject: UserResponse): void {
 
 export function handleUserActive(jsonObject: AllUsersResponse): void {
   const users = jsonObject.payload.users;
-  if (userList) userList.createUserList(users);
+  console.log(users);
+  const currentUserLogin = sessionStorage.getItem('currentUserLogin');
+  const filteredUsers = users.filter((user) => user.login !== currentUserLogin);
+  console.log(filteredUsers);
+
+  if (userList) userList.createUserList(filteredUsers);
   writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
 }
 
