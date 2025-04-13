@@ -5,6 +5,8 @@ import {
   handleUserActive,
   handleUserError,
   handleUserExternalLogin,
+  handleUserExternalLogout,
+  handleUserInActive,
   handleUserLogin,
   writeToScreen,
 } from './handle-response-server';
@@ -73,13 +75,19 @@ function onMessage(event: MessageEvent): void {
       }
       if (isValidUser(jsonObject)) {
         if (jsonObject.type === Type.USER_EXTERNAL_LOGIN) {
-          handleUserExternalLogin(jsonObject);
+          handleUserExternalLogin();
+        } else if (jsonObject.type === Type.USER_EXTERNAL_LOGOUT) {
+          handleUserExternalLogout();
         } else {
           handleUserLogin(jsonObject);
         }
       }
       if (isValidUserActive(jsonObject)) {
-        handleUserActive(jsonObject);
+        if (jsonObject.type === Type.USER_ACTIVE) {
+          handleUserActive(jsonObject);
+        } else {
+          handleUserInActive(jsonObject);
+        }
       }
     }
   } catch (error) {

@@ -10,10 +10,26 @@ import type { User } from '../../utils/server-data-type';
 
 export class UserList extends BaseComponent {
   private userDiv: BaseComponent | undefined;
+  private updateUsers: User[] = [];
   constructor(_parentNode: HTMLElement | null) {
     super(_parentNode, 'section', 'user-section');
     this.createUserList([]);
     this.createDialogContainer();
+  }
+
+  public updateUserList(users: User[]): void {
+    for (const user of users) {
+      const indexUser = this.updateUsers.findIndex((updateUser) => user.login === updateUser.login);
+      if (indexUser === -1) {
+        this.updateUsers.push(user);
+      } else {
+        this.updateUsers[indexUser].isLogined = user.isLogined;
+      }
+    }
+    const currentUserLogin = sessionStorage.getItem('currentUserLogin');
+    const filteredUsers = this.updateUsers.filter((user) => user.login !== currentUserLogin);
+    console.log(filteredUsers);
+    this.createUserList(filteredUsers);
   }
 
   public createUserList(users: User[]): void {
@@ -24,8 +40,9 @@ export class UserList extends BaseComponent {
     searchInput.setAttribute('placeholder', PLACEHOLDER_INPUT_SEARCH);
     const list = new BaseComponent(this.userDiv.node, 'ul', 'list');
     for (const user of users) {
+      const status = user.isLogined ? 'user-status-online' : 'user-status-offline';
       const listItem = new BaseComponent(list.node, 'li', 'list-item');
-      new BaseComponent(listItem.node, 'div', 'user-status');
+      new BaseComponent(listItem.node, 'div', status);
       new BaseComponent(listItem.node, 'label', 'user-name', user.login);
     }
   }

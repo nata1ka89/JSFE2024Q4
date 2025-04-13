@@ -46,25 +46,31 @@ export function handleUserLogin(jsonObject: UserResponse): void {
 
 export function handleUserActive(jsonObject: AllUsersResponse): void {
   const users = jsonObject.payload.users;
-  console.log(users);
-  const currentUserLogin = sessionStorage.getItem('currentUserLogin');
-  const filteredUsers = users.filter((user) => user.login !== currentUserLogin);
-  console.log(filteredUsers);
-
-  if (userList) userList.createUserList(filteredUsers);
+  if (userList) userList.updateUserList(users);
   writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
 }
 
-export function handleUserExternalLogin(jsonObject: UserResponse): void {
-  const externalUser = jsonObject.payload.user;
-  console.log(`External user logged in: ${externalUser.login}`);
+export function handleUserInActive(jsonObject: AllUsersResponse): void {
+  const users = jsonObject.payload.users;
+  if (userList) userList.updateUserList(users);
+  writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
+}
 
+export function handleUserExternalLogin(): void {
   const activeUserRequest: AllUsersRequest = {
     id: crypto.randomUUID(),
     type: Type.USER_ACTIVE,
     payload: null, // eslint-disable-line unicorn/no-null
   };
+  doSend(activeUserRequest);
+}
 
+export function handleUserExternalLogout(): void {
+  const activeUserRequest: AllUsersRequest = {
+    id: crypto.randomUUID(),
+    type: Type.USER_INACTIVE,
+    payload: null, // eslint-disable-line unicorn/no-null
+  };
   doSend(activeUserRequest);
 }
 

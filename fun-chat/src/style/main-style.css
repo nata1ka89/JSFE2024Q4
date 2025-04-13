@@ -131,11 +131,18 @@ button[disabled] {
   padding: 10px;
 }
 
-.user-status {
+.user-status-online {
   width: 10px;
   height: 10px;
   border-radius: 50%;
   background-color: green;
+}
+
+.user-status-offline {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: gray;
 }
 
 .dialog-container {

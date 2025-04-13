@@ -104,8 +104,14 @@ export class Authentication extends BaseComponent {
           type: Type.USER_ACTIVE,
           payload: null, // eslint-disable-line unicorn/no-null
         };
+        const inActiveUsers: AllUsersRequest = {
+          id: crypto.randomUUID(),
+          type: Type.USER_INACTIVE,
+          payload: null, // eslint-disable-line unicorn/no-null
+        };
         doSend(newUser);
         doSend(activeUsers);
+        doSend(inActiveUsers);
 
         userState[newUser.id] = {
           login: newUser.payload.user.login,
