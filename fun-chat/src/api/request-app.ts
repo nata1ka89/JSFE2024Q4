@@ -1,3 +1,4 @@
+import { getDataSessionStorage, removeDataSessionStorage } from '../utils/manage-storage';
 import type { AllUsersRequest, UserRequest } from '../utils/server-data-type';
 import { Type } from '../utils/server-data-type';
 import { doSend } from './authentication-api';
@@ -22,17 +23,15 @@ export function requestAllUsersInActive(): void {
 }
 
 export function requestUserLogin(): void {
-  const currentUserId = sessionStorage.getItem('currentUserId');
-  const currentUserLogin = sessionStorage.getItem('currentUserLogin');
-  const currentUserPassword = sessionStorage.getItem('currentUserPassword');
-  if (currentUserId && currentUserLogin && currentUserPassword) {
+  const { id, login, password } = getDataSessionStorage();
+  if (id && login && password) {
     const newUser: UserRequest = {
-      id: currentUserId,
+      id: id,
       type: Type.USER_LOGIN,
       payload: {
         user: {
-          login: currentUserLogin,
-          password: currentUserPassword,
+          login: login,
+          password: password,
         },
       },
     };
@@ -41,23 +40,19 @@ export function requestUserLogin(): void {
 }
 
 export function requestUserLogout(): void {
-  const currentUserId = sessionStorage.getItem('currentUserId');
-  const currentUserLogin = sessionStorage.getItem('currentUserLogin');
-  const currentUserPassword = sessionStorage.getItem('currentUserPassword');
-  if (currentUserId && currentUserLogin && currentUserPassword) {
+  const { id, login, password } = getDataSessionStorage();
+  if (id && login && password) {
     const logoutUser: UserRequest = {
-      id: currentUserId,
+      id: id,
       type: Type.USER_LOGOUT,
       payload: {
         user: {
-          login: currentUserLogin,
-          password: currentUserPassword,
+          login: login,
+          password: password,
         },
       },
     };
     doSend(logoutUser);
-    sessionStorage.removeItem('currentUserId');
-    sessionStorage.removeItem('currentUserLogin');
-    sessionStorage.removeItem('currentUserPassword');
+    removeDataSessionStorage();
   }
 }

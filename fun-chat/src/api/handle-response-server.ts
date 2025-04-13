@@ -2,6 +2,7 @@ import Modal from '../components/authentication-page/modal-valid-component';
 import { userList } from '../components/main-page/main-component';
 import Router from '../components/router';
 import { LOGIN_ROUTE, MAIN_ROUTE } from '../utils/constants';
+import { removeDataSessionStorage } from '../utils/manage-storage';
 import type { AllUsersResponse, UserErrorResponse, UserResponse } from '../utils/server-data-type';
 
 const router = new Router(document.body);
@@ -10,9 +11,7 @@ export function handleUserError(jsonObject: UserErrorResponse): void {
   new Modal(document.body, error);
   writeToScreen(`Error: ${error}`);
   router.navigate(LOGIN_ROUTE);
-  sessionStorage.removeItem('currentUserId');
-  sessionStorage.removeItem('currentUserLogin');
-  sessionStorage.removeItem('currentUserPassword');
+  removeDataSessionStorage();
 }
 
 export function handleUserLogin(jsonObject: UserResponse): void {

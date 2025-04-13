@@ -19,6 +19,7 @@ import {
 import { Type } from '../../utils/server-data-type';
 import type { UserRequest } from '../../utils/server-data-type';
 import { requestAllUsersActive, requestAllUsersInActive } from '../../api/request-app';
+import { setDataSessionStorage } from '../../utils/manage-storage';
 
 export class Authentication extends BaseComponent {
   private router: Router;
@@ -102,9 +103,11 @@ export class Authentication extends BaseComponent {
         doSend(newUser);
         requestAllUsersActive();
         requestAllUsersInActive();
-        sessionStorage.setItem('currentUserId', newUser.id);
-        sessionStorage.setItem('currentUserLogin', newUser.payload.user.login);
-        sessionStorage.setItem('currentUserPassword', newUser.payload.user.password);
+        setDataSessionStorage(
+          newUser.id,
+          newUser.payload.user.login,
+          newUser.payload.user.password
+        );
       }
     });
     const infoButton = new BaseComponent(buttonsDiv.node, 'button', 'info-button', BUTTON_INFO);
