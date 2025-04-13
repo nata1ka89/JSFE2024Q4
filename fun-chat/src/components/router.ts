@@ -1,5 +1,4 @@
 import { LOGIN_ROUTE, MAIN_ROUTE } from '../utils/constants';
-import { userState } from '../utils/user-state';
 
 type Route = {
   path: string;
@@ -37,13 +36,13 @@ export default class Router {
       this.navigate(currentPath);
       return;
     }
-    const currentUserId = sessionStorage.getItem('currentUserId');
-    if (currentUserId && userState[currentUserId]) {
-      if (currentPath === LOGIN_ROUTE && userState[currentUserId].isLogined) {
+    const currentUserIsLogined = sessionStorage.getItem('currentUserIsLogined');
+    if (currentUserIsLogined) {
+      if (currentPath === LOGIN_ROUTE && currentUserIsLogined === 'true') {
         this.navigate(MAIN_ROUTE);
         return;
       }
-      if (currentPath === MAIN_ROUTE && !userState[currentUserId].isLogined) {
+      if (currentPath === MAIN_ROUTE && currentUserIsLogined === 'false') {
         this.navigate(LOGIN_ROUTE);
         return;
       }

@@ -2,7 +2,6 @@ import { BaseComponent } from '../../utils/base-component';
 import '../../style/authentication-style.css';
 import { doSend } from '../../api/authentication-api';
 import type Router from '../router';
-import { userState } from '../../utils/user-state';
 import {
   ABOUT_ROUTE,
   AUTHENTICATION_TITLE,
@@ -18,7 +17,8 @@ import {
   VALID_PASSWORD,
 } from '../../utils/constants';
 import { Type } from '../../utils/server-data-type';
-import type { AllUsersRequest, UserRequest } from '../../utils/server-data-type';
+import type { UserRequest } from '../../utils/server-data-type';
+import { requestAllUsersActive, requestAllUsersInActive } from '../../api/request-app';
 
 export class Authentication extends BaseComponent {
   private router: Router;
@@ -99,25 +99,12 @@ export class Authentication extends BaseComponent {
             },
           },
         };
-        const activeUsers: AllUsersRequest = {
-          id: crypto.randomUUID(),
-          type: Type.USER_ACTIVE,
-          payload: null, // eslint-disable-line unicorn/no-null
-        };
-        const inActiveUsers: AllUsersRequest = {
-          id: crypto.randomUUID(),
-          type: Type.USER_INACTIVE,
-          payload: null, // eslint-disable-line unicorn/no-null
-        };
         doSend(newUser);
-        doSend(activeUsers);
-        doSend(inActiveUsers);
-
-        userState[newUser.id] = {
-          login: newUser.payload.user.login,
-          password: newUser.payload.user.password,
-          isLogined: true,
-        };
+        requestAllUsersActive();
+        requestAllUsersInActive();
+        sessionStorage.setItem('currentUserId', newUser.id);
+        sessionStorage.setItem('currentUserLogin', newUser.payload.user.login);
+        sessionStorage.setItem('currentUserPassword', newUser.payload.user.password);
       }
     });
     const infoButton = new BaseComponent(buttonsDiv.node, 'button', 'info-button', BUTTON_INFO);

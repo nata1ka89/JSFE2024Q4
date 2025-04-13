@@ -24,7 +24,7 @@ export type UserRequest = {
   };
 };
 export type UserResponse = {
-  id: string; //null
+  id: string;
   type: Type.USER_LOGIN | Type.USER_LOGOUT | Type.USER_EXTERNAL_LOGIN | Type.USER_EXTERNAL_LOGOUT;
   payload: {
     user: User;

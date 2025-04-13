@@ -1,11 +1,8 @@
-import { userState } from '../utils/user-state';
 import { CONNECTION_CLOSED, OFFLINE, WEBSOCKET_URL } from '../utils/constants';
 import ModalServer from './modal-server';
 import {
   handleUserActive,
   handleUserError,
-  handleUserExternalLogin,
-  handleUserExternalLogout,
   handleUserInActive,
   handleUserLogin,
   writeToScreen,
@@ -13,6 +10,7 @@ import {
 import type { AllUsersRequest, UserRequest } from '../utils/server-data-type';
 import { Type } from '../utils/server-data-type';
 import { isValidUser, isValidUserActive, isValidUserError } from '../utils/check-server-data';
+import { requestAllUsersActive, requestAllUsersInActive, requestUserLogin } from './request-app';
 
 let websocket: WebSocket;
 let serverModal: ModalServer | undefined;
@@ -30,20 +28,9 @@ function onOpen(): void {
     serverModal.closeModal();
     serverModal = undefined;
   }
-  const currentUserId = sessionStorage.getItem('currentUserId');
-  if (currentUserId) {
-    const newUser: UserRequest = {
-      id: currentUserId,
-      type: Type.USER_LOGIN,
-      payload: {
-        user: {
-          login: userState[currentUserId].login,
-          password: userState[currentUserId].password,
-        },
-      },
-    };
-    doSend(newUser);
-  }
+  requestUserLogin();
+  requestAllUsersActive();
+  requestAllUsersInActive();
   writeToScreen('Connection established');
 }
 
@@ -75,9 +62,9 @@ function onMessage(event: MessageEvent): void {
       }
       if (isValidUser(jsonObject)) {
         if (jsonObject.type === Type.USER_EXTERNAL_LOGIN) {
-          handleUserExternalLogin();
+          requestAllUsersActive();
         } else if (jsonObject.type === Type.USER_EXTERNAL_LOGOUT) {
-          handleUserExternalLogout();
+          requestAllUsersInActive();
         } else {
           handleUserLogin(jsonObject);
         }

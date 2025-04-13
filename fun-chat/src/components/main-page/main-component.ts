@@ -4,6 +4,7 @@ import { Header } from './header-component';
 import { UserList } from './user-list-component';
 import { Footer } from './footer-component';
 import type Router from '../router';
+import { requestAllUsersActive, requestAllUsersInActive } from '../../api/request-app';
 
 export let userList: UserList | undefined;
 export class Main extends BaseComponent {
@@ -15,5 +16,7 @@ export class Main extends BaseComponent {
     new Header(this.node, this.router);
     userList = new UserList(this.node);
     new Footer(this.node);
+    requestAllUsersActive();
+    requestAllUsersInActive();
   }
 }
