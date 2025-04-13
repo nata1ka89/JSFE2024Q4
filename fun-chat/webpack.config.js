@@ -41,6 +41,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'fun-chat',
+      favicon: path.resolve(__dirname, 'src/assets/favicon.png'),
     }),
     new CleanWebpackPlugin(),
     /*    new CopyPlugin({
