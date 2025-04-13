@@ -10,6 +10,7 @@ import type { User } from '../../utils/server-data-type';
 
 export class UserList extends BaseComponent {
   private userDiv: BaseComponent | undefined;
+  private list: BaseComponent | undefined;
   private updateUsers: User[] = [];
   constructor(_parentNode: HTMLElement | null) {
     super(_parentNode, 'section', 'user-section');
@@ -38,12 +39,26 @@ export class UserList extends BaseComponent {
     const searchInput = new BaseComponent(this.userDiv.node, 'input', 'input');
     searchInput.setAttribute('type', 'text');
     searchInput.setAttribute('placeholder', PLACEHOLDER_INPUT_SEARCH);
-    const list = new BaseComponent(this.userDiv.node, 'ul', 'list');
-    for (const user of users) {
-      const status = user.isLogined ? 'user-status-online' : 'user-status-offline';
-      const listItem = new BaseComponent(list.node, 'li', 'list-item');
-      new BaseComponent(listItem.node, 'div', status);
-      new BaseComponent(listItem.node, 'label', 'user-name', user.login);
+    searchInput.setCallback('input', (event) => {
+      if (event.target instanceof HTMLInputElement) {
+        const value = event.target.value.toLowerCase();
+        const filterUsers = users.filter((user) => user.login.toLowerCase().includes(value));
+        this.renderFilterUserList(filterUsers);
+      }
+    });
+    this.list = new BaseComponent(this.userDiv.node, 'ul', 'list');
+    this.renderFilterUserList(users);
+  }
+
+  public renderFilterUserList(users: User[]): void {
+    if (this.list) {
+      this.list.node.textContent = '';
+      for (const user of users) {
+        const status = user.isLogined ? 'user-status-online' : 'user-status-offline';
+        const listItem = new BaseComponent(this.list.node, 'li', 'list-item');
+        new BaseComponent(listItem.node, 'div', status);
+        new BaseComponent(listItem.node, 'label', 'user-name', user.login);
+      }
     }
   }
 
