@@ -1,15 +1,21 @@
 import { CONNECTION_CLOSED, OFFLINE, WEBSOCKET_URL } from '../utils/constants';
 import ModalServer from './modal-server';
 import {
+  handleMessageSend,
   handleUserActive,
   handleUserError,
   handleUserInActive,
   handleUserLogin,
   writeToScreen,
 } from './handle-response-server';
-import type { AllUsersRequest, UserRequest } from '../utils/server-data-type';
+import type { AllUsersRequest, MessageSendRequest, UserRequest } from '../utils/server-data-type';
 import { Type } from '../utils/server-data-type';
-import { isValidUser, isValidUserActive, isValidUserError } from '../utils/check-server-data';
+import {
+  isValidMessageSend,
+  isValidUser,
+  isValidUserActive,
+  isValidUserError,
+} from '../utils/check-server-data';
 import { requestAllUsersActive, requestAllUsersInActive, requestUserLogin } from './request-app';
 
 let websocket: WebSocket;
@@ -76,13 +82,16 @@ function onMessage(event: MessageEvent): void {
           handleUserInActive(jsonObject);
         }
       }
+      if (isValidMessageSend(jsonObject)) {
+        handleMessageSend(jsonObject);
+      }
     }
   } catch (error) {
     console.error('Error:', error);
   }
 }
 
-export function doSend(message: UserRequest | AllUsersRequest): void {
+export function doSend(message: UserRequest | AllUsersRequest | MessageSendRequest): void {
   if (websocket.readyState === WebSocket.OPEN) {
     writeToScreen(`SENT: ${JSON.stringify(message)}`);
     websocket.send(JSON.stringify(message));

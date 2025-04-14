@@ -91,6 +91,7 @@ button[disabled] {
 
   box-sizing: border-box;
   width: 100%;
+  max-height: 75%;
 }
 
 .user-container {
@@ -177,21 +178,61 @@ button[disabled] {
 }
 
 .message-content {
-  position: relative;
-
   overflow-y: auto;
   display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
 
   box-sizing: border-box;
   height: 100%;
+  max-height: 70%;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
 
   background-color: #fff;
+}
+
+.message-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  width: 70%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+
+  background-color: #f9f9f9;
+}
+
+.message-text {
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+
+  overflow-wrap: break-word;
+
+  background-color: #fff;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.message-footer {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.message-header label,
+.message-footer label {
+  font-size: 0.8rem;
 }
 
 .form-message {

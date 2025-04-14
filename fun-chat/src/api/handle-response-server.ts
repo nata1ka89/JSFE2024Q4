@@ -3,7 +3,12 @@ import { userList } from '../components/main-page/main-component';
 import Router from '../components/router';
 import { LOGIN_ROUTE, MAIN_ROUTE } from '../utils/constants';
 import { removeDataSessionStorage } from '../utils/manage-storage';
-import type { AllUsersResponse, UserErrorResponse, UserResponse } from '../utils/server-data-type';
+import type {
+  AllUsersResponse,
+  MessageSendResponse,
+  UserErrorResponse,
+  UserResponse,
+} from '../utils/server-data-type';
 
 const router = new Router(document.body);
 export function handleUserError(jsonObject: UserErrorResponse): void {
@@ -40,4 +45,14 @@ export function handleUserInActive(jsonObject: AllUsersResponse): void {
 
 export function writeToScreen(message: string): void {
   console.log(message);
+}
+
+export function handleMessageSend(jsonObject: MessageSendResponse): void {
+  const time = jsonObject.payload.message.datetime;
+  const text = jsonObject.payload.message.text;
+  const isDelivered = jsonObject.payload.message.status.isDelivered;
+  /* const isReaded=jsonObject.payload.message.status.isReaded
+   const isEdited=jsonObject.payload.message.status.isEdited*/
+  if (userList) userList.createMessageContainer(time, text, isDelivered);
+  writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
 }

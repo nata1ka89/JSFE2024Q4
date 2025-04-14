@@ -6,6 +6,7 @@ export enum Type {
   USER_EXTERNAL_LOGOUT = 'USER_EXTERNAL_LOGOUT',
   USER_ACTIVE = 'USER_ACTIVE',
   USER_INACTIVE = 'USER_INACTIVE',
+  MSG_SEND = 'MSG_SEND',
 }
 
 export type User = {
@@ -23,6 +24,7 @@ export type UserRequest = {
     };
   };
 };
+
 export type UserResponse = {
   id: string;
   type: Type.USER_LOGIN | Type.USER_LOGOUT | Type.USER_EXTERNAL_LOGIN | Type.USER_EXTERNAL_LOGOUT;
@@ -30,6 +32,7 @@ export type UserResponse = {
     user: User;
   };
 };
+
 export type UserErrorResponse = {
   id: string;
   type: Type.ERROR;
@@ -49,5 +52,35 @@ export type AllUsersResponse = {
   type: Type.USER_ACTIVE | Type.USER_INACTIVE;
   payload: {
     users: User[];
+  };
+};
+
+export type MessageSendRequest = {
+  id: string;
+  type: Type.MSG_SEND;
+  payload: {
+    message: {
+      to: string;
+      text: string;
+    };
+  };
+};
+
+export type MessageSendResponse = {
+  id: string;
+  type: 'MSG_SEND';
+  payload: {
+    message: {
+      id: string;
+      from: string;
+      to: string;
+      text: string;
+      datetime: number;
+      status: {
+        isDelivered: boolean;
+        isReaded: boolean;
+        isEdited: boolean;
+      };
+    };
   };
 };

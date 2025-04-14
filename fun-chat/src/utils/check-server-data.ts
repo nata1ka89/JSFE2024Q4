@@ -1,4 +1,9 @@
-import type { UserResponse, UserErrorResponse, AllUsersResponse } from './server-data-type';
+import type {
+  UserResponse,
+  UserErrorResponse,
+  AllUsersResponse,
+  MessageSendResponse,
+} from './server-data-type';
 
 export function isValidUser(data: unknown): data is UserResponse {
   return (
@@ -39,5 +44,31 @@ export function isValidUserActive(data: unknown): data is AllUsersResponse {
     'users' in data.payload &&
     typeof data.payload.users === 'object' &&
     data.payload.users !== null
+  );
+}
+
+export function isValidMessageSend(data: unknown): data is MessageSendResponse {
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    'id' in data &&
+    'type' in data &&
+    'payload' in data &&
+    typeof data.payload === 'object' &&
+    data.payload !== null &&
+    'message' in data.payload &&
+    typeof data.payload.message === 'object' &&
+    data.payload.message !== null &&
+    'id' in data.payload.message &&
+    'from' in data.payload.message &&
+    'to' in data.payload.message &&
+    'text' in data.payload.message &&
+    'datetime' in data.payload.message &&
+    'status' in data.payload.message &&
+    typeof data.payload.message.status === 'object' &&
+    data.payload.message.status !== null &&
+    'isDelivered' in data.payload.message.status &&
+    'isReaded' in data.payload.message.status &&
+    'isEdited' in data.payload.message.status
   );
 }

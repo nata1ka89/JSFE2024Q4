@@ -7,12 +7,20 @@ import {
   PLACEHOLDER_MESSAGE,
 } from '../../utils/constants';
 import type { User } from '../../utils/server-data-type';
+import { requestMessageSend } from '../../api/request-app';
+import { formatTime } from '../../utils/format-time';
 
 export class UserList extends BaseComponent {
   private userDiv: BaseComponent | undefined;
+  private messageDiv: BaseComponent | undefined;
   private headerMessageDiv: BaseComponent | undefined;
+  private labelPlaceholder: BaseComponent | undefined;
   private list: BaseComponent | undefined;
+  private sendButton: BaseComponent | undefined;
+  private textArea: BaseComponent | undefined;
   private updateUsers: User[] = [];
+  private login: string | null = '';
+  private message: string | null = '';
   constructor(_parentNode: HTMLElement | null) {
     super(_parentNode, 'section', 'user-section');
     this.createUserList([]);
@@ -32,6 +40,26 @@ export class UserList extends BaseComponent {
     const filteredUsers = this.updateUsers.filter((user) => user.login !== currentUserLogin);
     console.log(filteredUsers);
     this.createUserList(filteredUsers);
+  }
+
+  public createMessageContainer(time: number, text: string, isDelivered: boolean): void {
+    if (this.messageDiv && this.message && this.login) {
+      const dataTime = formatTime(time);
+      const statusMessage = isDelivered ? 'delivered' : 'sent';
+      const messageContainer = new BaseComponent(this.messageDiv.node, 'div', 'message-container');
+      const messageData = new BaseComponent(messageContainer.node, 'div', 'message-data');
+      const messageHeader = new BaseComponent(messageData.node, 'div', 'message-header');
+      /*const labelYou =*/ new BaseComponent(messageHeader.node, 'label', '', this.login);
+      /* const labelTime = */ new BaseComponent(messageHeader.node, 'label', '', dataTime);
+      /*const messageText = */ new BaseComponent(messageData.node, 'div', 'message-text', text);
+      const messageFooter = new BaseComponent(messageData.node, 'div', 'message-footer');
+      /* const labelStatusMessage = */ new BaseComponent(
+        messageFooter.node,
+        'label',
+        '',
+        statusMessage
+      );
+    }
   }
 
   private createUserList(users: User[]): void {
@@ -61,8 +89,10 @@ export class UserList extends BaseComponent {
         const label = new BaseComponent(listItem.node, 'label', 'user-name', user.login);
         label.setCallback('click', (event) => {
           if (event.target instanceof HTMLLabelElement) {
-            const value = event.target.textContent;
-            this.renderHeaderDialogContainer(value, status);
+            this.sendButton?.removeAttribute('disabled');
+            this.textArea?.removeAttribute('disabled');
+            this.login = event.target.textContent;
+            this.renderHeaderDialogContainer(this.login, status);
           }
         });
         this.renderHeaderDialogContainer('', '');
@@ -70,12 +100,12 @@ export class UserList extends BaseComponent {
     }
   }
 
-  private renderHeaderDialogContainer(value: string | null, status: string): void {
+  private renderHeaderDialogContainer(login: string | null, status: string): void {
     if (this.headerMessageDiv) {
       this.headerMessageDiv.node.textContent = '';
-      if (value) {
+      if (login) {
         const renderStatus = status === 'user-status-online' ? 'online' : 'offline';
-        new BaseComponent(this.headerMessageDiv.node, 'label', '', value);
+        new BaseComponent(this.headerMessageDiv.node, 'label', '', login);
         new BaseComponent(this.headerMessageDiv.node, 'label', '', renderStatus);
       }
     }
@@ -84,11 +114,37 @@ export class UserList extends BaseComponent {
   private createDialogContainer(): void {
     const dialogDiv = new BaseComponent(this.node, 'div', 'dialog-container');
     this.headerMessageDiv = new BaseComponent(dialogDiv.node, 'div', 'header-message-content');
-    const messageDiv = new BaseComponent(dialogDiv.node, 'div', 'message-content');
-    new BaseComponent(messageDiv.node, 'label', '', PLACEHOLDER_MESSAGE);
+    this.messageDiv = new BaseComponent(dialogDiv.node, 'div', 'message-content');
+    this.labelPlaceholder = new BaseComponent(
+      this.messageDiv.node,
+      'label',
+      '',
+      PLACEHOLDER_MESSAGE
+    );
     const messageForm = new BaseComponent(dialogDiv.node, 'form', 'form-message');
-    const text = new BaseComponent(messageForm.node, 'textarea', 'textarea');
-    text.setAttribute('placeholder', PLACEHOLDER_INPUT_MESSAGE);
-    new BaseComponent(messageForm.node, 'button', 'log-button', BUTTON_SEND);
+    this.textArea = new BaseComponent(messageForm.node, 'textarea', 'textarea');
+    this.textArea.setAttribute('placeholder', PLACEHOLDER_INPUT_MESSAGE);
+    this.textArea.setAttribute('disabled', 'true');
+    this.textArea.setCallback('input', (event) => {
+      if (event.target instanceof HTMLTextAreaElement) {
+        this.message = event.target.value;
+      }
+    });
+    this.sendButton = new BaseComponent(messageForm.node, 'button', 'log-button', BUTTON_SEND);
+    this.sendButton.setAttribute('disabled', 'true');
+    this.sendButton.setCallback('click', (event) => {
+      event.preventDefault();
+      if (
+        this.labelPlaceholder &&
+        this.login &&
+        this.message &&
+        this.textArea &&
+        this.textArea.node instanceof HTMLTextAreaElement
+      ) {
+        this.labelPlaceholder.destroy();
+        this.textArea.node.value = '';
+        requestMessageSend(this.login, this.message);
+      }
+    });
   }
 }
