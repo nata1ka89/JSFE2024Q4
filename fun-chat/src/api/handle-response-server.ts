@@ -51,8 +51,15 @@ export function handleMessageSend(jsonObject: MessageSendResponse): void {
   const time = jsonObject.payload.message.datetime;
   const text = jsonObject.payload.message.text;
   const isDelivered = jsonObject.payload.message.status.isDelivered;
+  const fromUser = jsonObject.payload.message.from;
+  const toUser = jsonObject.payload.message.to;
+  const currentUserLogin = sessionStorage.getItem('currentUserLogin');
   /* const isReaded=jsonObject.payload.message.status.isReaded
    const isEdited=jsonObject.payload.message.status.isEdited*/
-  if (userList) userList.createMessageContainer(time, text, isDelivered);
+  if (fromUser === currentUserLogin && userList) {
+    userList.createSendMessage(time, text, isDelivered);
+  } else if (toUser === currentUserLogin && userList) {
+    userList.createReceiveMessage(time, text, fromUser);
+  }
   writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
 }

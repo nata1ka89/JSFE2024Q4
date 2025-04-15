@@ -38,27 +38,36 @@ export class UserList extends BaseComponent {
     }
     const currentUserLogin = sessionStorage.getItem('currentUserLogin');
     const filteredUsers = this.updateUsers.filter((user) => user.login !== currentUserLogin);
-    console.log(filteredUsers);
     this.createUserList(filteredUsers);
   }
 
-  public createMessageContainer(time: number, text: string, isDelivered: boolean): void {
-    if (this.messageDiv && this.message && this.login) {
+  public createSendMessage(time: number, text: string, isDelivered: boolean): void {
+    if (this.messageDiv && this.labelPlaceholder) {
+      this.labelPlaceholder.destroy();
       const dataTime = formatTime(time);
       const statusMessage = isDelivered ? 'delivered' : 'sent';
       const messageContainer = new BaseComponent(this.messageDiv.node, 'div', 'message-container');
+      messageContainer.node.style.justifyContent = 'flex-end';
       const messageData = new BaseComponent(messageContainer.node, 'div', 'message-data');
       const messageHeader = new BaseComponent(messageData.node, 'div', 'message-header');
-      /*const labelYou =*/ new BaseComponent(messageHeader.node, 'label', '', this.login);
-      /* const labelTime = */ new BaseComponent(messageHeader.node, 'label', '', dataTime);
-      /*const messageText = */ new BaseComponent(messageData.node, 'div', 'message-text', text);
+      new BaseComponent(messageHeader.node, 'label', '', 'you');
+      new BaseComponent(messageHeader.node, 'label', '', dataTime);
+      new BaseComponent(messageData.node, 'div', 'message-text', text);
       const messageFooter = new BaseComponent(messageData.node, 'div', 'message-footer');
-      /* const labelStatusMessage = */ new BaseComponent(
-        messageFooter.node,
-        'label',
-        '',
-        statusMessage
-      );
+      new BaseComponent(messageFooter.node, 'label', '', statusMessage);
+    }
+  }
+  public createReceiveMessage(time: number, text: string, fromUser: string): void {
+    if (this.messageDiv && this.labelPlaceholder) {
+      this.labelPlaceholder.destroy();
+      const dataTime = formatTime(time);
+      const messageContainer = new BaseComponent(this.messageDiv.node, 'div', 'message-container');
+      messageContainer.node.style.justifyContent = '';
+      const messageData = new BaseComponent(messageContainer.node, 'div', 'message-data');
+      const messageHeader = new BaseComponent(messageData.node, 'div', 'message-header');
+      new BaseComponent(messageHeader.node, 'label', '', fromUser);
+      new BaseComponent(messageHeader.node, 'label', '', dataTime);
+      new BaseComponent(messageData.node, 'div', 'message-text', text);
     }
   }
 
@@ -126,22 +135,18 @@ export class UserList extends BaseComponent {
     this.textArea.setAttribute('placeholder', PLACEHOLDER_INPUT_MESSAGE);
     this.textArea.setAttribute('disabled', 'true');
     this.textArea.setCallback('input', (event) => {
-      if (event.target instanceof HTMLTextAreaElement) {
-        this.message = event.target.value;
-      }
+      if (event.target instanceof HTMLTextAreaElement) this.message = event.target.value;
     });
     this.sendButton = new BaseComponent(messageForm.node, 'button', 'log-button', BUTTON_SEND);
     this.sendButton.setAttribute('disabled', 'true');
     this.sendButton.setCallback('click', (event) => {
       event.preventDefault();
       if (
-        this.labelPlaceholder &&
         this.login &&
         this.message &&
         this.textArea &&
         this.textArea.node instanceof HTMLTextAreaElement
       ) {
-        this.labelPlaceholder.destroy();
         this.textArea.node.value = '';
         requestMessageSend(this.login, this.message);
       }
