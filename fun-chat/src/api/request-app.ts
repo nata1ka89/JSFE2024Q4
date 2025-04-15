@@ -1,5 +1,10 @@
 import { getDataSessionStorage, removeDataSessionStorage } from '../utils/manage-storage';
-import type { AllUsersRequest, MessageSendRequest, UserRequest } from '../utils/server-data-type';
+import type {
+  AllUsersRequest,
+  MessageFromUserRequest,
+  MessageSendRequest,
+  UserRequest,
+} from '../utils/server-data-type';
 import { Type } from '../utils/server-data-type';
 import { doSend } from './authentication-api';
 
@@ -69,4 +74,17 @@ export function requestMessageSend(login: string, message: string): void {
     },
   };
   doSend(messageSend);
+}
+
+export function requestMessageFromUser(login: string): void {
+  const messageFromUser: MessageFromUserRequest = {
+    id: crypto.randomUUID(),
+    type: Type.MSG_FROM_USER,
+    payload: {
+      user: {
+        login: login,
+      },
+    },
+  };
+  doSend(messageFromUser);
 }

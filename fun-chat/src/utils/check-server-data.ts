@@ -3,6 +3,7 @@ import type {
   UserErrorResponse,
   AllUsersResponse,
   MessageSendResponse,
+  MessageFromUserResponse,
 } from './server-data-type';
 
 export function isValidUser(data: unknown): data is UserResponse {
@@ -70,5 +71,19 @@ export function isValidMessageSend(data: unknown): data is MessageSendResponse {
     'isDelivered' in data.payload.message.status &&
     'isReaded' in data.payload.message.status &&
     'isEdited' in data.payload.message.status
+  );
+}
+
+export function isValidMessageFromUser(data: unknown): data is MessageFromUserResponse {
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    'type' in data &&
+    'payload' in data &&
+    typeof data.payload === 'object' &&
+    data.payload !== null &&
+    'messages' in data.payload &&
+    typeof data.payload.messages === 'object' &&
+    data.payload.messages !== null
   );
 }

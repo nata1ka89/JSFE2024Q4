@@ -1,6 +1,7 @@
 import { CONNECTION_CLOSED, OFFLINE, WEBSOCKET_URL } from '../utils/constants';
 import ModalServer from './modal-server';
 import {
+  handleMessageFromUser,
   handleMessageSend,
   handleUserActive,
   handleUserError,
@@ -8,9 +9,15 @@ import {
   handleUserLogin,
   writeToScreen,
 } from './handle-response-server';
-import type { AllUsersRequest, MessageSendRequest, UserRequest } from '../utils/server-data-type';
+import type {
+  AllUsersRequest,
+  MessageFromUserRequest,
+  MessageSendRequest,
+  UserRequest,
+} from '../utils/server-data-type';
 import { Type } from '../utils/server-data-type';
 import {
+  isValidMessageFromUser,
   isValidMessageSend,
   isValidUser,
   isValidUserActive,
@@ -85,13 +92,18 @@ function onMessage(event: MessageEvent): void {
       if (isValidMessageSend(jsonObject)) {
         handleMessageSend(jsonObject);
       }
+      if (isValidMessageFromUser(jsonObject)) {
+        handleMessageFromUser(jsonObject);
+      }
     }
   } catch (error) {
     console.error('Error:', error);
   }
 }
 
-export function doSend(message: UserRequest | AllUsersRequest | MessageSendRequest): void {
+export function doSend(
+  message: UserRequest | AllUsersRequest | MessageSendRequest | MessageFromUserRequest
+): void {
   if (websocket.readyState === WebSocket.OPEN) {
     writeToScreen(`SENT: ${JSON.stringify(message)}`);
     websocket.send(JSON.stringify(message));

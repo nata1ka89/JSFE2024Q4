@@ -7,8 +7,7 @@ import {
   PLACEHOLDER_MESSAGE,
 } from '../../utils/constants';
 import type { User } from '../../utils/server-data-type';
-import { requestMessageSend } from '../../api/request-app';
-import { formatTime } from '../../utils/format-time';
+import { requestMessageFromUser, requestMessageSend } from '../../api/request-app';
 
 export class UserList extends BaseComponent {
   private userDiv: BaseComponent | undefined;
@@ -41,11 +40,11 @@ export class UserList extends BaseComponent {
     this.createUserList(filteredUsers);
   }
 
-  public createSendMessage(time: number, text: string, isDelivered: boolean): void {
+  public createSendMessage(dataTime: string, text: string, isDelivered: boolean): void {
     if (this.messageDiv && this.labelPlaceholder) {
       this.labelPlaceholder.destroy();
-      const dataTime = formatTime(time);
-      const statusMessage = isDelivered ? 'delivered' : 'sent';
+
+      const statusMessage = isDelivered ? '✔✔' : '✔';
       const messageContainer = new BaseComponent(this.messageDiv.node, 'div', 'message-container');
       messageContainer.node.style.justifyContent = 'flex-end';
       const messageData = new BaseComponent(messageContainer.node, 'div', 'message-data');
@@ -57,10 +56,9 @@ export class UserList extends BaseComponent {
       new BaseComponent(messageFooter.node, 'label', '', statusMessage);
     }
   }
-  public createReceiveMessage(time: number, text: string, fromUser: string): void {
+  public createReceiveMessage(dataTime: string, text: string, fromUser: string): void {
     if (this.messageDiv && this.labelPlaceholder) {
       this.labelPlaceholder.destroy();
-      const dataTime = formatTime(time);
       const messageContainer = new BaseComponent(this.messageDiv.node, 'div', 'message-container');
       messageContainer.node.style.justifyContent = '';
       const messageData = new BaseComponent(messageContainer.node, 'div', 'message-data');
@@ -102,6 +100,10 @@ export class UserList extends BaseComponent {
             this.textArea?.removeAttribute('disabled');
             this.login = event.target.textContent;
             this.renderHeaderDialogContainer(this.login, status);
+            if (this.messageDiv && this.login) {
+              this.messageDiv.node.textContent = '';
+              requestMessageFromUser(this.login);
+            }
           }
         });
         this.renderHeaderDialogContainer('', '');

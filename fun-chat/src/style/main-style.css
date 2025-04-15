@@ -204,10 +204,9 @@ button[disabled] {
 .message-data {
   display: flex;
   flex-direction: column;
-  gap: 5px;
 
   width: 70%;
-  padding: 10px;
+  padding: 10px 10px 0;
   border: 1px solid #ddd;
   border-radius: 8px;
 
@@ -217,7 +216,6 @@ button[disabled] {
 .message-text {
   box-sizing: border-box;
   padding: 10px;
-  border: 1px solid #ddd;
   border-radius: 4px;
 
   overflow-wrap: break-word;
@@ -237,9 +235,13 @@ button[disabled] {
   width: 100%;
 }
 
-.message-header label,
-.message-footer label {
+.message-header label {
   font-size: 0.8rem;
+}
+
+.message-footer label {
+  font-size: 1.1rem;
+  color: #b3afaf;
 }
 
 .form-message {

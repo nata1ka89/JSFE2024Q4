@@ -7,6 +7,7 @@ export enum Type {
   USER_ACTIVE = 'USER_ACTIVE',
   USER_INACTIVE = 'USER_INACTIVE',
   MSG_SEND = 'MSG_SEND',
+  MSG_FROM_USER = 'MSG_FROM_USER',
 }
 
 export type User = {
@@ -14,6 +15,18 @@ export type User = {
   isLogined: boolean;
 };
 
+export type Message = {
+  id: string;
+  from: string;
+  to: string;
+  text: string;
+  datetime: number;
+  status: {
+    isDelivered: boolean;
+    isReaded: boolean;
+    isEdited: boolean;
+  };
+};
 export type UserRequest = {
   id: string;
   type: Type.USER_LOGIN | Type.USER_LOGOUT;
@@ -68,7 +81,7 @@ export type MessageSendRequest = {
 
 export type MessageSendResponse = {
   id: string;
-  type: 'MSG_SEND';
+  type: Type.MSG_SEND;
   payload: {
     message: {
       id: string;
@@ -82,5 +95,23 @@ export type MessageSendResponse = {
         isEdited: boolean;
       };
     };
+  };
+};
+
+export type MessageFromUserRequest = {
+  id: string;
+  type: Type.MSG_FROM_USER;
+  payload: {
+    user: {
+      login: string;
+    };
+  };
+};
+
+export type MessageFromUserResponse = {
+  id: string;
+  type: Type.MSG_FROM_USER;
+  payload: {
+    messages: Message[];
   };
 };
