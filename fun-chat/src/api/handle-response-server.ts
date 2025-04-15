@@ -69,6 +69,7 @@ export function handleMessageSend(jsonObject: MessageSendResponse): void {
 
 export function handleMessageFromUser(jsonObject: MessageFromUserResponse): void {
   const messages = jsonObject.payload.messages;
+  if (messages.length === 0 && userList) userList.createLabel();
   for (const message of messages) {
     const dataTime = formatTime(message.datetime);
     const text = message.text;

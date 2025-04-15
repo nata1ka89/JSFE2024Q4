@@ -5,6 +5,7 @@ import {
   PLACEHOLDER_INPUT_MESSAGE,
   PLACEHOLDER_INPUT_SEARCH,
   PLACEHOLDER_MESSAGE,
+  PLACEHOLDER_MESSAGE_TO_USER,
 } from '../../utils/constants';
 import type { User } from '../../utils/server-data-type';
 import { requestMessageFromUser, requestMessageSend } from '../../api/request-app';
@@ -14,6 +15,7 @@ export class UserList extends BaseComponent {
   private messageDiv: BaseComponent | undefined;
   private headerMessageDiv: BaseComponent | undefined;
   private labelPlaceholder: BaseComponent | undefined;
+  private labelPlaceholderNew: BaseComponent | undefined;
   private list: BaseComponent | undefined;
   private sendButton: BaseComponent | undefined;
   private textArea: BaseComponent | undefined;
@@ -43,7 +45,6 @@ export class UserList extends BaseComponent {
   public createSendMessage(dataTime: string, text: string, isDelivered: boolean): void {
     if (this.messageDiv && this.labelPlaceholder) {
       this.labelPlaceholder.destroy();
-
       const statusMessage = isDelivered ? '✔✔' : '✔';
       const messageContainer = new BaseComponent(this.messageDiv.node, 'div', 'message-container');
       messageContainer.node.style.justifyContent = 'flex-end';
@@ -54,10 +55,11 @@ export class UserList extends BaseComponent {
       new BaseComponent(messageData.node, 'div', 'message-text', text);
       const messageFooter = new BaseComponent(messageData.node, 'div', 'message-footer');
       new BaseComponent(messageFooter.node, 'label', '', statusMessage);
+      messageContainer.node.scrollIntoView({ behavior: 'smooth' });
     }
   }
   public createReceiveMessage(dataTime: string, text: string, fromUser: string): void {
-    if (this.messageDiv && this.labelPlaceholder) {
+    if (this.messageDiv && this.labelPlaceholder && fromUser === this.login) {
       this.labelPlaceholder.destroy();
       const messageContainer = new BaseComponent(this.messageDiv.node, 'div', 'message-container');
       messageContainer.node.style.justifyContent = '';
@@ -66,6 +68,20 @@ export class UserList extends BaseComponent {
       new BaseComponent(messageHeader.node, 'label', '', fromUser);
       new BaseComponent(messageHeader.node, 'label', '', dataTime);
       new BaseComponent(messageData.node, 'div', 'message-text', text);
+      const messageFooter = new BaseComponent(messageData.node, 'div', 'message-footer');
+      new BaseComponent(messageFooter.node, 'label', '', '');
+      messageContainer.node.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  public createLabel(): void {
+    if (this.messageDiv) {
+      this.labelPlaceholderNew = new BaseComponent(
+        this.messageDiv.node,
+        'label',
+        '',
+        PLACEHOLDER_MESSAGE_TO_USER
+      );
     }
   }
 
@@ -147,9 +163,11 @@ export class UserList extends BaseComponent {
         this.login &&
         this.message &&
         this.textArea &&
+        this.labelPlaceholderNew &&
         this.textArea.node instanceof HTMLTextAreaElement
       ) {
         this.textArea.node.value = '';
+        this.labelPlaceholderNew.destroy();
         requestMessageSend(this.login, this.message);
       }
     });

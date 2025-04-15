@@ -29,6 +29,7 @@ export const LOGO_IMG_URL = 'https://rs.school/_next/static/media/rss-logo.c19ce
 export const PLACEHOLDER_LOGIN = 'Enter your name';
 export const PLACEHOLDER_PASSWORD = 'Enter password';
 export const PLACEHOLDER_MESSAGE = 'Select a user to send a message to...';
+export const PLACEHOLDER_MESSAGE_TO_USER = 'Write your first message...';
 export const PLACEHOLDER_INPUT_MESSAGE = 'message...';
 export const PLACEHOLDER_INPUT_SEARCH = 'search...';
 
