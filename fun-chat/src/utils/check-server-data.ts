@@ -4,6 +4,7 @@ import type {
   AllUsersResponse,
   MessageSendResponse,
   MessageFromUserResponse,
+  MessageDeliverResponse,
 } from './server-data-type';
 
 export function isValidUser(data: unknown): data is UserResponse {
@@ -85,5 +86,25 @@ export function isValidMessageFromUser(data: unknown): data is MessageFromUserRe
     'messages' in data.payload &&
     typeof data.payload.messages === 'object' &&
     data.payload.messages !== null
+  );
+}
+
+export function isValidMessageDeliver(data: unknown): data is MessageDeliverResponse {
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    'id' in data &&
+    'type' in data &&
+    'payload' in data &&
+    typeof data.payload === 'object' &&
+    data.payload !== null &&
+    'message' in data.payload &&
+    typeof data.payload.message === 'object' &&
+    data.payload.message !== null &&
+    'id' in data.payload.message &&
+    'status' in data.payload.message &&
+    typeof data.payload.message.status === 'object' &&
+    data.payload.message.status !== null &&
+    'isDelivered' in data.payload.message.status
   );
 }

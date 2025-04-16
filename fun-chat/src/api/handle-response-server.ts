@@ -69,19 +69,21 @@ export function handleMessageSend(jsonObject: MessageSendResponse): void {
 
 export function handleMessageFromUser(jsonObject: MessageFromUserResponse): void {
   const messages = jsonObject.payload.messages;
-  if (messages.length === 0 && userList) userList.createLabel();
-  for (const message of messages) {
-    const dataTime = formatTime(message.datetime);
-    const text = message.text;
-    const isDelivered = message.status.isDelivered;
-    const fromUser = message.from;
-    const toUser = message.to;
-    const currentUserLogin = sessionStorage.getItem('currentUserLogin');
-    if (fromUser === currentUserLogin && userList) {
-      userList.createSendMessage(dataTime, text, isDelivered);
-    } else if (toUser === currentUserLogin && userList) {
-      userList.createReceiveMessage(dataTime, text, fromUser);
+  if (messages.length > 0 && userList && userList.messageDiv) {
+    userList.messageDiv.node.textContent = '';
+    for (const message of messages) {
+      const dataTime = formatTime(message.datetime);
+      const text = message.text;
+      const isDelivered = message.status.isDelivered;
+      const fromUser = message.from;
+      const toUser = message.to;
+      const currentUserLogin = sessionStorage.getItem('currentUserLogin');
+      if (fromUser === currentUserLogin && userList) {
+        userList.createSendMessage(dataTime, text, isDelivered);
+      } else if (toUser === currentUserLogin && userList) {
+        userList.createReceiveMessage(dataTime, text, fromUser);
+      }
     }
+    writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
   }
-  writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
 }

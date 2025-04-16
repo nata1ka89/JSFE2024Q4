@@ -18,8 +18,13 @@ import {
 } from '../../utils/constants';
 import { Type } from '../../utils/server-data-type';
 import type { UserRequest } from '../../utils/server-data-type';
-import { requestAllUsersActive, requestAllUsersInActive } from '../../api/request-app';
+import {
+  requestAllUsersActive,
+  requestAllUsersInActive,
+  requestMessageFromUser,
+} from '../../api/request-app';
 import { setDataSessionStorage } from '../../utils/manage-storage';
+import { updateUsers } from '../main-page/user-list-component';
 
 export class Authentication extends BaseComponent {
   private router: Router;
@@ -108,6 +113,13 @@ export class Authentication extends BaseComponent {
           newUser.payload.user.login,
           newUser.payload.user.password
         );
+        console.log(updateUsers);
+        const filteredUsers = updateUsers.filter(
+          (user) => user.login !== newUser.payload.user.login
+        );
+        for (const user of filteredUsers) {
+          requestMessageFromUser(user.login);
+        }
       }
     });
     const infoButton = new BaseComponent(buttonsDiv.node, 'button', 'info-button', BUTTON_INFO);

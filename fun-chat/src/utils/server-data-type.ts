@@ -8,6 +8,7 @@ export enum Type {
   USER_INACTIVE = 'USER_INACTIVE',
   MSG_SEND = 'MSG_SEND',
   MSG_FROM_USER = 'MSG_FROM_USER',
+  MSG_DELIVER = 'MSG_DELIVER',
 }
 
 export type User = {
@@ -113,5 +114,18 @@ export type MessageFromUserResponse = {
   type: Type.MSG_FROM_USER;
   payload: {
     messages: Message[];
+  };
+};
+
+export type MessageDeliverResponse = {
+  id: null;
+  type: 'MSG_DELIVER';
+  payload: {
+    message: {
+      id: string;
+      status: {
+        isDelivered: boolean;
+      };
+    };
   };
 };

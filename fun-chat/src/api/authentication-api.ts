@@ -23,7 +23,12 @@ import {
   isValidUserActive,
   isValidUserError,
 } from '../utils/check-server-data';
-import { requestAllUsersActive, requestAllUsersInActive, requestUserLogin } from './request-app';
+import {
+  requestAllUsersActive,
+  requestAllUsersInActive,
+  requestMessageFromUser,
+  requestUserLogin,
+} from './request-app';
 
 let websocket: WebSocket;
 let serverModal: ModalServer | undefined;
@@ -75,7 +80,9 @@ function onMessage(event: MessageEvent): void {
       }
       if (isValidUser(jsonObject)) {
         if (jsonObject.type === Type.USER_EXTERNAL_LOGIN) {
+          const login = jsonObject.payload.user.login;
           requestAllUsersActive();
+          requestMessageFromUser(login);
         } else if (jsonObject.type === Type.USER_EXTERNAL_LOGOUT) {
           requestAllUsersInActive();
         } else {

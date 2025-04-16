@@ -9,17 +9,16 @@ import {
 } from '../../utils/constants';
 import type { User } from '../../utils/server-data-type';
 import { requestMessageFromUser, requestMessageSend } from '../../api/request-app';
-
+export const updateUsers: User[] = [];
 export class UserList extends BaseComponent {
+  public messageDiv: BaseComponent | undefined;
   private userDiv: BaseComponent | undefined;
-  private messageDiv: BaseComponent | undefined;
   private headerMessageDiv: BaseComponent | undefined;
   private labelPlaceholder: BaseComponent | undefined;
   private labelPlaceholderNew: BaseComponent | undefined;
   private list: BaseComponent | undefined;
   private sendButton: BaseComponent | undefined;
   private textArea: BaseComponent | undefined;
-  private updateUsers: User[] = [];
   private login: string | null = '';
   private message: string | null = '';
   constructor(_parentNode: HTMLElement | null) {
@@ -30,15 +29,15 @@ export class UserList extends BaseComponent {
 
   public updateUserList(users: User[]): void {
     for (const user of users) {
-      const indexUser = this.updateUsers.findIndex((updateUser) => user.login === updateUser.login);
+      const indexUser = updateUsers.findIndex((updateUser) => user.login === updateUser.login);
       if (indexUser === -1) {
-        this.updateUsers.push(user);
+        updateUsers.push(user);
       } else {
-        this.updateUsers[indexUser].isLogined = user.isLogined;
+        updateUsers[indexUser].isLogined = user.isLogined;
       }
     }
     const currentUserLogin = sessionStorage.getItem('currentUserLogin');
-    const filteredUsers = this.updateUsers.filter((user) => user.login !== currentUserLogin);
+    const filteredUsers = updateUsers.filter((user) => user.login !== currentUserLogin);
     this.createUserList(filteredUsers);
   }
 
@@ -74,8 +73,9 @@ export class UserList extends BaseComponent {
     }
   }
 
-  public createLabel(): void {
+  public changeLabelPlaceholderNew(): void {
     if (this.messageDiv) {
+      this.messageDiv.node.textContent = '';
       this.labelPlaceholderNew = new BaseComponent(
         this.messageDiv.node,
         'label',
@@ -117,7 +117,7 @@ export class UserList extends BaseComponent {
             this.login = event.target.textContent;
             this.renderHeaderDialogContainer(this.login, status);
             if (this.messageDiv && this.login) {
-              this.messageDiv.node.textContent = '';
+              this.changeLabelPlaceholderNew();
               requestMessageFromUser(this.login);
             }
           }
@@ -163,12 +163,13 @@ export class UserList extends BaseComponent {
         this.login &&
         this.message &&
         this.textArea &&
-        this.labelPlaceholderNew &&
         this.textArea.node instanceof HTMLTextAreaElement
       ) {
         this.textArea.node.value = '';
-        this.labelPlaceholderNew.destroy();
         requestMessageSend(this.login, this.message);
+      }
+      if (this.labelPlaceholderNew) {
+        this.labelPlaceholderNew.destroy();
       }
     });
   }
