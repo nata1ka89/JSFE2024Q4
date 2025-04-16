@@ -19,7 +19,7 @@ export class UserList extends BaseComponent {
   private list: BaseComponent | undefined;
   private sendButton: BaseComponent | undefined;
   private textArea: BaseComponent | undefined;
-  private login: string | null = '';
+  public login: string | null = '';
   private message: string | null = '';
   constructor(_parentNode: HTMLElement | null) {
     super(_parentNode, 'section', 'user-section');
@@ -127,13 +127,21 @@ export class UserList extends BaseComponent {
     }
   }
 
-  private renderHeaderDialogContainer(login: string | null, status: string): void {
-    if (this.headerMessageDiv) {
+  public renderHeaderDialogContainer(login: string | null, status: string): void {
+    if (this.headerMessageDiv && this.messageDiv) {
       this.headerMessageDiv.node.textContent = '';
       if (login) {
         const renderStatus = status === 'user-status-online' ? 'online' : 'offline';
         new BaseComponent(this.headerMessageDiv.node, 'label', '', login);
         new BaseComponent(this.headerMessageDiv.node, 'label', '', renderStatus);
+      } else {
+        this.messageDiv.node.textContent = '';
+        this.labelPlaceholder = new BaseComponent(
+          this.messageDiv.node,
+          'label',
+          '',
+          PLACEHOLDER_MESSAGE
+        );
       }
     }
   }

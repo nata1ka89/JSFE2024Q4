@@ -84,6 +84,7 @@ export function handleMessageFromUser(jsonObject: MessageFromUserResponse): void
         userList.createReceiveMessage(dataTime, text, fromUser);
       }
     }
+    userList.renderHeaderDialogContainer(userList.login, 'user-status-online');
     writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
   }
 }

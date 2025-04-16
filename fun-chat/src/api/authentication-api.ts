@@ -79,12 +79,13 @@ function onMessage(event: MessageEvent): void {
         handleUserError(jsonObject);
       }
       if (isValidUser(jsonObject)) {
+        const login = jsonObject.payload.user.login;
         if (jsonObject.type === Type.USER_EXTERNAL_LOGIN) {
-          const login = jsonObject.payload.user.login;
           requestAllUsersActive();
           requestMessageFromUser(login);
         } else if (jsonObject.type === Type.USER_EXTERNAL_LOGOUT) {
           requestAllUsersInActive();
+          requestMessageFromUser(login);
         } else {
           handleUserLogin(jsonObject);
         }
