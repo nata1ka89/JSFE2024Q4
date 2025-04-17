@@ -113,7 +113,6 @@ export class Authentication extends BaseComponent {
           newUser.payload.user.login,
           newUser.payload.user.password
         );
-        console.log(updateUsers);
         const filteredUsers = updateUsers.filter(
           (user) => user.login !== newUser.payload.user.login
         );

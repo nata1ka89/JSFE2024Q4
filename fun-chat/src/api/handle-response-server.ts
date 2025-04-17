@@ -1,5 +1,7 @@
 import Modal from '../components/authentication-page/modal-valid-component';
 import { userList } from '../components/main-page/main-component';
+import { dialog } from '../components/main-page/main-component';
+import { login, status } from '../components/main-page/user-list-component';
 import Router from '../components/router';
 import { LOGIN_ROUTE, MAIN_ROUTE } from '../utils/constants';
 import { formatTime } from '../utils/format-time';
@@ -59,32 +61,36 @@ export function handleMessageSend(jsonObject: MessageSendResponse): void {
   const currentUserLogin = sessionStorage.getItem('currentUserLogin');
   /* const isReaded=jsonObject.payload.message.status.isReaded
    const isEdited=jsonObject.payload.message.status.isEdited*/
-  if (fromUser === currentUserLogin && userList) {
-    userList.createSendMessage(dataTime, text, isDelivered);
-  } else if (toUser === currentUserLogin && userList) {
-    userList.createReceiveMessage(dataTime, text, fromUser);
+  if (fromUser === currentUserLogin && dialog) {
+    dialog.createSendMessage(dataTime, text, isDelivered);
+  } else if (toUser === currentUserLogin && dialog) {
+    dialog.createReceiveMessage(dataTime, text, fromUser);
   }
   writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
 }
 
 export function handleMessageFromUser(jsonObject: MessageFromUserResponse): void {
   const messages = jsonObject.payload.messages;
-  if (messages.length > 0 && userList && userList.messageDiv) {
-    userList.messageDiv.node.textContent = '';
-    for (const message of messages) {
-      const dataTime = formatTime(message.datetime);
-      const text = message.text;
-      const isDelivered = message.status.isDelivered;
-      const fromUser = message.from;
-      const toUser = message.to;
-      const currentUserLogin = sessionStorage.getItem('currentUserLogin');
-      if (fromUser === currentUserLogin && userList) {
-        userList.createSendMessage(dataTime, text, isDelivered);
-      } else if (toUser === currentUserLogin && userList) {
-        userList.createReceiveMessage(dataTime, text, fromUser);
+  if (dialog) {
+    if (messages.length > 0 && dialog.messageDiv) {
+      dialog.messageDiv.node.textContent = '';
+      for (const message of messages) {
+        const dataTime = formatTime(message.datetime);
+        const text = message.text;
+        const isDelivered = message.status.isDelivered;
+        const fromUser = message.from;
+        const toUser = message.to;
+        const currentUserLogin = sessionStorage.getItem('currentUserLogin');
+        if (fromUser === currentUserLogin && dialog) {
+          dialog.createSendMessage(dataTime, text, isDelivered);
+        } else if (toUser === currentUserLogin && dialog) {
+          dialog.createReceiveMessage(dataTime, text, fromUser);
+        }
       }
     }
-    userList.renderHeaderDialogContainer(userList.login, 'user-status-online');
+    console.log(login);
+
+    dialog.renderHeaderDialogContainer(login, status);
     writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
   }
 }
