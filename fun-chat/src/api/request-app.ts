@@ -3,6 +3,7 @@ import type {
   AllUsersRequest,
   MessageFromUserRequest,
   MessageSendRequest,
+  MessageStatusRequest,
   UserRequest,
 } from '../utils/server-data-type';
 import { Type } from '../utils/server-data-type';
@@ -87,4 +88,17 @@ export function requestMessageFromUser(login: string): void {
     },
   };
   doSend(messageFromUser);
+}
+
+export function requestMessageStatus(id: string): void {
+  const messageStatus: MessageStatusRequest = {
+    id: crypto.randomUUID(),
+    type: Type.MSG_READ,
+    payload: {
+      message: {
+        id: id,
+      },
+    },
+  };
+  doSend(messageStatus);
 }

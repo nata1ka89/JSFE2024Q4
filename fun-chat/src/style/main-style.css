@@ -239,10 +239,14 @@ button[disabled] {
   font-size: 0.8rem;
 }
 
-.message-footer label {
+.message-unread {
   height: 1.2em;
   font-size: 1.1rem;
   color: #b3afaf;
+}
+
+.message-read {
+  color: green;
 }
 
 .form-message {

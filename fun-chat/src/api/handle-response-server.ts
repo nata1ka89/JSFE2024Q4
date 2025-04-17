@@ -10,6 +10,7 @@ import type {
   AllUsersResponse,
   MessageFromUserResponse,
   MessageSendResponse,
+  MessageStatusResponse,
   UserErrorResponse,
   UserResponse,
 } from '../utils/server-data-type';
@@ -17,8 +18,14 @@ import type {
 const router = new Router(document.body);
 export function handleUserError(jsonObject: UserErrorResponse): void {
   const error = jsonObject.payload.error;
-  new Modal(document.body, error);
-  writeToScreen(`Error: ${error}`);
+  if (
+    error === 'a user with this login is already authorized' ||
+    error === 'another user is already authorized in this connection' ||
+    error === 'incorrect password'
+  ) {
+    new Modal(document.body, error);
+    writeToScreen(`Error: ${error}`);
+  }
   router.navigate(LOGIN_ROUTE);
   removeDataSessionStorage();
 }
@@ -59,10 +66,10 @@ export function handleMessageSend(jsonObject: MessageSendResponse): void {
   const fromUser = jsonObject.payload.message.from;
   const toUser = jsonObject.payload.message.to;
   const currentUserLogin = sessionStorage.getItem('currentUserLogin');
-  /* const isReaded=jsonObject.payload.message.status.isReaded
-   const isEdited=jsonObject.payload.message.status.isEdited*/
+  const isReaded = jsonObject.payload.message.status.isReaded;
+  /*const isEdited=jsonObject.payload.message.status.isEdited*/
   if (fromUser === currentUserLogin && dialog) {
-    dialog.createSendMessage(dataTime, text, isDelivered);
+    dialog.createSendMessage(dataTime, text, isDelivered, isReaded);
   } else if (toUser === currentUserLogin && dialog) {
     dialog.createReceiveMessage(dataTime, text, fromUser);
   }
@@ -74,23 +81,37 @@ export function handleMessageFromUser(jsonObject: MessageFromUserResponse): void
   if (dialog) {
     if (messages.length > 0 && dialog.messageDiv) {
       dialog.messageDiv.node.textContent = '';
-      for (const message of messages) {
+      const readMessages = messages.filter((message) => message.status.isReaded);
+      const unreadMessages = messages.filter((message) => !message.status.isReaded);
+      for (const message of readMessages) {
         const dataTime = formatTime(message.datetime);
-        const text = message.text;
         const isDelivered = message.status.isDelivered;
-        const fromUser = message.from;
-        const toUser = message.to;
+        const isReaded = message.status.isReaded;
         const currentUserLogin = sessionStorage.getItem('currentUserLogin');
-        if (fromUser === currentUserLogin && dialog) {
-          dialog.createSendMessage(dataTime, text, isDelivered);
-        } else if (toUser === currentUserLogin && dialog) {
-          dialog.createReceiveMessage(dataTime, text, fromUser);
+        if (message.from === currentUserLogin && dialog) {
+          dialog.createSendMessage(dataTime, message.text, isDelivered, isReaded);
+        } else if (message.to === currentUserLogin && dialog) {
+          dialog.createReceiveMessage(dataTime, message.text, message.from);
+        }
+      }
+
+      for (const message of unreadMessages) {
+        const dataTime = formatTime(message.datetime);
+        const isDelivered = message.status.isDelivered;
+        const currentUserLogin = sessionStorage.getItem('currentUserLogin');
+        const isReaded = message.status.isReaded;
+        if (message.from === currentUserLogin && dialog) {
+          dialog.createSendMessage(dataTime, message.text, isDelivered, isReaded);
+        } else if (message.to === currentUserLogin && dialog) {
+          dialog.createReceiveMessage(dataTime, message.text, message.from);
         }
       }
     }
-    console.log(login);
-
     dialog.renderHeaderDialogContainer(login, status);
     writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
   }
+}
+
+export function handleMessageRead(jsonObject: MessageStatusResponse): void {
+  writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
 }

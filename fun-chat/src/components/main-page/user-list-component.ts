@@ -78,8 +78,6 @@ export class UserList extends BaseComponent {
             }
           }
         });
-        console.log(login);
-
         dialog.renderHeaderDialogContainer('', '');
       }
     }

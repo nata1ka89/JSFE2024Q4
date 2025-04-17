@@ -18,7 +18,12 @@ export class Dialog extends BaseComponent {
     this.createDialogContainer();
   }
 
-  public createSendMessage(dataTime: string, text: string, isDelivered: boolean): void {
+  public createSendMessage(
+    dataTime: string,
+    text: string,
+    isDelivered: boolean,
+    isReaded: boolean
+  ): void {
     if (this.messageDiv) {
       const statusMessage = isDelivered ? '✔✔' : '✔';
       const messageContainer = new BaseComponent(this.messageDiv.node, 'div', 'message-container');
@@ -29,8 +34,17 @@ export class Dialog extends BaseComponent {
       new BaseComponent(messageHeader.node, 'label', '', dataTime);
       new BaseComponent(messageData.node, 'div', 'message-text', text);
       const messageFooter = new BaseComponent(messageData.node, 'div', 'message-footer');
-      new BaseComponent(messageFooter.node, 'label', '', statusMessage);
+      const readMessage = new BaseComponent(
+        messageFooter.node,
+        'label',
+        'message-unread',
+        statusMessage
+      );
       messageContainer.node.scrollIntoView({ behavior: 'smooth' });
+      if (isReaded) {
+        console.log(isReaded);
+        readMessage.node.classList.add('message-read');
+      }
     }
   }
   public createReceiveMessage(dataTime: string, text: string, fromUser: string): void {
@@ -43,7 +57,7 @@ export class Dialog extends BaseComponent {
       new BaseComponent(messageHeader.node, 'label', '', dataTime);
       new BaseComponent(messageData.node, 'div', 'message-text', text);
       const messageFooter = new BaseComponent(messageData.node, 'div', 'message-footer');
-      new BaseComponent(messageFooter.node, 'label', '', '');
+      new BaseComponent(messageFooter.node, 'label', 'message-unread', '');
       messageContainer.node.scrollIntoView({ behavior: 'smooth' });
     }
   }
@@ -51,8 +65,6 @@ export class Dialog extends BaseComponent {
     if (this.headerMessageDiv && this.messageDiv) {
       this.headerMessageDiv.node.textContent = '';
       if (currentLogin) {
-        console.log(currentLogin);
-
         const renderStatus = status === 'user-status-online' ? 'online' : 'offline';
         new BaseComponent(this.headerMessageDiv.node, 'label', '', currentLogin);
         new BaseComponent(this.headerMessageDiv.node, 'label', '', renderStatus);
@@ -85,6 +97,27 @@ export class Dialog extends BaseComponent {
     this.textArea.setCallback('input', (event) => {
       if (event.target instanceof HTMLTextAreaElement) message = event.target.value;
     });
+
+    this.textArea.setCallback('keydown', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        if (
+          login &&
+          message &&
+          this.textArea &&
+          this.textArea.node instanceof HTMLTextAreaElement
+        ) {
+          this.textArea.node.value = '';
+          requestMessageSend(login, message);
+          message = '';
+        }
+        if (userList) {
+          this.labelPlaceholder?.destroy();
+          userList.labelPlaceholderNew?.destroy();
+        }
+      }
+    });
+
     this.sendButton = new BaseComponent(messageForm.node, 'button', 'log-button', BUTTON_SEND);
     this.sendButton.setAttribute('disabled', 'true');
     this.sendButton.setCallback('click', (event) => {
