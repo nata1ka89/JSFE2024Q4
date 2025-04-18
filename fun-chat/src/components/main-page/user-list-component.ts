@@ -66,6 +66,8 @@ export class UserList extends BaseComponent {
             dialog.sendButton.removeAttribute('disabled');
             dialog.textArea.removeAttribute('disabled');
             login = event.target.textContent;
+            console.log(login);
+
             dialog.renderHeaderDialogContainer(login, status);
             if (login) {
               this.labelPlaceholderNew = new BaseComponent(

@@ -1,17 +1,20 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/main-style.css';
 import { BUTTON_SEND, PLACEHOLDER_INPUT_MESSAGE, PLACEHOLDER_MESSAGE } from '../../utils/constants';
-import type { User } from '../../utils/server-data-type';
-import { requestMessageSend } from '../../api/request-app';
+import type { Message, User } from '../../utils/server-data-type';
+import { requestMessageSend, requestMessageStatus } from '../../api/request-app';
 import { login } from './user-list-component';
 import { userList } from './main-component';
 export const updateUsers: User[] = [];
 export class Dialog extends BaseComponent {
   public messageDiv: BaseComponent | undefined;
+  public readMessage: BaseComponent | undefined;
   public textArea: BaseComponent | undefined;
   public sendButton: BaseComponent | undefined;
   public labelPlaceholder: BaseComponent | undefined;
+  public headerLogin: BaseComponent | undefined;
   private headerMessageDiv: BaseComponent | undefined;
+  private separatorLine: BaseComponent | undefined;
   constructor(_parentNode: HTMLElement | null) {
     super(_parentNode, 'div', 'dialog-container');
 
@@ -34,23 +37,24 @@ export class Dialog extends BaseComponent {
       new BaseComponent(messageHeader.node, 'label', '', dataTime);
       new BaseComponent(messageData.node, 'div', 'message-text', text);
       const messageFooter = new BaseComponent(messageData.node, 'div', 'message-footer');
-      const readMessage = new BaseComponent(
+      this.readMessage = new BaseComponent(
         messageFooter.node,
         'label',
         'message-unread',
         statusMessage
       );
-      messageContainer.node.scrollIntoView({ behavior: 'smooth' });
       if (isReaded) {
-        console.log(isReaded);
-        readMessage.node.classList.add('message-read');
+        this.readMessage.node.classList.add('message-read');
       }
+      this.messageDiv.node.scrollTop = this.messageDiv.node.scrollHeight;
     }
   }
-  public createReceiveMessage(dataTime: string, text: string, fromUser: string): void {
+
+  public createReceiveMessage(dataTime: string, text: string, fromUser: string, id: string): void {
     if (this.messageDiv && fromUser === login) {
       const messageContainer = new BaseComponent(this.messageDiv.node, 'div', 'message-container');
       messageContainer.node.style.justifyContent = '';
+      messageContainer.setAttribute('id', id);
       const messageData = new BaseComponent(messageContainer.node, 'div', 'message-data');
       const messageHeader = new BaseComponent(messageData.node, 'div', 'message-header');
       new BaseComponent(messageHeader.node, 'label', '', fromUser);
@@ -58,15 +62,16 @@ export class Dialog extends BaseComponent {
       new BaseComponent(messageData.node, 'div', 'message-text', text);
       const messageFooter = new BaseComponent(messageData.node, 'div', 'message-footer');
       new BaseComponent(messageFooter.node, 'label', 'message-unread', '');
-      messageContainer.node.scrollIntoView({ behavior: 'smooth' });
+      this.messageDiv.node.scrollTop = this.messageDiv.node.scrollHeight;
     }
   }
+
   public renderHeaderDialogContainer(currentLogin: string | null, status: string): void {
     if (this.headerMessageDiv && this.messageDiv) {
       this.headerMessageDiv.node.textContent = '';
       if (currentLogin) {
         const renderStatus = status === 'user-status-online' ? 'online' : 'offline';
-        new BaseComponent(this.headerMessageDiv.node, 'label', '', currentLogin);
+        this.headerLogin = new BaseComponent(this.headerMessageDiv.node, 'label', '', currentLogin);
         new BaseComponent(this.headerMessageDiv.node, 'label', '', renderStatus);
       } else {
         this.messageDiv.node.textContent = '';
@@ -76,6 +81,41 @@ export class Dialog extends BaseComponent {
           '',
           PLACEHOLDER_MESSAGE
         );
+      }
+    }
+  }
+
+  public updateStatusMessage(unreadMessages: Message[]): void {
+    const unreadMessageIds = unreadMessages.map((message) => message.id);
+    if (this.messageDiv) {
+      this.messageDiv.setCallback('click', () => {
+        requestMessageStatus(unreadMessageIds);
+        this.separatorLine?.destroy();
+      });
+      /* this.messageDiv.setCallback('scroll', () => {
+        requestMessageStatus(unreadMessageIds);
+        this.separatorLine?.destroy()
+        });*/
+    }
+  }
+
+  public addSeparatorLine(firstUnreadMessage: Message, userTo: string, currentLogin: string): void {
+    if (this.messageDiv && !this.separatorLine && userTo !== currentLogin) {
+      console.log(userTo);
+      console.log(currentLogin);
+
+      this.separatorLine = new BaseComponent(
+        this.messageDiv.node,
+        'div',
+        'separator-line',
+        'New Messages'
+      );
+      const messages = [...this.messageDiv.node.children];
+      const messageLast = messages.find((element) => {
+        return element.id === firstUnreadMessage.id;
+      });
+      if (messageLast) {
+        this.messageDiv.node.insertBefore(this.separatorLine.node, messageLast);
       }
     }
   }

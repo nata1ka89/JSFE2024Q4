@@ -293,6 +293,16 @@ a {
   text-decoration: none;
 }
 
+.separator-line {
+  padding: 5px 0;
+  border-bottom: 1px solid #ccc;
+
+  font-weight: bold;
+  text-align: center;
+
+  background-color: #f0f0f0;
+}
+
 @media screen and (width <=560px) {
   .main {
     width: 90vw;

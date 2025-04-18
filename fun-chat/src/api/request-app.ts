@@ -90,15 +90,17 @@ export function requestMessageFromUser(login: string): void {
   doSend(messageFromUser);
 }
 
-export function requestMessageStatus(id: string): void {
-  const messageStatus: MessageStatusRequest = {
-    id: crypto.randomUUID(),
-    type: Type.MSG_READ,
-    payload: {
-      message: {
-        id: id,
+export function requestMessageStatus(allId: string[]): void {
+  for (const id of allId) {
+    const messageStatus: MessageStatusRequest = {
+      id: crypto.randomUUID(),
+      type: Type.MSG_READ,
+      payload: {
+        message: {
+          id: id,
+        },
       },
-    },
-  };
-  doSend(messageStatus);
+    };
+    doSend(messageStatus);
+  }
 }

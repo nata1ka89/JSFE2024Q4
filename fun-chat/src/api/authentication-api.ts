@@ -1,4 +1,11 @@
-import { CONNECTION_CLOSED, OFFLINE, WEBSOCKET_URL } from '../utils/constants';
+import {
+  CONNECTION_CLOSED,
+  errorAuthorized,
+  errorConnection,
+  errorPassword,
+  OFFLINE,
+  WEBSOCKET_URL,
+} from '../utils/constants';
 import ModalServer from './modal-server';
 import {
   handleMessageFromUser,
@@ -79,7 +86,12 @@ function onMessage(event: MessageEvent): void {
     if (typeof event.data === 'string') {
       const jsonObject: unknown = JSON.parse(event.data);
       if (isValidUserError(jsonObject)) {
-        handleUserError(jsonObject);
+        const error = jsonObject.payload.error;
+        if (error === errorAuthorized || error === errorConnection || error === errorPassword) {
+          handleUserError(jsonObject);
+        } else {
+          return;
+        }
       }
       if (isValidUser(jsonObject)) {
         const login = jsonObject.payload.user.login;

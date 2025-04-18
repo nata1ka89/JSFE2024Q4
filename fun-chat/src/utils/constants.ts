@@ -42,3 +42,6 @@ export const CONNECTION_CLOSED = 'Connection to server';
 export const OFFLINE = 'You are offline. Please connect to the Internet and try again.';
 
 export const ERROR_ELEMENT_NULL = 'Element is null';
+export const errorAuthorized = 'a user with this login is already authorized';
+export const errorConnection = 'another user is already authorized in this connection';
+export const errorPassword = 'incorrect password';

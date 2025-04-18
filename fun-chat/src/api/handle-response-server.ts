@@ -14,18 +14,13 @@ import type {
   UserErrorResponse,
   UserResponse,
 } from '../utils/server-data-type';
+import { requestMessageFromUser } from './request-app';
 
 const router = new Router(document.body);
 export function handleUserError(jsonObject: UserErrorResponse): void {
   const error = jsonObject.payload.error;
-  if (
-    error === 'a user with this login is already authorized' ||
-    error === 'another user is already authorized in this connection' ||
-    error === 'incorrect password'
-  ) {
-    new Modal(document.body, error);
-    writeToScreen(`Error: ${error}`);
-  }
+  new Modal(document.body, error);
+  writeToScreen(`Error: ${error}`);
   router.navigate(LOGIN_ROUTE);
   removeDataSessionStorage();
 }
@@ -65,20 +60,23 @@ export function handleMessageSend(jsonObject: MessageSendResponse): void {
   const isDelivered = jsonObject.payload.message.status.isDelivered;
   const fromUser = jsonObject.payload.message.from;
   const toUser = jsonObject.payload.message.to;
+  const id = jsonObject.payload.message.id;
   const currentUserLogin = sessionStorage.getItem('currentUserLogin');
   const isReaded = jsonObject.payload.message.status.isReaded;
-  /*const isEdited=jsonObject.payload.message.status.isEdited*/
-  if (fromUser === currentUserLogin && dialog) {
-    dialog.createSendMessage(dataTime, text, isDelivered, isReaded);
-  } else if (toUser === currentUserLogin && dialog) {
-    dialog.createReceiveMessage(dataTime, text, fromUser);
+  if (dialog && dialog.headerLogin) {
+    /*const isEdited=jsonObject.payload.message.status.isEdited*/
+    if (fromUser === currentUserLogin && dialog) {
+      dialog.createSendMessage(dataTime, text, isDelivered, isReaded);
+    } else if (toUser === currentUserLogin && dialog) {
+      dialog.createReceiveMessage(dataTime, text, fromUser, id);
+    }
   }
   writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
 }
 
 export function handleMessageFromUser(jsonObject: MessageFromUserResponse): void {
   const messages = jsonObject.payload.messages;
-  if (dialog) {
+  if (dialog && dialog.headerLogin) {
     if (messages.length > 0 && dialog.messageDiv) {
       dialog.messageDiv.node.textContent = '';
       const readMessages = messages.filter((message) => message.status.isReaded);
@@ -91,7 +89,13 @@ export function handleMessageFromUser(jsonObject: MessageFromUserResponse): void
         if (message.from === currentUserLogin && dialog) {
           dialog.createSendMessage(dataTime, message.text, isDelivered, isReaded);
         } else if (message.to === currentUserLogin && dialog) {
-          dialog.createReceiveMessage(dataTime, message.text, message.from);
+          dialog.createReceiveMessage(dataTime, message.text, message.from, message.id);
+        }
+      }
+      if (unreadMessages.length > 0) {
+        const firstUnreadMessage = unreadMessages[0];
+        if (login) {
+          dialog.addSeparatorLine(firstUnreadMessage, firstUnreadMessage.to, login);
         }
       }
 
@@ -103,9 +107,10 @@ export function handleMessageFromUser(jsonObject: MessageFromUserResponse): void
         if (message.from === currentUserLogin && dialog) {
           dialog.createSendMessage(dataTime, message.text, isDelivered, isReaded);
         } else if (message.to === currentUserLogin && dialog) {
-          dialog.createReceiveMessage(dataTime, message.text, message.from);
+          dialog.createReceiveMessage(dataTime, message.text, message.from, message.id);
         }
       }
+      dialog.updateStatusMessage(unreadMessages);
     }
     dialog.renderHeaderDialogContainer(login, status);
     writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
@@ -113,5 +118,6 @@ export function handleMessageFromUser(jsonObject: MessageFromUserResponse): void
 }
 
 export function handleMessageRead(jsonObject: MessageStatusResponse): void {
+  if (login) requestMessageFromUser(login);
   writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
 }
