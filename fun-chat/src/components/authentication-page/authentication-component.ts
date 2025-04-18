@@ -60,9 +60,7 @@ export class Authentication extends BaseComponent {
     }
   }
 
-  private createForm(): void {
-    const fieldset = new BaseComponent(this.node, 'fieldset', 'fieldset');
-    new BaseComponent(fieldset.node, 'legend', 'fieldset', AUTHENTICATION_TITLE);
+  private static createNameField(fieldset: BaseComponent): BaseComponent[] {
     const nameDiv = new BaseComponent(fieldset.node, 'div', 'container-filed');
     new BaseComponent(nameDiv.node, 'label', '', LABEL_NAME);
     const nameInput = new BaseComponent(nameDiv.node, 'input', 'input');
@@ -72,6 +70,10 @@ export class Authentication extends BaseComponent {
     nameInput.setAttribute('minlength', MIN_LENGTH.toString());
     nameInput.setAttribute('maxlength', MAX_LENGTH.toString());
     const nameError = new BaseComponent(nameDiv.node, 'span', 'error-message', VALID_LOGIN);
+    return [nameInput, nameError];
+  }
+
+  private static createPasswordField(fieldset: BaseComponent): BaseComponent[] {
     const passwordDiv = new BaseComponent(fieldset.node, 'div', 'container-filed');
     new BaseComponent(passwordDiv.node, 'label', '', LABEL_PASSWORD);
     const passwordInput = new BaseComponent(passwordDiv.node, 'input', 'input');
@@ -86,7 +88,16 @@ export class Authentication extends BaseComponent {
       'error-message',
       VALID_PASSWORD
     );
-    const buttonsDiv = new BaseComponent(fieldset.node, 'div', 'container-buttons');
+    return [passwordInput, passwordError];
+  }
+
+  private static createLoginButton(
+    buttonsDiv: BaseComponent,
+    nameInput: BaseComponent,
+    nameError: BaseComponent,
+    passwordInput: BaseComponent,
+    passwordError: BaseComponent
+  ): void {
     const logButton = new BaseComponent(buttonsDiv.node, 'button', 'log-button', BUTTON_LOGIN);
     logButton.setAttribute('disabled', 'true');
     logButton.setCallback('click', (event) => {
@@ -121,9 +132,6 @@ export class Authentication extends BaseComponent {
         }
       }
     });
-    const infoButton = new BaseComponent(buttonsDiv.node, 'button', 'info-button', BUTTON_INFO);
-    infoButton.setCallback('click', () => this.router.navigate(ABOUT_ROUTE));
-    infoButton.setAttribute('type', 'button');
     const inputs = [nameInput, passwordInput];
     for (const input of inputs) {
       input.node.addEventListener('input', () => {
@@ -131,5 +139,27 @@ export class Authentication extends BaseComponent {
         Authentication.validateForm(inputs, logButton);
       });
     }
+  }
+
+  private createInfoButton(buttonsDiv: BaseComponent): void {
+    const infoButton = new BaseComponent(buttonsDiv.node, 'button', 'info-button', BUTTON_INFO);
+    infoButton.setCallback('click', () => this.router.navigate(ABOUT_ROUTE));
+    infoButton.setAttribute('type', 'button');
+  }
+
+  private createForm(): void {
+    const fieldset = new BaseComponent(this.node, 'fieldset', 'fieldset');
+    new BaseComponent(fieldset.node, 'legend', 'fieldset', AUTHENTICATION_TITLE);
+    const [nameInput, nameError] = Authentication.createNameField(fieldset);
+    const [passwordInput, passwordError] = Authentication.createPasswordField(fieldset);
+    const buttonsDiv = new BaseComponent(fieldset.node, 'div', 'container-buttons');
+    Authentication.createLoginButton(
+      buttonsDiv,
+      nameInput,
+      nameError,
+      passwordInput,
+      passwordError
+    );
+    this.createInfoButton(buttonsDiv);
   }
 }

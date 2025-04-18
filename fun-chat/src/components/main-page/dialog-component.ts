@@ -101,20 +101,7 @@ export class Dialog extends BaseComponent {
     this.textArea.setCallback('keydown', (event) => {
       if (event.key === 'Enter') {
         event.preventDefault();
-        if (
-          login &&
-          message &&
-          this.textArea &&
-          this.textArea.node instanceof HTMLTextAreaElement
-        ) {
-          this.textArea.node.value = '';
-          requestMessageSend(login, message);
-          message = '';
-        }
-        if (userList) {
-          this.labelPlaceholder?.destroy();
-          userList.labelPlaceholderNew?.destroy();
-        }
+        message = this.clearField(message);
       }
     });
 
@@ -122,15 +109,20 @@ export class Dialog extends BaseComponent {
     this.sendButton.setAttribute('disabled', 'true');
     this.sendButton.setCallback('click', (event) => {
       event.preventDefault();
-      if (login && message && this.textArea && this.textArea.node instanceof HTMLTextAreaElement) {
-        this.textArea.node.value = '';
-        requestMessageSend(login, message);
-        message = '';
-      }
-      if (userList) {
-        this.labelPlaceholder?.destroy();
-        userList.labelPlaceholderNew?.destroy();
-      }
+      message = this.clearField(message);
     });
+  }
+
+  private clearField(message: string): string {
+    if (login && message && this.textArea && this.textArea.node instanceof HTMLTextAreaElement) {
+      this.textArea.node.value = '';
+      requestMessageSend(login, message);
+      message = '';
+    }
+    if (userList) {
+      this.labelPlaceholder?.destroy();
+      userList.labelPlaceholderNew?.destroy();
+    }
+    return message;
   }
 }
