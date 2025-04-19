@@ -3,7 +3,7 @@ import '../../style/main-style.css';
 import { BUTTON_SEND, PLACEHOLDER_INPUT_MESSAGE, PLACEHOLDER_MESSAGE } from '../../utils/constants';
 import type { Message, User } from '../../utils/server-data-type';
 import { requestMessageSend, requestMessageStatus } from '../../api/request-app';
-import { login } from './user-list-component';
+/*import { login } from './user-list-component';*/
 import { userList } from './main-component';
 export const updateUsers: User[] = [];
 export class Dialog extends BaseComponent {
@@ -13,8 +13,9 @@ export class Dialog extends BaseComponent {
   public sendButton: BaseComponent | undefined;
   public labelPlaceholder: BaseComponent | undefined;
   public headerLogin: BaseComponent | undefined;
+  public separatorLine: BaseComponent | undefined;
+  public allMessagesRead: boolean | undefined;
   private headerMessageDiv: BaseComponent | undefined;
-  private separatorLine: BaseComponent | undefined;
   constructor(_parentNode: HTMLElement | null) {
     super(_parentNode, 'div', 'dialog-container');
 
@@ -51,6 +52,7 @@ export class Dialog extends BaseComponent {
   }
 
   public createReceiveMessage(dataTime: string, text: string, fromUser: string, id: string): void {
+    const login = sessionStorage.getItem('currentUserTo');
     if (this.messageDiv && fromUser === login) {
       const messageContainer = new BaseComponent(this.messageDiv.node, 'div', 'message-container');
       messageContainer.node.style.justifyContent = '';
@@ -66,11 +68,11 @@ export class Dialog extends BaseComponent {
     }
   }
 
-  public renderHeaderDialogContainer(currentLogin: string | null, status: string): void {
+  public renderHeaderDialogContainer(currentLogin: string | null, status: boolean): void {
     if (this.headerMessageDiv && this.messageDiv) {
       this.headerMessageDiv.node.textContent = '';
       if (currentLogin) {
-        const renderStatus = status === 'user-status-online' ? 'online' : 'offline';
+        const renderStatus = status ? 'online' : 'offline';
         this.headerLogin = new BaseComponent(this.headerMessageDiv.node, 'label', '', currentLogin);
         new BaseComponent(this.headerMessageDiv.node, 'label', '', renderStatus);
       } else {
@@ -88,22 +90,27 @@ export class Dialog extends BaseComponent {
   public updateStatusMessage(unreadMessages: Message[]): void {
     const unreadMessageIds = unreadMessages.map((message) => message.id);
     if (this.messageDiv) {
-      this.messageDiv.setCallback('click', () => {
+      const messageDiv = this.messageDiv;
+
+      const handleClick = (): void => {
         requestMessageStatus(unreadMessageIds);
         this.separatorLine?.destroy();
-      });
-      /* this.messageDiv.setCallback('scroll', () => {
-        requestMessageStatus(unreadMessageIds);
-        this.separatorLine?.destroy()
+        this.separatorLine = undefined;
+        messageDiv.node.scrollTop = messageDiv.node.scrollHeight;
+        messageDiv.node.removeEventListener('click', handleClick);
+        this.allMessagesRead = true;
+      };
+      messageDiv.setCallback('click', handleClick);
+
+      /*  this.messageDiv.setCallback('scroll', () => {
+          requestMessageStatus(unreadMessageIds);
+          this.separatorLine?.destroy()
         });*/
     }
   }
 
   public addSeparatorLine(firstUnreadMessage: Message, userTo: string, currentLogin: string): void {
     if (this.messageDiv && !this.separatorLine && userTo !== currentLogin) {
-      console.log(userTo);
-      console.log(currentLogin);
-
       this.separatorLine = new BaseComponent(
         this.messageDiv.node,
         'div',
@@ -154,6 +161,8 @@ export class Dialog extends BaseComponent {
   }
 
   private clearField(message: string): string {
+    const login = sessionStorage.getItem('currentUserTo');
+
     if (login && message && this.textArea && this.textArea.node instanceof HTMLTextAreaElement) {
       this.textArea.node.value = '';
       requestMessageSend(login, message);

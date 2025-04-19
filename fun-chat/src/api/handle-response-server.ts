@@ -1,7 +1,6 @@
 import Modal from '../components/authentication-page/modal-valid-component';
 import { userList } from '../components/main-page/main-component';
 import { dialog } from '../components/main-page/main-component';
-import { login, status } from '../components/main-page/user-list-component';
 import Router from '../components/router';
 import { LOGIN_ROUTE, MAIN_ROUTE } from '../utils/constants';
 import { formatTime } from '../utils/format-time';
@@ -10,17 +9,15 @@ import type {
   AllUsersResponse,
   MessageFromUserResponse,
   MessageSendResponse,
-  MessageStatusResponse,
   UserErrorResponse,
   UserResponse,
 } from '../utils/server-data-type';
-import { requestMessageFromUser } from './request-app';
+import { requestMessageFromUser, requestMessageStatus } from './request-app';
 
 const router = new Router(document.body);
 export function handleUserError(jsonObject: UserErrorResponse): void {
   const error = jsonObject.payload.error;
   new Modal(document.body, error);
-  writeToScreen(`Error: ${error}`);
   router.navigate(LOGIN_ROUTE);
   removeDataSessionStorage();
 }
@@ -29,10 +26,8 @@ export function handleUserLogin(jsonObject: UserResponse): void {
   const userIsLogined = jsonObject.payload.user.isLogined;
   sessionStorage.setItem('currentUserIsLogined', `${userIsLogined}`);
   if (userIsLogined) {
-    writeToScreen(`RECEIVED: ${JSON.stringify(jsonObject)}`);
     router.navigate(MAIN_ROUTE);
   } else {
-    writeToScreen(`RECEIVED: ${JSON.stringify(jsonObject)}`);
     router.navigate(LOGIN_ROUTE);
   }
 }
@@ -40,38 +35,33 @@ export function handleUserLogin(jsonObject: UserResponse): void {
 export function handleUserActive(jsonObject: AllUsersResponse): void {
   const users = jsonObject.payload.users;
   if (userList) userList.updateUserList(users);
-  writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
 }
 
 export function handleUserInActive(jsonObject: AllUsersResponse): void {
   const users = jsonObject.payload.users;
   if (userList) userList.updateUserList(users);
-  writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
-}
-
-export function writeToScreen(message: string): void {
-  console.log(message);
 }
 
 export function handleMessageSend(jsonObject: MessageSendResponse): void {
-  const time = jsonObject.payload.message.datetime;
-  const dataTime = formatTime(time);
-  const text = jsonObject.payload.message.text;
-  const isDelivered = jsonObject.payload.message.status.isDelivered;
-  const fromUser = jsonObject.payload.message.from;
-  const toUser = jsonObject.payload.message.to;
-  const id = jsonObject.payload.message.id;
+  const message = jsonObject.payload.message;
+  const dataTime = formatTime(message.datetime);
   const currentUserLogin = sessionStorage.getItem('currentUserLogin');
-  const isReaded = jsonObject.payload.message.status.isReaded;
   if (dialog && dialog.headerLogin) {
+    if (dialog.allMessagesRead) {
+      requestMessageStatus([message.id]);
+    }
     /*const isEdited=jsonObject.payload.message.status.isEdited*/
-    if (fromUser === currentUserLogin && dialog) {
-      dialog.createSendMessage(dataTime, text, isDelivered, isReaded);
-    } else if (toUser === currentUserLogin && dialog) {
-      dialog.createReceiveMessage(dataTime, text, fromUser, id);
+    if (message.from === currentUserLogin && dialog) {
+      dialog.createSendMessage(
+        dataTime,
+        message.text,
+        message.status.isDelivered,
+        message.status.isReaded
+      );
+    } else if (message.to === currentUserLogin && dialog) {
+      dialog.createReceiveMessage(dataTime, message.text, message.from, message.id);
     }
   }
-  writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
 }
 
 export function handleMessageFromUser(jsonObject: MessageFromUserResponse): void {
@@ -94,6 +84,7 @@ export function handleMessageFromUser(jsonObject: MessageFromUserResponse): void
       }
       if (unreadMessages.length > 0) {
         const firstUnreadMessage = unreadMessages[0];
+        const login = sessionStorage.getItem('currentUserTo');
         if (login) {
           dialog.addSeparatorLine(firstUnreadMessage, firstUnreadMessage.to, login);
         }
@@ -112,12 +103,14 @@ export function handleMessageFromUser(jsonObject: MessageFromUserResponse): void
       }
       dialog.updateStatusMessage(unreadMessages);
     }
-    dialog.renderHeaderDialogContainer(login, status);
-    writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
+    const login = sessionStorage.getItem('currentUserTo');
+    const status = sessionStorage.getItem('currentUserToStatus');
+    const currentStatus = status == 'true' ? true : false;
+    dialog.renderHeaderDialogContainer(login, currentStatus);
   }
 }
 
-export function handleMessageRead(jsonObject: MessageStatusResponse): void {
+export function handleMessageRead(): void {
+  const login = sessionStorage.getItem('currentUserTo');
   if (login) requestMessageFromUser(login);
-  writeToScreen(`RECEIVED:${JSON.stringify(jsonObject)}`);
 }

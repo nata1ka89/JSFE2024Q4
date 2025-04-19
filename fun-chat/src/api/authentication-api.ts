@@ -15,7 +15,6 @@ import {
   handleUserError,
   handleUserInActive,
   handleUserLogin,
-  writeToScreen,
 } from './handle-response-server';
 import type {
   AllUsersRequest,
@@ -59,11 +58,10 @@ function onOpen(): void {
   requestUserLogin();
   requestAllUsersActive();
   requestAllUsersInActive();
-  writeToScreen('Connection established');
+  requestAllUsersInActive();
 }
 
 function onClose(event: CloseEvent): void {
-  writeToScreen(`Connection closed: ${event.code} - ${event.reason}`);
   if (event.code != 1000) {
     if (!serverModal) {
       serverModal = new ModalServer(document.body, CONNECTION_CLOSED);
@@ -72,13 +70,13 @@ function onClose(event: CloseEvent): void {
       connectWebSocket();
     }, 3000);
     if (!navigator.onLine) {
-      writeToScreen(OFFLINE);
+      console.log(OFFLINE);
     }
   }
 }
 
 function onError(): void {
-  writeToScreen('Error');
+  console.log('Error');
 }
 
 function onMessage(event: MessageEvent): void {
@@ -95,12 +93,19 @@ function onMessage(event: MessageEvent): void {
       }
       if (isValidUser(jsonObject)) {
         const login = jsonObject.payload.user.login;
+        const currentUserTo = sessionStorage.getItem('currentUserTo');
         if (jsonObject.type === Type.USER_EXTERNAL_LOGIN) {
           requestAllUsersActive();
-          requestMessageFromUser(login);
+          if (login === currentUserTo) {
+            sessionStorage.setItem('currentUserToStatus', 'true');
+            requestMessageFromUser(login);
+          }
         } else if (jsonObject.type === Type.USER_EXTERNAL_LOGOUT) {
           requestAllUsersInActive();
-          requestMessageFromUser(login);
+          if (login === currentUserTo) {
+            sessionStorage.setItem('currentUserToStatus', 'false');
+            requestMessageFromUser(login);
+          }
         } else {
           handleUserLogin(jsonObject);
         }
@@ -119,7 +124,7 @@ function onMessage(event: MessageEvent): void {
         handleMessageFromUser(jsonObject);
       }
       if (isValidMessageStatus(jsonObject)) {
-        handleMessageRead(jsonObject);
+        handleMessageRead();
       }
     }
   } catch (error) {
@@ -136,7 +141,6 @@ export function doSend(
     | MessageStatusRequest
 ): void {
   if (websocket.readyState === WebSocket.OPEN) {
-    writeToScreen(`SENT: ${JSON.stringify(message)}`);
     websocket.send(JSON.stringify(message));
   }
 }

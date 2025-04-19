@@ -6,8 +6,8 @@ import { requestMessageFromUser } from '../../api/request-app';
 import { dialog } from './main-component';
 
 export const updateUsers: User[] = [];
-export let login: string | null = '';
-export let status: string = '';
+/*export let login: string | null = '';
+export let status: string = '';*/
 export class UserList extends BaseComponent {
   public labelPlaceholderNew: BaseComponent | undefined;
   private list: BaseComponent | undefined;
@@ -50,7 +50,7 @@ export class UserList extends BaseComponent {
     if (this.list && dialog) {
       this.list.node.textContent = '';
       for (const user of users) {
-        status = user.isLogined ? 'user-status-online' : 'user-status-offline';
+        const status = user.isLogined ? 'user-status-online' : 'user-status-offline';
         const listItem = new BaseComponent(this.list.node, 'li', 'list-item');
         new BaseComponent(listItem.node, 'div', status);
         const label = new BaseComponent(listItem.node, 'label', 'user-name', user.login);
@@ -65,9 +65,10 @@ export class UserList extends BaseComponent {
             dialog.messageDiv.node.textContent = '';
             dialog.sendButton.removeAttribute('disabled');
             dialog.textArea.removeAttribute('disabled');
-            login = event.target.textContent;
-            console.log(login);
-
+            const login = event.target.textContent;
+            if (login) sessionStorage.setItem('currentUserTo', login);
+            const status = user.isLogined;
+            sessionStorage.setItem('currentUserToStatus', `${status}`);
             dialog.renderHeaderDialogContainer(login, status);
             if (login) {
               this.labelPlaceholderNew = new BaseComponent(
@@ -80,7 +81,7 @@ export class UserList extends BaseComponent {
             }
           }
         });
-        dialog.renderHeaderDialogContainer('', '');
+        /* dialog.renderHeaderDialogContainer('', '');*/
       }
     }
   }

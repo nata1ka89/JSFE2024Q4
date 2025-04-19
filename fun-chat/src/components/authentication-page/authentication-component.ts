@@ -18,11 +18,7 @@ import {
 } from '../../utils/constants';
 import { Type } from '../../utils/server-data-type';
 import type { UserRequest } from '../../utils/server-data-type';
-import {
-  requestAllUsersActive,
-  requestAllUsersInActive,
-  requestMessageFromUser,
-} from '../../api/request-app';
+import { requestMessageFromUser } from '../../api/request-app';
 import { setDataSessionStorage } from '../../utils/manage-storage';
 import { updateUsers } from '../main-page/user-list-component';
 
@@ -117,12 +113,14 @@ export class Authentication extends BaseComponent {
           },
         };
         doSend(newUser);
-        requestAllUsersActive();
-        requestAllUsersInActive();
+        /* requestAllUsersActive();
+         requestAllUsersInActive();*/
         setDataSessionStorage(
           newUser.id,
           newUser.payload.user.login,
-          newUser.payload.user.password
+          newUser.payload.user.password,
+          ' ',
+          ' '
         );
         const filteredUsers = updateUsers.filter(
           (user) => user.login !== newUser.payload.user.login
