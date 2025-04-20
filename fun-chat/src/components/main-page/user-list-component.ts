@@ -6,8 +6,6 @@ import { requestMessageFromUser } from '../../api/request-app';
 import { dialog } from './main-component';
 
 export const updateUsers: User[] = [];
-/*export let login: string | null = '';
-export let status: string = '';*/
 export class UserList extends BaseComponent {
   public labelPlaceholderNew: BaseComponent | undefined;
   private list: BaseComponent | undefined;
@@ -81,7 +79,6 @@ export class UserList extends BaseComponent {
             }
           }
         });
-        /* dialog.renderHeaderDialogContainer('', '');*/
       }
     }
   }

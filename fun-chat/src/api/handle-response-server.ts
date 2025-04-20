@@ -7,6 +7,7 @@ import { formatTime } from '../utils/format-time';
 import { removeDataSessionStorage } from '../utils/manage-storage';
 import type {
   AllUsersResponse,
+  Message,
   MessageFromUserResponse,
   MessageSendResponse,
   UserErrorResponse,
@@ -52,12 +53,7 @@ export function handleMessageSend(jsonObject: MessageSendResponse): void {
     }
     /*const isEdited=jsonObject.payload.message.status.isEdited*/
     if (message.from === currentUserLogin && dialog) {
-      dialog.createSendMessage(
-        dataTime,
-        message.text,
-        message.status.isDelivered,
-        message.status.isReaded
-      );
+      dialog.createSendMessage(dataTime, message.text, message.status.isDelivered, message.status.isReaded);
     } else if (message.to === currentUserLogin && dialog) {
       dialog.createReceiveMessage(dataTime, message.text, message.from, message.id);
     }
@@ -71,17 +67,7 @@ export function handleMessageFromUser(jsonObject: MessageFromUserResponse): void
       dialog.messageDiv.node.textContent = '';
       const readMessages = messages.filter((message) => message.status.isReaded);
       const unreadMessages = messages.filter((message) => !message.status.isReaded);
-      for (const message of readMessages) {
-        const dataTime = formatTime(message.datetime);
-        const isDelivered = message.status.isDelivered;
-        const isReaded = message.status.isReaded;
-        const currentUserLogin = sessionStorage.getItem('currentUserLogin');
-        if (message.from === currentUserLogin && dialog) {
-          dialog.createSendMessage(dataTime, message.text, isDelivered, isReaded);
-        } else if (message.to === currentUserLogin && dialog) {
-          dialog.createReceiveMessage(dataTime, message.text, message.from, message.id);
-        }
-      }
+      renderMessage(readMessages);
       if (unreadMessages.length > 0) {
         const firstUnreadMessage = unreadMessages[0];
         const login = sessionStorage.getItem('currentUserTo');
@@ -89,24 +75,27 @@ export function handleMessageFromUser(jsonObject: MessageFromUserResponse): void
           dialog.addSeparatorLine(firstUnreadMessage, firstUnreadMessage.to, login);
         }
       }
-
-      for (const message of unreadMessages) {
-        const dataTime = formatTime(message.datetime);
-        const isDelivered = message.status.isDelivered;
-        const currentUserLogin = sessionStorage.getItem('currentUserLogin');
-        const isReaded = message.status.isReaded;
-        if (message.from === currentUserLogin && dialog) {
-          dialog.createSendMessage(dataTime, message.text, isDelivered, isReaded);
-        } else if (message.to === currentUserLogin && dialog) {
-          dialog.createReceiveMessage(dataTime, message.text, message.from, message.id);
-        }
-      }
+      renderMessage(unreadMessages);
       dialog.updateStatusMessage(unreadMessages);
     }
     const login = sessionStorage.getItem('currentUserTo');
     const status = sessionStorage.getItem('currentUserToStatus');
     const currentStatus = status == 'true' ? true : false;
     dialog.renderHeaderDialogContainer(login, currentStatus);
+  }
+
+  function renderMessage(messages: Message[]) {
+    for (const message of messages) {
+      const dataTime = formatTime(message.datetime);
+      const isDelivered = message.status.isDelivered;
+      const currentUserLogin = sessionStorage.getItem('currentUserLogin');
+      const isReaded = message.status.isReaded;
+      if (message.from === currentUserLogin && dialog) {
+        dialog.createSendMessage(dataTime, message.text, isDelivered, isReaded);
+      } else if (message.to === currentUserLogin && dialog) {
+        dialog.createReceiveMessage(dataTime, message.text, message.from, message.id);
+      }
+    }
   }
 }
 

@@ -1,13 +1,6 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/main-style.css';
-import {
-  AUTHOR,
-  GITHUB_URL,
-  LOGO_IMG_URL,
-  NAME_SCHOOL,
-  RSS_COURSE_URL,
-  YEAR_APP,
-} from '../../utils/constants';
+import { AUTHOR, GITHUB_URL, LOGO_IMG_URL, NAME_SCHOOL, RSS_COURSE_URL, YEAR_APP } from '../../utils/constants';
 
 export class Footer extends BaseComponent {
   constructor(_parentNode: HTMLElement | null) {

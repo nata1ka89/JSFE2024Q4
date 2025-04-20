@@ -32,9 +32,7 @@ export class Authentication extends BaseComponent {
 
   private static validateInput(input: BaseComponent, error: BaseComponent): void {
     if (input.node instanceof HTMLInputElement) {
-      const isValid =
-        input.node.value.trim().length >= MIN_LENGTH &&
-        input.node.value.trim().length <= MAX_LENGTH;
+      const isValid = input.node.value.trim().length >= MIN_LENGTH && input.node.value.trim().length <= MAX_LENGTH;
       error.node.style.display = isValid ? 'none' : 'block';
     }
   }
@@ -42,10 +40,7 @@ export class Authentication extends BaseComponent {
   private static validateForm(inputs: BaseComponent[], logButton: BaseComponent): void {
     const allValid = inputs.every((input) => {
       if (input.node instanceof HTMLInputElement) {
-        return (
-          input.node.value.trim().length >= MIN_LENGTH &&
-          input.node.value.trim().length <= MAX_LENGTH
-        );
+        return input.node.value.trim().length >= MIN_LENGTH && input.node.value.trim().length <= MAX_LENGTH;
       }
       return false;
     });
@@ -78,12 +73,7 @@ export class Authentication extends BaseComponent {
     passwordInput.setAttribute('required', 'true');
     passwordInput.setAttribute('minlength', MIN_LENGTH.toString());
     passwordInput.setAttribute('maxlength', MAX_LENGTH.toString());
-    const passwordError = new BaseComponent(
-      passwordDiv.node,
-      'span',
-      'error-message',
-      VALID_PASSWORD
-    );
+    const passwordError = new BaseComponent(passwordDiv.node, 'span', 'error-message', VALID_PASSWORD);
     return [passwordInput, passwordError];
   }
 
@@ -98,10 +88,7 @@ export class Authentication extends BaseComponent {
     logButton.setAttribute('disabled', 'true');
     logButton.setCallback('click', (event) => {
       event.preventDefault();
-      if (
-        nameInput.node instanceof HTMLInputElement &&
-        passwordInput.node instanceof HTMLInputElement
-      ) {
+      if (nameInput.node instanceof HTMLInputElement && passwordInput.node instanceof HTMLInputElement) {
         const newUser: UserRequest = {
           id: crypto.randomUUID(),
           type: Type.USER_LOGIN,
@@ -115,16 +102,8 @@ export class Authentication extends BaseComponent {
         doSend(newUser);
         /* requestAllUsersActive();
          requestAllUsersInActive();*/
-        setDataSessionStorage(
-          newUser.id,
-          newUser.payload.user.login,
-          newUser.payload.user.password,
-          ' ',
-          ' '
-        );
-        const filteredUsers = updateUsers.filter(
-          (user) => user.login !== newUser.payload.user.login
-        );
+        setDataSessionStorage(newUser.id, newUser.payload.user.login, newUser.payload.user.password, ' ', ' ');
+        const filteredUsers = updateUsers.filter((user) => user.login !== newUser.payload.user.login);
         for (const user of filteredUsers) {
           requestMessageFromUser(user.login);
         }
@@ -151,13 +130,7 @@ export class Authentication extends BaseComponent {
     const [nameInput, nameError] = Authentication.createNameField(fieldset);
     const [passwordInput, passwordError] = Authentication.createPasswordField(fieldset);
     const buttonsDiv = new BaseComponent(fieldset.node, 'div', 'container-buttons');
-    Authentication.createLoginButton(
-      buttonsDiv,
-      nameInput,
-      nameError,
-      passwordInput,
-      passwordError
-    );
+    Authentication.createLoginButton(buttonsDiv, nameInput, nameError, passwordInput, passwordError);
     this.createInfoButton(buttonsDiv);
   }
 }

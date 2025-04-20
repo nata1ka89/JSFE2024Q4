@@ -18,12 +18,7 @@ export default class Modal extends BaseComponent {
   public createModal(error: string): void {
     const content = new BaseComponent(this.node, 'div', 'content');
     new BaseComponent(content.node, 'p', 'message', `${error}`);
-    const closeButton = new BaseComponent(
-      content.node,
-      'button',
-      'button close-button',
-      BUTTON_CLOSE
-    );
+    const closeButton = new BaseComponent(content.node, 'button', 'button close-button', BUTTON_CLOSE);
     closeButton.setAttribute('type', 'button');
     closeButton.setCallback('click', () => this.closeModal());
     this.viewModal();

@@ -3,7 +3,6 @@ import '../../style/main-style.css';
 import { BUTTON_SEND, PLACEHOLDER_INPUT_MESSAGE, PLACEHOLDER_MESSAGE } from '../../utils/constants';
 import type { Message, User } from '../../utils/server-data-type';
 import { requestMessageSend, requestMessageStatus } from '../../api/request-app';
-/*import { login } from './user-list-component';*/
 import { userList } from './main-component';
 export const updateUsers: User[] = [];
 export class Dialog extends BaseComponent {
@@ -22,12 +21,7 @@ export class Dialog extends BaseComponent {
     this.createDialogContainer();
   }
 
-  public createSendMessage(
-    dataTime: string,
-    text: string,
-    isDelivered: boolean,
-    isReaded: boolean
-  ): void {
+  public createSendMessage(dataTime: string, text: string, isDelivered: boolean, isReaded: boolean): void {
     if (this.messageDiv) {
       const statusMessage = isDelivered ? '✔✔' : '✔';
       const messageContainer = new BaseComponent(this.messageDiv.node, 'div', 'message-container');
@@ -38,12 +32,7 @@ export class Dialog extends BaseComponent {
       new BaseComponent(messageHeader.node, 'label', '', dataTime);
       new BaseComponent(messageData.node, 'div', 'message-text', text);
       const messageFooter = new BaseComponent(messageData.node, 'div', 'message-footer');
-      this.readMessage = new BaseComponent(
-        messageFooter.node,
-        'label',
-        'message-unread',
-        statusMessage
-      );
+      this.readMessage = new BaseComponent(messageFooter.node, 'label', 'message-unread', statusMessage);
       if (isReaded) {
         this.readMessage.node.classList.add('message-read');
       }
@@ -77,12 +66,7 @@ export class Dialog extends BaseComponent {
         new BaseComponent(this.headerMessageDiv.node, 'label', '', renderStatus);
       } else {
         this.messageDiv.node.textContent = '';
-        this.labelPlaceholder = new BaseComponent(
-          this.messageDiv.node,
-          'label',
-          '',
-          PLACEHOLDER_MESSAGE
-        );
+        this.labelPlaceholder = new BaseComponent(this.messageDiv.node, 'label', '', PLACEHOLDER_MESSAGE);
       }
     }
   }
@@ -91,7 +75,6 @@ export class Dialog extends BaseComponent {
     const unreadMessageIds = unreadMessages.map((message) => message.id);
     if (this.messageDiv) {
       const messageDiv = this.messageDiv;
-
       const handleClick = (): void => {
         requestMessageStatus(unreadMessageIds);
         this.separatorLine?.destroy();
@@ -101,22 +84,12 @@ export class Dialog extends BaseComponent {
         this.allMessagesRead = true;
       };
       messageDiv.setCallback('click', handleClick);
-
-      /*  this.messageDiv.setCallback('scroll', () => {
-          requestMessageStatus(unreadMessageIds);
-          this.separatorLine?.destroy()
-        });*/
     }
   }
 
   public addSeparatorLine(firstUnreadMessage: Message, userTo: string, currentLogin: string): void {
     if (this.messageDiv && !this.separatorLine && userTo !== currentLogin) {
-      this.separatorLine = new BaseComponent(
-        this.messageDiv.node,
-        'div',
-        'separator-line',
-        'New Messages'
-      );
+      this.separatorLine = new BaseComponent(this.messageDiv.node, 'div', 'separator-line', 'New Messages');
       const messages = [...this.messageDiv.node.children];
       const messageLast = messages.find((element) => {
         return element.id === firstUnreadMessage.id;
@@ -130,12 +103,7 @@ export class Dialog extends BaseComponent {
   private createDialogContainer(): void {
     this.headerMessageDiv = new BaseComponent(this.node, 'div', 'header-message-content');
     this.messageDiv = new BaseComponent(this.node, 'div', 'message-content');
-    this.labelPlaceholder = new BaseComponent(
-      this.messageDiv.node,
-      'label',
-      '',
-      PLACEHOLDER_MESSAGE
-    );
+    this.labelPlaceholder = new BaseComponent(this.messageDiv.node, 'label', '', PLACEHOLDER_MESSAGE);
     let message: string;
     const messageForm = new BaseComponent(this.node, 'form', 'form-message');
     this.textArea = new BaseComponent(messageForm.node, 'textarea', 'textarea');
@@ -162,7 +130,6 @@ export class Dialog extends BaseComponent {
 
   private clearField(message: string): string {
     const login = sessionStorage.getItem('currentUserTo');
-
     if (login && message && this.textArea && this.textArea.node instanceof HTMLTextAreaElement) {
       this.textArea.node.value = '';
       requestMessageSend(login, message);

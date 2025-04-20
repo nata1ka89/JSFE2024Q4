@@ -133,12 +133,7 @@ function onMessage(event: MessageEvent): void {
 }
 
 export function doSend(
-  message:
-    | UserRequest
-    | AllUsersRequest
-    | MessageSendRequest
-    | MessageFromUserRequest
-    | MessageStatusRequest
+  message: UserRequest | AllUsersRequest | MessageSendRequest | MessageFromUserRequest | MessageStatusRequest
 ): void {
   if (websocket.readyState === WebSocket.OPEN) {
     websocket.send(JSON.stringify(message));

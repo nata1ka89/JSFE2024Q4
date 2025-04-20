@@ -32,10 +32,7 @@ export class BaseComponent {
     this.node.removeAttribute(name);
   }
 
-  public setCallback<K extends keyof HTMLElementEventMap>(
-    eventType: K,
-    callback: Callback<K>
-  ): void {
+  public setCallback<K extends keyof HTMLElementEventMap>(eventType: K, callback: Callback<K>): void {
     this.node.addEventListener(eventType, callback);
   }
 
