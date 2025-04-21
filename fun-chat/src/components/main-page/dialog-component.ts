@@ -1,7 +1,7 @@
 import { BaseComponent } from '../../utils/base-component';
 import '../../style/main-style.css';
 import { BUTTON_SEND, PLACEHOLDER_INPUT_MESSAGE, PLACEHOLDER_MESSAGE } from '../../utils/constants';
-import type { Message, User } from '../../utils/server-data-type';
+import type { Message } from '../../utils/server-data-type';
 import {
   requestMessageDelete,
   requestMessageEdit,
@@ -9,7 +9,6 @@ import {
   requestMessageStatus,
 } from '../../api/request-app';
 import { userList } from './main-component';
-export const updateUsers: User[] = [];
 export class Dialog extends BaseComponent {
   public messageDiv: BaseComponent | undefined;
   public readMessage: BaseComponent | undefined;
@@ -21,15 +20,24 @@ export class Dialog extends BaseComponent {
   public allMessagesRead: boolean | undefined;
   private headerMessageDiv: BaseComponent | undefined;
   private menu: BaseComponent | undefined;
+  private isEditing: boolean = false;
+  private editingMessageId: string | null = '';
   constructor(_parentNode: HTMLElement | null) {
     super(_parentNode, 'div', 'dialog-container');
-
     this.createDialogContainer();
   }
 
-  public createSendMessage(id: string, dataTime: string, text: string, isDelivered: boolean, isReaded: boolean): void {
+  public createSendMessage(
+    id: string,
+    dataTime: string,
+    text: string,
+    isDelivered: boolean,
+    isReaded: boolean,
+    isEdited: boolean
+  ): void {
     if (this.messageDiv) {
       const statusMessage = isDelivered ? '✔✔' : '✔';
+      const statusEditMessage = isEdited ? 'edited' : '';
       const messageContainer = new BaseComponent(this.messageDiv.node, 'div', 'message-container');
       messageContainer.node.style.justifyContent = 'flex-end';
       const messageData = new BaseComponent(messageContainer.node, 'div', 'message-data');
@@ -38,6 +46,7 @@ export class Dialog extends BaseComponent {
       new BaseComponent(messageHeader.node, 'label', '', dataTime);
       new BaseComponent(messageData.node, 'div', 'message-text', text);
       const messageFooter = new BaseComponent(messageData.node, 'div', 'message-footer');
+      new BaseComponent(messageFooter.node, 'label', '', statusEditMessage);
       this.readMessage = new BaseComponent(messageFooter.node, 'label', 'message-unread', statusMessage);
       if (isReaded) {
         this.readMessage.node.classList.add('message-read');
@@ -122,14 +131,12 @@ export class Dialog extends BaseComponent {
     this.textArea.setCallback('input', (event) => {
       if (event.target instanceof HTMLTextAreaElement) message = event.target.value;
     });
-
     this.textArea.setCallback('keydown', (event) => {
       if (event.key === 'Enter') {
         event.preventDefault();
         message = this.clearField(message);
       }
     });
-
     this.sendButton = new BaseComponent(messageForm.node, 'button', 'log-button', BUTTON_SEND);
     this.sendButton.setAttribute('disabled', 'true');
     this.sendButton.setCallback('click', (event) => {
@@ -145,7 +152,14 @@ export class Dialog extends BaseComponent {
       this.menu.node.style.top = `${event.clientY}px`;
       this.menu.node.style.left = `${event.clientX}px`;
       const editOption = new BaseComponent(this.menu.node, 'div', '', 'edit');
-      editOption.setCallback('click', () => requestMessageEdit(messageId, messageText));
+      editOption.setCallback('click', () => {
+        if (this.textArea && this.textArea.node instanceof HTMLTextAreaElement) {
+          this.textArea.node.value = messageText;
+          this.isEditing = true;
+          this.editingMessageId = messageId;
+          this.textArea.node.focus();
+        }
+      });
       const deleteOption = new BaseComponent(this.menu.node, 'div', '', 'delete');
       deleteOption.setCallback('click', () => requestMessageDelete(messageId));
       document.addEventListener('click', () => {
@@ -158,7 +172,13 @@ export class Dialog extends BaseComponent {
     const login = sessionStorage.getItem('currentUserTo');
     if (login && message && this.textArea && this.textArea.node instanceof HTMLTextAreaElement) {
       this.textArea.node.value = '';
-      requestMessageSend(login, message);
+      if (this.isEditing && this.editingMessageId) {
+        requestMessageEdit(this.editingMessageId, message);
+        this.isEditing = false;
+        this.editingMessageId = '';
+      } else {
+        requestMessageSend(login, message);
+      }
       message = '';
     }
     if (userList) {

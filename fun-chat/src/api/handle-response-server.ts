@@ -53,7 +53,14 @@ export function handleMessageSend(jsonObject: MessageSendResponse): void {
       requestMessageStatus([message.id]);
     }
     if (message.from === currentUserLogin && dialog) {
-      dialog.createSendMessage(message.id, dataTime, message.text, message.status.isDelivered, message.status.isReaded);
+      dialog.createSendMessage(
+        message.id,
+        dataTime,
+        message.text,
+        message.status.isDelivered,
+        message.status.isReaded,
+        message.status.isEdited
+      );
     } else if (message.to === currentUserLogin && dialog) {
       dialog.createReceiveMessage(dataTime, message.text, message.from, message.id);
     }
@@ -99,8 +106,9 @@ export function handleMessageFromUser(jsonObject: MessageFromUserResponse): void
       const isDelivered = message.status.isDelivered;
       const currentUserLogin = sessionStorage.getItem('currentUserLogin');
       const isReaded = message.status.isReaded;
+      const isEdited = message.status.isEdited;
       if (message.from === currentUserLogin && dialog) {
-        dialog.createSendMessage(message.id, dataTime, message.text, isDelivered, isReaded);
+        dialog.createSendMessage(message.id, dataTime, message.text, isDelivered, isReaded, isEdited);
       } else if (message.to === currentUserLogin && dialog) {
         dialog.createReceiveMessage(dataTime, message.text, message.from, message.id);
       }
@@ -116,8 +124,6 @@ export function handleMessageRead(): void {
 export function handleMessageDelete(): void {
   const login = sessionStorage.getItem('currentUserTo');
   if (login && login !== ' ') {
-    console.log('handle');
-
     requestMessageFromUser(login);
   }
 }

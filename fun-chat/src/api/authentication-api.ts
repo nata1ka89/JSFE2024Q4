@@ -131,8 +131,6 @@ function onMessage(event: MessageEvent): void {
         handleMessageRead();
       }
       if (isValidMessageDelete(jsonObject)) {
-        console.log('api');
-
         handleMessageDelete();
       }
       if (isValidMessageEdit(jsonObject)) {
