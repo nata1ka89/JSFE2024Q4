@@ -8,6 +8,8 @@ import {
 } from '../utils/constants';
 import ModalServer from './modal-server';
 import {
+  handleMessageDelete,
+  handleMessageEdit,
   handleMessageFromUser,
   handleMessageRead,
   handleMessageSend,
@@ -25,6 +27,8 @@ import type {
 } from '../utils/server-data-type';
 import { Type } from '../utils/server-data-type';
 import {
+  isValidMessageDelete,
+  isValidMessageEdit,
   isValidMessageFromUser,
   isValidMessageSend,
   isValidMessageStatus,
@@ -125,6 +129,14 @@ function onMessage(event: MessageEvent): void {
       }
       if (isValidMessageStatus(jsonObject)) {
         handleMessageRead();
+      }
+      if (isValidMessageDelete(jsonObject)) {
+        console.log('api');
+
+        handleMessageDelete();
+      }
+      if (isValidMessageEdit(jsonObject)) {
+        handleMessageEdit();
       }
     }
   } catch (error) {

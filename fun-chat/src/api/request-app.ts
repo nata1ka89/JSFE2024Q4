@@ -104,3 +104,30 @@ export function requestMessageStatus(allId: string[]): void {
     doSend(messageStatus);
   }
 }
+
+export function requestMessageEdit(id: string, text: string): void {
+  const messageEdit: MessageStatusRequest = {
+    id: crypto.randomUUID(),
+    type: Type.MSG_EDIT,
+    payload: {
+      message: {
+        id: id,
+        text: text,
+      },
+    },
+  };
+  doSend(messageEdit);
+}
+
+export function requestMessageDelete(id: string): void {
+  const messageDelete: MessageStatusRequest = {
+    id: crypto.randomUUID(),
+    type: Type.MSG_DELETE,
+    payload: {
+      message: {
+        id: id,
+      },
+    },
+  };
+  doSend(messageDelete);
+}

@@ -6,6 +6,8 @@ import type {
   MessageFromUserResponse,
   MessageDeliverResponse,
   MessageStatusResponse,
+  MessageEditResponse,
+  MessageDeleteResponse,
 } from './server-data-type';
 
 export function isValidUser(data: unknown): data is UserResponse {
@@ -127,5 +129,44 @@ export function isValidMessageStatus(data: unknown): data is MessageStatusRespon
     typeof data.payload.message.status === 'object' &&
     data.payload.message.status !== null &&
     'isReaded' in data.payload.message.status
+  );
+}
+export function isValidMessageDelete(data: unknown): data is MessageDeleteResponse {
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    'id' in data &&
+    'type' in data &&
+    'payload' in data &&
+    typeof data.payload === 'object' &&
+    data.payload !== null &&
+    'message' in data.payload &&
+    typeof data.payload.message === 'object' &&
+    data.payload.message !== null &&
+    'id' in data.payload.message &&
+    'status' in data.payload.message &&
+    typeof data.payload.message.status === 'object' &&
+    data.payload.message.status !== null &&
+    'isDeleted' in data.payload.message.status
+  );
+}
+export function isValidMessageEdit(data: unknown): data is MessageEditResponse {
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    'id' in data &&
+    'type' in data &&
+    'payload' in data &&
+    typeof data.payload === 'object' &&
+    data.payload !== null &&
+    'message' in data.payload &&
+    typeof data.payload.message === 'object' &&
+    data.payload.message !== null &&
+    'id' in data.payload.message &&
+    'text' in data.payload.message &&
+    'status' in data.payload.message &&
+    typeof data.payload.message.status === 'object' &&
+    data.payload.message.status !== null &&
+    'isEdited' in data.payload.message.status
   );
 }

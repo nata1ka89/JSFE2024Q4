@@ -10,6 +10,8 @@ export enum Type {
   MSG_FROM_USER = 'MSG_FROM_USER',
   MSG_DELIVER = 'MSG_DELIVER',
   MSG_READ = 'MSG_READ',
+  MSG_DELETE = 'MSG_DELETE',
+  MSG_EDIT = 'MSG_EDIT',
 }
 
 export type User = {
@@ -85,18 +87,7 @@ export type MessageSendResponse = {
   id: string;
   type: Type.MSG_SEND;
   payload: {
-    message: {
-      id: string;
-      from: string;
-      to: string;
-      text: string;
-      datetime: number;
-      status: {
-        isDelivered: boolean;
-        isReaded: boolean;
-        isEdited: boolean;
-      };
-    };
+    message: Message;
   };
 };
 
@@ -133,10 +124,11 @@ export type MessageDeliverResponse = {
 
 export type MessageStatusRequest = {
   id: string;
-  type: Type.MSG_READ;
+  type: Type.MSG_READ | Type.MSG_EDIT | Type.MSG_DELETE;
   payload: {
     message: {
       id: string;
+      text?: string;
     };
   };
 };
@@ -148,7 +140,32 @@ export type MessageStatusResponse = {
     message: {
       id: string;
       status: {
-        isReaded: boolean;
+        isReaded?: boolean;
+      };
+    };
+  };
+};
+export type MessageDeleteResponse = {
+  id: string;
+  type: Type.MSG_DELETE;
+  payload: {
+    message: {
+      id: string;
+      status: {
+        isDeleted: boolean;
+      };
+    };
+  };
+};
+export type MessageEditResponse = {
+  id: string;
+  type: Type.MSG_EDIT;
+  payload: {
+    message: {
+      id: string;
+      text: string;
+      status: {
+        isEdited: boolean;
       };
     };
   };

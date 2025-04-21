@@ -2,7 +2,12 @@ import { BaseComponent } from '../../utils/base-component';
 import '../../style/main-style.css';
 import { BUTTON_SEND, PLACEHOLDER_INPUT_MESSAGE, PLACEHOLDER_MESSAGE } from '../../utils/constants';
 import type { Message, User } from '../../utils/server-data-type';
-import { requestMessageSend, requestMessageStatus } from '../../api/request-app';
+import {
+  requestMessageDelete,
+  requestMessageEdit,
+  requestMessageSend,
+  requestMessageStatus,
+} from '../../api/request-app';
 import { userList } from './main-component';
 export const updateUsers: User[] = [];
 export class Dialog extends BaseComponent {
@@ -15,13 +20,14 @@ export class Dialog extends BaseComponent {
   public separatorLine: BaseComponent | undefined;
   public allMessagesRead: boolean | undefined;
   private headerMessageDiv: BaseComponent | undefined;
+  private menu: BaseComponent | undefined;
   constructor(_parentNode: HTMLElement | null) {
     super(_parentNode, 'div', 'dialog-container');
 
     this.createDialogContainer();
   }
 
-  public createSendMessage(dataTime: string, text: string, isDelivered: boolean, isReaded: boolean): void {
+  public createSendMessage(id: string, dataTime: string, text: string, isDelivered: boolean, isReaded: boolean): void {
     if (this.messageDiv) {
       const statusMessage = isDelivered ? '✔✔' : '✔';
       const messageContainer = new BaseComponent(this.messageDiv.node, 'div', 'message-container');
@@ -37,6 +43,10 @@ export class Dialog extends BaseComponent {
         this.readMessage.node.classList.add('message-read');
       }
       this.messageDiv.node.scrollTop = this.messageDiv.node.scrollHeight;
+      messageContainer.setCallback('contextmenu', (event) => {
+        event.preventDefault();
+        this.showContextMenu(event, id, text);
+      });
     }
   }
 
@@ -126,6 +136,22 @@ export class Dialog extends BaseComponent {
       event.preventDefault();
       message = this.clearField(message);
     });
+  }
+
+  private showContextMenu(event: MouseEvent, messageId: string, messageText: string): void {
+    if (this.messageDiv) {
+      if (this.menu) this.menu.destroy();
+      this.menu = new BaseComponent(this.messageDiv.node, 'div', 'context-menu');
+      this.menu.node.style.top = `${event.clientY}px`;
+      this.menu.node.style.left = `${event.clientX}px`;
+      const editOption = new BaseComponent(this.menu.node, 'div', '', 'edit');
+      editOption.setCallback('click', () => requestMessageEdit(messageId, messageText));
+      const deleteOption = new BaseComponent(this.menu.node, 'div', '', 'delete');
+      deleteOption.setCallback('click', () => requestMessageDelete(messageId));
+      document.addEventListener('click', () => {
+        if (this.menu) this.menu.destroy();
+      });
+    }
   }
 
   private clearField(message: string): string {

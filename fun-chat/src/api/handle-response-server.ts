@@ -2,7 +2,8 @@ import Modal from '../components/authentication-page/modal-valid-component';
 import { userList } from '../components/main-page/main-component';
 import { dialog } from '../components/main-page/main-component';
 import Router from '../components/router';
-import { LOGIN_ROUTE, MAIN_ROUTE } from '../utils/constants';
+import { BaseComponent } from '../utils/base-component';
+import { LOGIN_ROUTE, MAIN_ROUTE, PLACEHOLDER_MESSAGE_TO_USER } from '../utils/constants';
 import { formatTime } from '../utils/format-time';
 import { removeDataSessionStorage } from '../utils/manage-storage';
 import type {
@@ -51,9 +52,8 @@ export function handleMessageSend(jsonObject: MessageSendResponse): void {
     if (dialog.allMessagesRead) {
       requestMessageStatus([message.id]);
     }
-    /*const isEdited=jsonObject.payload.message.status.isEdited*/
     if (message.from === currentUserLogin && dialog) {
-      dialog.createSendMessage(dataTime, message.text, message.status.isDelivered, message.status.isReaded);
+      dialog.createSendMessage(message.id, dataTime, message.text, message.status.isDelivered, message.status.isReaded);
     } else if (message.to === currentUserLogin && dialog) {
       dialog.createReceiveMessage(dataTime, message.text, message.from, message.id);
     }
@@ -63,20 +63,29 @@ export function handleMessageSend(jsonObject: MessageSendResponse): void {
 export function handleMessageFromUser(jsonObject: MessageFromUserResponse): void {
   const messages = jsonObject.payload.messages;
   if (dialog && dialog.headerLogin) {
-    if (messages.length > 0 && dialog.messageDiv) {
+    if (dialog.messageDiv && userList) {
       dialog.messageDiv.node.textContent = '';
-      const readMessages = messages.filter((message) => message.status.isReaded);
-      const unreadMessages = messages.filter((message) => !message.status.isReaded);
-      renderMessage(readMessages);
-      if (unreadMessages.length > 0) {
-        const firstUnreadMessage = unreadMessages[0];
-        const login = sessionStorage.getItem('currentUserTo');
-        if (login) {
-          dialog.addSeparatorLine(firstUnreadMessage, firstUnreadMessage.to, login);
+      if (messages.length === 0) {
+        userList.labelPlaceholderNew = new BaseComponent(
+          dialog.messageDiv.node,
+          'label',
+          '',
+          PLACEHOLDER_MESSAGE_TO_USER
+        );
+      } else {
+        const readMessages = messages.filter((message) => message.status.isReaded);
+        const unreadMessages = messages.filter((message) => !message.status.isReaded);
+        renderMessage(readMessages);
+        if (unreadMessages.length > 0) {
+          const firstUnreadMessage = unreadMessages[0];
+          const login = sessionStorage.getItem('currentUserTo');
+          if (login) {
+            dialog.addSeparatorLine(firstUnreadMessage, firstUnreadMessage.to, login);
+          }
         }
+        renderMessage(unreadMessages);
+        dialog.updateStatusMessage(unreadMessages);
       }
-      renderMessage(unreadMessages);
-      dialog.updateStatusMessage(unreadMessages);
     }
     const login = sessionStorage.getItem('currentUserTo');
     const status = sessionStorage.getItem('currentUserToStatus');
@@ -84,14 +93,14 @@ export function handleMessageFromUser(jsonObject: MessageFromUserResponse): void
     dialog.renderHeaderDialogContainer(login, currentStatus);
   }
 
-  function renderMessage(messages: Message[]) {
+  function renderMessage(messages: Message[]): void {
     for (const message of messages) {
       const dataTime = formatTime(message.datetime);
       const isDelivered = message.status.isDelivered;
       const currentUserLogin = sessionStorage.getItem('currentUserLogin');
       const isReaded = message.status.isReaded;
       if (message.from === currentUserLogin && dialog) {
-        dialog.createSendMessage(dataTime, message.text, isDelivered, isReaded);
+        dialog.createSendMessage(message.id, dataTime, message.text, isDelivered, isReaded);
       } else if (message.to === currentUserLogin && dialog) {
         dialog.createReceiveMessage(dataTime, message.text, message.from, message.id);
       }
@@ -101,5 +110,18 @@ export function handleMessageFromUser(jsonObject: MessageFromUserResponse): void
 
 export function handleMessageRead(): void {
   const login = sessionStorage.getItem('currentUserTo');
-  if (login) requestMessageFromUser(login);
+  if (login && login !== ' ') requestMessageFromUser(login);
+}
+
+export function handleMessageDelete(): void {
+  const login = sessionStorage.getItem('currentUserTo');
+  if (login && login !== ' ') {
+    console.log('handle');
+
+    requestMessageFromUser(login);
+  }
+}
+export function handleMessageEdit(): void {
+  const login = sessionStorage.getItem('currentUserTo');
+  if (login && login !== ' ') requestMessageFromUser(login);
 }
