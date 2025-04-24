@@ -171,10 +171,17 @@ button[disabled] {
 .header-message-content label,
 .header-content label,
 .user-name {
+  cursor: pointer;
+
   width: 100%;
+
   font-size: 1rem;
   font-weight: bold;
   color: #333;
+}
+
+.user-name:hover {
+  color: #007bff;
 }
 
 .message-content {
@@ -202,6 +209,8 @@ button[disabled] {
 }
 
 .message-data {
+  cursor: pointer;
+
   display: flex;
   flex-direction: column;
 
@@ -211,6 +220,11 @@ button[disabled] {
   border-radius: 8px;
 
   background-color: #f9f9f9;
+}
+
+.message-data:hover {
+  background-color: #f1f1f1;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 10%);
 }
 
 .message-text {

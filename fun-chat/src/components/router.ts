@@ -37,6 +37,11 @@ export default class Router {
       return;
     }
     const currentUserIsLogined = sessionStorage.getItem('currentUserIsLogined');
+
+    if (currentPath === MAIN_ROUTE && currentUserIsLogined === null) {
+      this.navigate(LOGIN_ROUTE);
+      return;
+    }
     if (currentUserIsLogined) {
       if (currentPath === LOGIN_ROUTE && currentUserIsLogined === 'true') {
         this.navigate(MAIN_ROUTE);
